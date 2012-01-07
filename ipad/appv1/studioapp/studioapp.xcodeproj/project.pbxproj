@@ -1,0 +1,436 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B38651E114B5B1D700C48BD3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B38651E014B5B1D700C48BD3 /* UIKit.framework */; };
+		B38651E314B5B1D700C48BD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B38651E214B5B1D700C48BD3 /* Foundation.framework */; };
+		B38651E514B5B1D700C48BD3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B38651E414B5B1D700C48BD3 /* CoreGraphics.framework */; };
+		B38651EB14B5B1D700C48BD3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B38651E914B5B1D700C48BD3 /* InfoPlist.strings */; };
+		B38651ED14B5B1D700C48BD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B38651EC14B5B1D700C48BD3 /* main.m */; };
+		B38651F114B5B1D700C48BD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B38651F014B5B1D700C48BD3 /* AppDelegate.m */; };
+		B38651F414B5B1D700C48BD3 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B38651F214B5B1D700C48BD3 /* MainStoryboard.storyboard */; };
+		B38651F714B5B1D700C48BD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B38651F614B5B1D700C48BD3 /* ViewController.m */; };
+		B386520514B5B39E00C48BD3 /* MyScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B386520414B5B39E00C48BD3 /* MyScrollView.m */; };
+		B386520914B5D77B00C48BD3 /* illustration02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B386520814B5D77B00C48BD3 /* illustration02.jpg */; };
+		B386520C14B5E3AC00C48BD3 /* illustration06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B386520B14B5E3AC00C48BD3 /* illustration06.jpg */; };
+		B386520E14B670EC00C48BD3 /* illustration04.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B386520D14B670EC00C48BD3 /* illustration04.jpg */; };
+		B3F9DFD814B71C1400BAD3B3 /* FILM_REEL.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFD714B71C1400BAD3B3 /* FILM_REEL.mov */; };
+		B3F9DFE014B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F9DFDA14B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.m */; };
+		B3F9DFE114B7217F00BAD3B3 /* MyMoviePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F9DFDC14B7217F00BAD3B3 /* MyMoviePlayer.m */; };
+		B3F9DFE214B7217F00BAD3B3 /* MyMoviePlayer.xib in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFDD14B7217F00BAD3B3 /* MyMoviePlayer.xib */; };
+		B3F9DFE314B7217F00BAD3B3 /* MyMovieView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F9DFDF14B7217F00BAD3B3 /* MyMovieView.m */; };
+		B3F9DFE514B7235100BAD3B3 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F9DFE414B7235100BAD3B3 /* CoreVideo.framework */; };
+		B3F9DFE714B7235800BAD3B3 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F9DFE614B7235800BAD3B3 /* AVFoundation.framework */; };
+		B3F9DFE914B7236600BAD3B3 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F9DFE814B7236600BAD3B3 /* MediaPlayer.framework */; };
+		B3F9DFEB14B7236F00BAD3B3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F9DFEA14B7236F00BAD3B3 /* CoreMedia.framework */; };
+		B3F9DFEE14B729C300BAD3B3 /* Animation_Reel.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFED14B729C300BAD3B3 /* Animation_Reel.mov */; };
+		B3F9DFF114B72A9A00BAD3B3 /* Preproduction_Reel.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFF014B72A9A00BAD3B3 /* Preproduction_Reel.mov */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B38651DC14B5B1D700C48BD3 /* studioapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = studioapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B38651E014B5B1D700C48BD3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B38651E214B5B1D700C48BD3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B38651E414B5B1D700C48BD3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B38651E814B5B1D700C48BD3 /* studioapp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "studioapp-Info.plist"; sourceTree = "<group>"; };
+		B38651EA14B5B1D700C48BD3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B38651EC14B5B1D700C48BD3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B38651EE14B5B1D700C48BD3 /* studioapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "studioapp-Prefix.pch"; sourceTree = "<group>"; };
+		B38651EF14B5B1D700C48BD3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = studioapp/AppDelegate.h; sourceTree = "<group>"; };
+		B38651F014B5B1D700C48BD3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = studioapp/AppDelegate.m; sourceTree = "<group>"; };
+		B38651F314B5B1D700C48BD3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		B38651F514B5B1D700C48BD3 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ViewController.h; path = studioapp/ViewController.h; sourceTree = "<group>"; };
+		B38651F614B5B1D700C48BD3 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ViewController.m; path = studioapp/ViewController.m; sourceTree = "<group>"; };
+		B386520314B5B39E00C48BD3 /* MyScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyScrollView.h; sourceTree = "<group>"; };
+		B386520414B5B39E00C48BD3 /* MyScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyScrollView.m; sourceTree = "<group>"; };
+		B386520814B5D77B00C48BD3 /* illustration02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = illustration02.jpg; sourceTree = "<group>"; };
+		B386520B14B5E3AC00C48BD3 /* illustration06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = illustration06.jpg; sourceTree = "<group>"; };
+		B386520D14B670EC00C48BD3 /* illustration04.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = illustration04.jpg; sourceTree = "<group>"; };
+		B3F9DFD714B71C1400BAD3B3 /* FILM_REEL.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = FILM_REEL.mov; sourceTree = "<group>"; };
+		B3F9DFD914B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVPlayerDemoPlaybackView.h; sourceTree = "<group>"; };
+		B3F9DFDA14B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVPlayerDemoPlaybackView.m; sourceTree = "<group>"; };
+		B3F9DFDB14B7217F00BAD3B3 /* MyMoviePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMoviePlayer.h; sourceTree = "<group>"; };
+		B3F9DFDC14B7217F00BAD3B3 /* MyMoviePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMoviePlayer.m; sourceTree = "<group>"; };
+		B3F9DFDD14B7217F00BAD3B3 /* MyMoviePlayer.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyMoviePlayer.xib; sourceTree = "<group>"; };
+		B3F9DFDE14B7217F00BAD3B3 /* MyMovieView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyMovieView.h; sourceTree = "<group>"; };
+		B3F9DFDF14B7217F00BAD3B3 /* MyMovieView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyMovieView.m; sourceTree = "<group>"; };
+		B3F9DFE414B7235100BAD3B3 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		B3F9DFE614B7235800BAD3B3 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B3F9DFE814B7236600BAD3B3 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		B3F9DFEA14B7236F00BAD3B3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		B3F9DFED14B729C300BAD3B3 /* Animation_Reel.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = Animation_Reel.mov; path = ../../app_lite/ios5/assets/Animation_Reel.mov; sourceTree = "<group>"; };
+		B3F9DFF014B72A9A00BAD3B3 /* Preproduction_Reel.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = Preproduction_Reel.mov; path = ../../app_lite/ios5/assets/assets/Preproduction/Preproduction_Reel.mov; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B38651D914B5B1D600C48BD3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B38651E514B5B1D700C48BD3 /* CoreGraphics.framework in Frameworks */,
+				B3F9DFEB14B7236F00BAD3B3 /* CoreMedia.framework in Frameworks */,
+				B3F9DFE914B7236600BAD3B3 /* MediaPlayer.framework in Frameworks */,
+				B3F9DFE714B7235800BAD3B3 /* AVFoundation.framework in Frameworks */,
+				B3F9DFE514B7235100BAD3B3 /* CoreVideo.framework in Frameworks */,
+				B38651E114B5B1D700C48BD3 /* UIKit.framework in Frameworks */,
+				B38651E314B5B1D700C48BD3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B38651D114B5B1D600C48BD3 = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFEA14B7236F00BAD3B3 /* CoreMedia.framework */,
+				B3F9DFE814B7236600BAD3B3 /* MediaPlayer.framework */,
+				B3F9DFE614B7235800BAD3B3 /* AVFoundation.framework */,
+				B3F9DFE414B7235100BAD3B3 /* CoreVideo.framework */,
+				B386520614B5D73D00C48BD3 /* Content */,
+				B38651E614B5B1D700C48BD3 /* studioapp */,
+				B38651DF14B5B1D700C48BD3 /* Frameworks */,
+				B38651DD14B5B1D700C48BD3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B38651DD14B5B1D700C48BD3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B38651DC14B5B1D700C48BD3 /* studioapp.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B38651DF14B5B1D700C48BD3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B38651E014B5B1D700C48BD3 /* UIKit.framework */,
+				B38651E214B5B1D700C48BD3 /* Foundation.framework */,
+				B38651E414B5B1D700C48BD3 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B38651E614B5B1D700C48BD3 /* studioapp */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFC614B70CB800BAD3B3 /* mymovieview */,
+				B38651FF14B5B32B00C48BD3 /* myscrollview */,
+				B38651FD14B5B22900C48BD3 /* main */,
+				B38651FE14B5B23E00C48BD3 /* mainviewctl */,
+				B38651E714B5B1D700C48BD3 /* Supporting Files */,
+			);
+			path = studioapp;
+			sourceTree = "<group>";
+		};
+		B38651E714B5B1D700C48BD3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B38651E814B5B1D700C48BD3 /* studioapp-Info.plist */,
+				B38651E914B5B1D700C48BD3 /* InfoPlist.strings */,
+				B38651EC14B5B1D700C48BD3 /* main.m */,
+				B38651EE14B5B1D700C48BD3 /* studioapp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B38651FD14B5B22900C48BD3 /* main */ = {
+			isa = PBXGroup;
+			children = (
+				B38651EF14B5B1D700C48BD3 /* AppDelegate.h */,
+				B38651F014B5B1D700C48BD3 /* AppDelegate.m */,
+				B38651F214B5B1D700C48BD3 /* MainStoryboard.storyboard */,
+			);
+			name = main;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B38651FE14B5B23E00C48BD3 /* mainviewctl */ = {
+			isa = PBXGroup;
+			children = (
+				B38651F514B5B1D700C48BD3 /* ViewController.h */,
+				B38651F614B5B1D700C48BD3 /* ViewController.m */,
+			);
+			name = mainviewctl;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B38651FF14B5B32B00C48BD3 /* myscrollview */ = {
+			isa = PBXGroup;
+			children = (
+				B386520314B5B39E00C48BD3 /* MyScrollView.h */,
+				B386520414B5B39E00C48BD3 /* MyScrollView.m */,
+			);
+			name = myscrollview;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B386520614B5D73D00C48BD3 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFEF14B72A7B00BAD3B3 /* Preproduction */,
+				B3F9DFEC14B729B200BAD3B3 /* Animation */,
+				B3F9DFD614B71BF600BAD3B3 /* Film */,
+				B386520A14B5E39600C48BD3 /* Illustration */,
+				B386520714B5D74800C48BD3 /* People */,
+			);
+			name = Content;
+			sourceTree = "<group>";
+		};
+		B386520714B5D74800C48BD3 /* People */ = {
+			isa = PBXGroup;
+			children = (
+				B386520814B5D77B00C48BD3 /* illustration02.jpg */,
+			);
+			name = People;
+			sourceTree = "<group>";
+		};
+		B386520A14B5E39600C48BD3 /* Illustration */ = {
+			isa = PBXGroup;
+			children = (
+				B386520D14B670EC00C48BD3 /* illustration04.jpg */,
+				B386520B14B5E3AC00C48BD3 /* illustration06.jpg */,
+			);
+			name = Illustration;
+			sourceTree = "<group>";
+		};
+		B3F9DFC614B70CB800BAD3B3 /* mymovieview */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFD914B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.h */,
+				B3F9DFDA14B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.m */,
+				B3F9DFDB14B7217F00BAD3B3 /* MyMoviePlayer.h */,
+				B3F9DFDC14B7217F00BAD3B3 /* MyMoviePlayer.m */,
+				B3F9DFDD14B7217F00BAD3B3 /* MyMoviePlayer.xib */,
+				B3F9DFDE14B7217F00BAD3B3 /* MyMovieView.h */,
+				B3F9DFDF14B7217F00BAD3B3 /* MyMovieView.m */,
+			);
+			name = mymovieview;
+			sourceTree = "<group>";
+		};
+		B3F9DFD614B71BF600BAD3B3 /* Film */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFD714B71C1400BAD3B3 /* FILM_REEL.mov */,
+			);
+			name = Film;
+			sourceTree = "<group>";
+		};
+		B3F9DFEC14B729B200BAD3B3 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFED14B729C300BAD3B3 /* Animation_Reel.mov */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
+		B3F9DFEF14B72A7B00BAD3B3 /* Preproduction */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFF014B72A9A00BAD3B3 /* Preproduction_Reel.mov */,
+			);
+			name = Preproduction;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B38651DB14B5B1D600C48BD3 /* studioapp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B38651FA14B5B1D700C48BD3 /* Build configuration list for PBXNativeTarget "studioapp" */;
+			buildPhases = (
+				B38651D814B5B1D600C48BD3 /* Sources */,
+				B38651D914B5B1D600C48BD3 /* Frameworks */,
+				B38651DA14B5B1D600C48BD3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = studioapp;
+			productName = studioapp;
+			productReference = B38651DC14B5B1D700C48BD3 /* studioapp.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B38651D314B5B1D600C48BD3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = B38651D614B5B1D600C48BD3 /* Build configuration list for PBXProject "studioapp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = B38651D114B5B1D600C48BD3;
+			productRefGroup = B38651DD14B5B1D700C48BD3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B38651DB14B5B1D600C48BD3 /* studioapp */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B38651DA14B5B1D600C48BD3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B38651EB14B5B1D700C48BD3 /* InfoPlist.strings in Resources */,
+				B38651F414B5B1D700C48BD3 /* MainStoryboard.storyboard in Resources */,
+				B386520914B5D77B00C48BD3 /* illustration02.jpg in Resources */,
+				B386520C14B5E3AC00C48BD3 /* illustration06.jpg in Resources */,
+				B386520E14B670EC00C48BD3 /* illustration04.jpg in Resources */,
+				B3F9DFD814B71C1400BAD3B3 /* FILM_REEL.mov in Resources */,
+				B3F9DFE214B7217F00BAD3B3 /* MyMoviePlayer.xib in Resources */,
+				B3F9DFEE14B729C300BAD3B3 /* Animation_Reel.mov in Resources */,
+				B3F9DFF114B72A9A00BAD3B3 /* Preproduction_Reel.mov in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B38651D814B5B1D600C48BD3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B38651ED14B5B1D700C48BD3 /* main.m in Sources */,
+				B38651F114B5B1D700C48BD3 /* AppDelegate.m in Sources */,
+				B38651F714B5B1D700C48BD3 /* ViewController.m in Sources */,
+				B386520514B5B39E00C48BD3 /* MyScrollView.m in Sources */,
+				B3F9DFE014B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.m in Sources */,
+				B3F9DFE114B7217F00BAD3B3 /* MyMoviePlayer.m in Sources */,
+				B3F9DFE314B7217F00BAD3B3 /* MyMovieView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B38651E914B5B1D700C48BD3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B38651EA14B5B1D700C48BD3 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B38651F214B5B1D700C48BD3 /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B38651F314B5B1D700C48BD3 /* en */,
+			);
+			name = MainStoryboard.storyboard;
+			path = studioapp;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B38651F814B5B1D700C48BD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		B38651F914B5B1D700C48BD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B38651FB14B5B1D700C48BD3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "studioapp/studioapp-Prefix.pch";
+				INFOPLIST_FILE = "studioapp/studioapp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B38651FC14B5B1D700C48BD3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "studioapp/studioapp-Prefix.pch";
+				INFOPLIST_FILE = "studioapp/studioapp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B38651D614B5B1D600C48BD3 /* Build configuration list for PBXProject "studioapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B38651F814B5B1D700C48BD3 /* Debug */,
+				B38651F914B5B1D700C48BD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B38651FA14B5B1D700C48BD3 /* Build configuration list for PBXNativeTarget "studioapp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B38651FB14B5B1D700C48BD3 /* Debug */,
+				B38651FC14B5B1D700C48BD3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B38651D314B5B1D600C48BD3 /* Project object */;
+}
