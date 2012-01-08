@@ -27,12 +27,22 @@
 @synthesize offset=_offset;
 @synthesize playv=_playv;
 @synthesize moviePlayer=_moviePlayer;
+@synthesize del=_del;
+@synthesize section=_section;
 
-
-
-#if 0
 - (BOOL) handleBleed
 {
+    if (self.del)
+    {
+        BOOL handled = [ self.del movieHandleBleed:self.section ];
+        return handled;
+    }
+    else
+    {
+        return NO;
+    }
+    
+#if 0
     ViewController *vc = (ViewController *)self.vparent;
     if ( self.section != vc.section )
     {
@@ -46,8 +56,8 @@
     {
         return NO;
     }
-}
 #endif
+}
 
 #if 1
 
@@ -125,7 +135,7 @@
 - (void) oneFingerTwoTaps
 {
 
-    if (NO) //( [ self handleBleed ] )
+    if ([ self handleBleed ])
     {
         return;
     }
@@ -168,6 +178,7 @@
         [self.tap setNumberOfTapsRequired:1];
         [self.tap setNumberOfTouchesRequired:1];
         //[ self addGestureRecognizer:self.tap];
+        
         [ self.player addGestureRecognizer:self.tap ];
         
         [self load];

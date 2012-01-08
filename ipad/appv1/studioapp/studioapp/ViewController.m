@@ -19,8 +19,17 @@
 @synthesize zoom_img=_zoom_img;
 
 @synthesize fmv=_fmv;
+@synthesize fmv2=_fmv2;
+@synthesize fmv3=_fmv3;
+
+@synthesize section=_section;
+
+@synthesize objSection=_objSection;
+
+@synthesize gotoing=_gotoing;
 
 #define SPACING 10.0
+#define EXTEND 20.0
 
 CGRect lastZoomPicRect;
 
@@ -28,6 +37,73 @@ CGRect lastZoomPicRect;
 {
     [super didReceiveMemoryWarning];
 }
+
+
+-(void) gotoSection:(enum Section)sct:(BOOL)anim
+{
+    if ( self.gotoing )
+    {
+        return;
+    }
+    else
+    {
+        CGPoint pt;
+        switch (sct)
+        {
+            case Section_AboutUs: 
+                pt = CGPointMake(0, 0);
+                break;
+            case Section_Illustration:
+                pt = CGPointMake(1024, 0);
+                break;
+            case Section_Film:
+                pt = CGPointMake(1024*2, 0);
+                break;
+            case Section_Design:
+                pt = CGPointMake(0, 768);
+                break;
+            case Section_Home:
+                pt = CGPointMake(1024, 768);
+                break;
+            case Section_Preproduction:
+                pt = CGPointMake(1024*2, 768);
+                break;
+            case Section_CharacterDevelopment:
+                pt = CGPointMake(0, 768*2);
+                break;
+            case Section_Animation:;
+                pt = CGPointMake(1024, 768*2);
+                break;
+            case Section_Storyboarding:
+                pt = CGPointMake(1024*2, 768*2);
+                break;
+        }
+        
+        if (anim)
+        {
+            self.gotoing = YES;
+            self.sv.scrollEnabled = NO;
+            [UIView animateWithDuration:0.3
+                                  delay: 0.0
+                                options: UIViewAnimationOptionCurveEaseIn
+                             animations:^{
+                                 self.sv.contentOffset = pt;
+                             }
+                             completion:^(BOOL finished){
+                                 self.sv.contentOffset = pt;
+                                 self.gotoing = NO;
+                                 self.sv.scrollEnabled = YES;
+                                 self.section = sct;
+                             }
+             ];
+        }
+        else
+        {
+            self.sv.contentOffset = pt;
+        }
+    }
+}
+
 
 #pragma mark - zoom...
 
@@ -103,16 +179,34 @@ CGRect lastZoomPicRect;
     }
 }
 
+-(void) handleBleed: (enum Section)sct
+{
+    [ self gotoSection:sct :YES ];
+}
 
 #pragma mark - gestures...
 
 -(void) oneFingerOneTap: (UIGestureRecognizer *)g
 {
     UIView *v = g.view;
-    self.cur_zoom = v;
-    UIImageView *iv = (UIImageView *)[v.subviews objectAtIndex:0 ];
-    self.zoom_img = iv.image;
-    [ self zoom ];
+    
+    //  See if we need to handle bleed...
+    enum Section nsct= v.tag;
+    enum Section osct = self.section;
+    if ( osct != nsct)
+    {
+        [ self handleBleed:nsct ];
+    }
+    else // zoom
+    {
+        self.cur_zoom = v;
+        if ( [ v.subviews count ] > 0 )
+        {
+            UIImageView *iv = (UIImageView *)[v.subviews objectAtIndex:0 ];
+            self.zoom_img = iv.image;
+            [ self zoom ];
+        }
+    }
 }
 
 
@@ -127,7 +221,12 @@ CGRect lastZoomPicRect;
 
 #pragma mark - elements..
 
--(UIView *) singlePic: (int)sr: (int)sc: (int)row: (int)col: (NSString *)img: (CGAffineTransform)tr: (BOOL)clip
+-(UIView *) singlePic: 
+    (int)sr: (int)sc: 
+    (int)row: (int)col: 
+    (NSString *)img: (CGAffineTransform)tr: (BOOL)clip:
+    (float) l:(float)t:(float)r:(float)b:
+    (enum Section)sct
 {
     float aw = (1024.0-5*SPACING)/6.0;
     float ah = (768-3*SPACING)/4.0;
@@ -144,6 +243,14 @@ CGRect lastZoomPicRect;
     if (col>0) x = x+ SPACING/2.0;
     if (row>0) y = y+ SPACING/2.0;
     
+    //  adjust coords for bleeding...
+    {
+        x = x - l;
+        y = y - t;
+        aw = aw + l + r;
+        ah = ah + t + b;
+    }
+    
     UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
     [ v setBackgroundColor:[ UIColor whiteColor ] ];
     
@@ -152,6 +259,8 @@ CGRect lastZoomPicRect;
     if (img)
     {
         UIImage *p = [ UIImage imageNamed:img ];
+        //UIImage *p = nil;
+        
         UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
         [ v addSubview:iv ];
         
@@ -177,11 +286,19 @@ CGRect lastZoomPicRect;
     [ stap setNumberOfTouchesRequired:1];
     [ v addGestureRecognizer:stap ];
     
+    //  map view to section...
+    v.tag = sct;
+    //NSNumber *num = [ NSNumber numberWithInt:sct ];
+    //[ self.objSection setObject:num forKey:num ];
+    
     return v;
 }
 
 
--(UIView *) twoByOnePic: (int)sr: (int)sc: (int)row: (int)col
+-(UIView *) twoByOnePic: (int)sr: (int)sc: (int)row: (int)col:
+    (NSString *)img: (CGAffineTransform)tr: (BOOL)clip:
+    (float) l:(float)t:(float)r:(float)b:
+    (enum Section)sct
 {
     float aw = (1024.0/6.0)*2;
     float ah = 768/4.0;
@@ -201,16 +318,64 @@ CGRect lastZoomPicRect;
     if (row>0) y = y + SPACING/2.0;
     if (col>0) x = x +SPACING/2.0;
     
+    //  adjust coords for bleeding...
+    {
+        x = x - l;
+        y = y - t;
+        aw = aw + l + r;
+        ah = ah + t + b;
+    }
+    
     UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
     [ v setBackgroundColor:[ UIColor whiteColor ] ];
     
     [ self.top_view addSubview:v ];
     
+    if (img)
+    {
+        UIImage *p = [ UIImage imageNamed:img ];
+        //UIImage *p = nil;
+        
+        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
+        [ v addSubview:iv ];
+        
+        //iv.transform = tr;
+        iv.transform = tr;
+        
+        v.clipsToBounds = clip;
+        if (!v.clipsToBounds)
+        {
+            UIView *t = [ [ UIView alloc ] initWithFrame:
+                         CGRectMake(0, 0, v.frame.size.width, v.frame.size.height) ];
+            [ t setBackgroundColor:[ UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5 ] ];
+            [ v addSubview:t];  
+            
+        }
+    }
+    
+    //  gesture...
+    UITapGestureRecognizer *stap = 
+    [[UITapGestureRecognizer alloc] 
+     initWithTarget:self action:@selector(oneFingerOneTap:)];
+    [ stap setNumberOfTapsRequired:1];
+    [ stap setNumberOfTouchesRequired:1];
+    [ v addGestureRecognizer:stap ];
+    
+    //  map view to section...
+    v.tag = sct;
+    //NSNumber *num = [ NSNumber numberWithInt:sct ];
+    //[ self.objSection setObject:num forKey:num ];
+    
+
+    
     return v;
 }
 
 
--(UIView *) fourByTwoPic: (int)sr: (int)sc: (int)row: (int)col: (BOOL)movie: (NSString *)path
+-(UIView *) fourByTwoPic: (int)sr: (int)sc: (int)row: (int)col: 
+    (BOOL)movie: (NSString *)path:(CGAffineTransform)tr: (BOOL)clip:
+    (float) l:(float)t:(float)r:(float)b:
+    (enum Section)sct
 {
     float aw = (1024.0/6.0)*4;
     float ah = (768/4.0)*2;
@@ -231,17 +396,37 @@ CGRect lastZoomPicRect;
     else if (row>0) y = y + SPACING/2.0;
     if (col>0) x = x +SPACING/2.0 + 2; //TODO: fudge?
     
+    //  adjust coords for bleeding...
+    {
+        x = x - l;
+        y = y - t;
+        aw = aw + l + r;
+        ah = ah + t + b;
+    }
+
     UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
-    [ v setBackgroundColor:[ UIColor whiteColor ] ];
+    if (movie)
+    {
+        [ v setBackgroundColor:[ UIColor blackColor ] ];
+    }
+    else
+    {
+        [ v setBackgroundColor:[ UIColor whiteColor ] ];
+    }
     
     [ self.top_view addSubview:v ];
     
     if (movie && path)
     {
+        //
         //  movie...
+        //
         self.fmv = [ [ MyMovieView alloc ] 
                     initWithFrame:
                     CGRectMake(x, y, aw, ah):path:2 ];
+        self.fmv.section = sct;
+        self.fmv.del = self;
+        
         //CGRectMake(xoff, 43, 1024, 768):@"FILM_REEL":2 ];
         //self.fmv.section = Film;
         //self.fmv.delegate = self;
@@ -250,14 +435,51 @@ CGRect lastZoomPicRect;
     }
     else if (path)
     {
+        UIImage *p = [ UIImage imageNamed:path ];
+            //UIImage *p = nil;
+            
+        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
+        [ v addSubview:iv ];
+            
+            //iv.transform = tr;
+        iv.transform = tr;
+            
+        v.clipsToBounds = clip;
+        if (!v.clipsToBounds)
+            {
+                UIView *t = [ [ UIView alloc ] initWithFrame:
+                             CGRectMake(0, 0, v.frame.size.width, v.frame.size.height) ];
+                [ t setBackgroundColor:[ UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5 ] ];
+                [ v addSubview:t];  
+                
+            }
         
+    }
+     
+    if (!movie)
+    {
+        //  gesture...
+        UITapGestureRecognizer *stap = 
+        [[UITapGestureRecognizer alloc] 
+         initWithTarget:self action:@selector(oneFingerOneTap:)];
+        [ stap setNumberOfTapsRequired:1];
+        [ stap setNumberOfTouchesRequired:1];
+        [ v addGestureRecognizer:stap ];
+        
+        //  map view to section...
+        v.tag = sct;
+        //NSNumber *num = [ NSNumber numberWithInt:sct ];
+        //[ self.objSection setObject:num forKey:num ];
     }
     
     return v;
 }
 
 
--(UIView *) sixByTwoPic: (int)sr: (int)sc: (int)row: (int)col
+-(UIView *) sixByTwoPic: (int)sr: (int)sc: (int)row: (int)col:
+    (NSString *)img: (CGAffineTransform)tr: (BOOL)clip:
+    (float) l:(float)t:(float)r:(float)b:
+    (enum Section)sct
 {
     float aw = (1024.0/6.0)*6;
     float ah = (768/4.0)*2;
@@ -271,31 +493,83 @@ CGRect lastZoomPicRect;
     if (row>0) y = y + SPACING/2.0 ;
     if (col>0) x = x +SPACING/2.0;
     
+    
+    //  adjust coords for bleeding...
+    {
+        x = x - l;
+        y = y - t;
+        aw = aw + l + r;
+        ah = ah + t + b;
+    }
+    
     UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
-    [ v setBackgroundColor:[ UIColor whiteColor ] ];
+    [ v setBackgroundColor:[ UIColor blackColor ] ];
     
     [ self.top_view addSubview:v ];
     
-    
-#if 1
-    //  movie...
-    self.fmv = [ [ MyMovieView alloc ] 
+    if (img)
+    {
+        UIImage *p = [ UIImage imageNamed:img ];
+        //UIImage *p = nil;
+        
+        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
+        [ v addSubview:iv ];
+        
+        //iv.transform = tr;
+        iv.transform = tr;
+        
+        v.clipsToBounds = clip;
+        if (!v.clipsToBounds)
+        {
+            UIView *t = [ [ UIView alloc ] initWithFrame:
+                         CGRectMake(0, 0, v.frame.size.width, v.frame.size.height) ];
+            [ t setBackgroundColor:[ UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5 ] ];
+            [ v addSubview:t];  
+            
+        }
+        
+        //  gesture...
+        UITapGestureRecognizer *stap = 
+        [[UITapGestureRecognizer alloc] 
+         initWithTarget:self action:@selector(oneFingerOneTap:)];
+        [ stap setNumberOfTapsRequired:1];
+        [ stap setNumberOfTouchesRequired:1];
+        [ v addGestureRecognizer:stap ];
+        
+        //  map view to section...
+        v.tag = sct;
+        //NSNumber *num = [ NSNumber numberWithInt:sct ];
+        //[ self.objSection setObject:num forKey:num ];
+    }
+    else
+    {
+        //
+        //  movie...
+        //
+        self.fmv2 = [ [ MyMovieView alloc ] 
                 initWithFrame:
                 CGRectMake(x, y, aw, ah):@"Animation_Reel":2 ];
-    //CGRectMake(xoff, 43, 1024, 768):@"FILM_REEL":2 ];
+        self.fmv2.section = sct;
+        self.fmv2.del = self;
+        
+        //CGRectMake(xoff, 43, 1024, 768):@"FILM_REEL":2 ];
+        //self.fmv2.section = Film;
+        //self.fmv2.delegate = self;
+        //self.fmv2.vparent = (id *)self;
+        [ self.top_view addSubview:self.fmv2 ];
     
-    //self.fmv.section = Film;
-    //self.fmv.delegate = self;
-    //self.fmv.vparent = (id *)self;
-    [ self.top_view addSubview:self.fmv ];
-#endif
+    }
+    
     
     return v;
 }
 
 
 
--(UIView *) sixByThreePic: (int)sr: (int)sc: (int)row: (int)col
+-(UIView *) sixByThreePic: (int)sr: (int)sc: (int)row: (int)col:
+    (NSString *)img: (CGAffineTransform)tr: (BOOL)clip:
+    (float) l:(float)t:(float)r:(float)b:
+    (enum Section)sct
 {
     float aw = (1024.0/6.0)*6;
     float ah = (768/4.0)*3;
@@ -308,24 +582,79 @@ CGRect lastZoomPicRect;
     float y = sr * 768 + coordy;
     if (row>0) y = y + SPACING/2.0;
     
+    //
+    //  adjust coords for bleeding...
+    //
+    {
+        x = x - l;
+        y = y - t;
+        aw = aw + l + r;
+        ah = ah + t + b;
+    }
+    
     UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
-    [ v setBackgroundColor:[ UIColor whiteColor ] ];
+    [ v setBackgroundColor:[ UIColor blackColor ] ];
     
     [ self.top_view addSubview:v ];
     
-#if 1
-    //  movie...
-    self.fmv = [ [ MyMovieView alloc ] 
+    if (img)
+    {
+        UIImage *p = [ UIImage imageNamed:img ];
+        //UIImage *p = nil;
+        
+        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
+        [ v addSubview:iv ];
+        
+        //iv.transform = tr;
+        iv.transform = tr;
+        
+        v.clipsToBounds = clip;
+        if (!v.clipsToBounds)
+        {
+            UIView *t = [ [ UIView alloc ] initWithFrame:
+                         CGRectMake(0, 0, v.frame.size.width, v.frame.size.height) ];
+            [ t setBackgroundColor:[ UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5 ] ];
+            [ v addSubview:t];  
+            
+        }
+        
+        
+        //  gesture...
+        UITapGestureRecognizer *stap = 
+        [[UITapGestureRecognizer alloc] 
+         initWithTarget:self action:@selector(oneFingerOneTap:)];
+        [ stap setNumberOfTapsRequired:1];
+        [ stap setNumberOfTouchesRequired:1];
+        [ v addGestureRecognizer:stap ];
+        
+        //  map view to section...
+        v.tag = sct;
+        //NSNumber *num = [ NSNumber numberWithInt:sct ];
+        //[ self.objSection setObject:num forKey:num ];
+        
+
+    }
+    else
+    {
+        
+        //
+        //  movie...
+        //
+        self.fmv3 = [ [ MyMovieView alloc ] 
                initWithFrame:
                 CGRectMake(x, y, aw, ah):@"FILM_REEL":2 ];
+        self.fmv3.section = sct;
+        self.fmv3.del = self;
+        
                 //CGRectMake(xoff, 43, 1024, 768):@"FILM_REEL":2 ];
     
-    //self.fmv.section = Film;
-    //self.fmv.delegate = self;
-    //self.fmv.vparent = (id *)self;
-    [ self.top_view addSubview:self.fmv ];
-#endif
-    
+        //self.fmv3.section = Film;
+        //self.fmv3.delegate = self;
+        //self.fmv3.vparent = (id *)self;
+        [ self.top_view addSubview:self.fmv3 ];
+
+    }
+        
     return v;
 }
 
@@ -338,33 +667,17 @@ CGRect lastZoomPicRect;
 {
     UIView *people = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, 1024, 768) ];
     [ people setBackgroundColor: [ UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.5 ] ];
-    [ self.top_view addSubview:people ];
+    //[ self.top_view addSubview:people ];
     
-#if 0
-    UIView *p = [ [ UIImageView alloc ] initWithFrame:CGRectMake(50, 50, 450, 450) ];
-    [ p setBackgroundColor:[ UIColor grayColor ]];
-    p.clipsToBounds = YES;
-    [ self.top_view addSubview:p ];
-   
-    UIImageView *v = [ [ UIImageView alloc ] initWithFrame:CGRectMake(0, 0, 700, 700) ];
-    UIImage *i = [ UIImage imageNamed:@"illustration02.jpg"];
-    [ v setImage:i ];
-    v.contentMode = UIViewContentModeScaleToFill;
-    v.clipsToBounds = YES;
-    
-    [ p addSubview:v ];
-    //v.contentMode = UIViewContentModeScaleAspectFill;
-#endif
-    
-    [ self singlePic:0 :0 :0 :3 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :1 :4 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :2 :3 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :2 :4 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :2 :5 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :3 :0 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :3 :2 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :3 :4 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:0 :0 :3 :5 :nil: CGAffineTransformIdentity: YES ];
+    [ self singlePic:0 :0 :0 :3 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :0 ];
+    [ self singlePic:0 :0 :1 :4 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :3 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :4 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :5 :nil: CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
+    [ self singlePic:0 :0 :3 :0 :nil: CGAffineTransformIdentity: YES:0:0:0:EXTEND :0];
+    [ self singlePic:0 :0 :3 :2 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :3 :4 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :3 :5 :nil: CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
 }
 
 
@@ -372,14 +685,24 @@ CGRect lastZoomPicRect;
 {
     UIView *parent= [ [ UIView alloc ] initWithFrame:CGRectMake(1024, 0, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:0.5 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:0 :1 :0 :0 :nil: CGAffineTransformIdentity: YES  ];
-    [ self singlePic:0 :1 :0 :5 :nil: CGAffineTransformIdentity: YES  ];
-    [ self singlePic:0 :1 :1 :2 :@"illustration06.jpg": CGAffineTransformMakeTranslation(-50, -215): YES  ];
-    [ self singlePic:0 :1 :1 :3 :@"illustration04.jpg": CGAffineTransformMakeTranslation(-130, -170): YES ];
-    [ self singlePic:0 :1 :2 :4 :nil: CGAffineTransformIdentity: YES  ];
-    [ self singlePic:0 :1 :3 :1 :nil: CGAffineTransformIdentity: YES ];
+    float l = 1024.0 + 350.0f;
+    float t = 580.0f;
+    float w = 200.0;
+    float h = 50.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile2Illustration.png" ];
+    [ iv setImage:img ];
+    
+    [ self singlePic:0 :1 :0 :0 :nil: CGAffineTransformIdentity: YES :EXTEND:0:0:0 :1];
+    [ self singlePic:0 :1 :0 :5 :@"illustration14.jpg": CGAffineTransformMakeTranslation(-60,-130): YES :0:0:EXTEND:0 :1];
+    [ self singlePic:0 :1 :1 :2 :@"illustration06.jpg": CGAffineTransformMakeTranslation(-50, -215): YES:0:0:0:0  :1];
+    [ self singlePic:0 :1 :1 :3 :@"illustration04.jpg": CGAffineTransformMakeTranslation(-130, -170): YES:0:0:0:0 :1];
+    [ self singlePic:0 :1 :2 :4 :nil: CGAffineTransformIdentity: YES :0:0:0:0 :1];
+    [ self singlePic:0 :1 :3 :1 :nil: CGAffineTransformIdentity: YES:0:0:0:EXTEND :1];
 }
 
 
@@ -387,10 +710,22 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(1024*2, 0, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.5 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:0 :2 :0 :3  :nil: CGAffineTransformIdentity: YES];
-    [ self sixByThreePic:0 :2 :1 :0];
+    
+    float l = 1024.0*2 + 100.0f;
+    float t = 130.0f;
+    float w = 200.0;
+    float h = 50.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile3Film.png" ];
+    [ iv setImage:img ];
+
+    
+    [ self singlePic:0 :2 :0 :3  :nil: CGAffineTransformIdentity: YES:0:0:0:0  :2];
+    [ self sixByThreePic:0 :2 :1 :0: nil: CGAffineTransformIdentity: YES:  EXTEND:0:0:EXTEND :2];
 }
 
 //  MIDDLE ROW...
@@ -399,16 +734,24 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 768, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.8 green:0.0 blue:0.0 alpha:0.5 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:1 :0 :2 :3 :nil: CGAffineTransformIdentity: YES ];
+    float l = 470.0f;
+    float t = 768 + 580.0f;
+    float w = 200.0;
+    float h = 50.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile4Design.png" ];
+    [ iv setImage:img ];
     
-    [ self twoByOnePic:1 :0 :2 :0];
-    [ self twoByOnePic:1 :0 :3 :0];
+    [ self singlePic:1 :0 :2 :3 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :3];
     
-    //[ self twoByOnePic:1:0:0:2];
+    [ self twoByOnePic:1 :0 :2 :0 :nil: CGAffineTransformIdentity: YES :0:0:0:0 :3];
+    [ self twoByOnePic:1 :0 :3 :0  :nil: CGAffineTransformIdentity: YES:0:0:0:EXTEND :3];
     
-    [ self fourByTwoPic:1:0:0:2:NO:nil];
+    [ self fourByTwoPic:1:0:0:2:NO:nil:CGAffineTransformIdentity:YES  :0:EXTEND:EXTEND:0 :3];
 }
 
 
@@ -416,8 +759,19 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(1024, 768, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.0 green:0.8 blue:0.0 alpha:0.5 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
+    float w = 300.0;
+    float h = 300.0;
+    float l = 1024.0/2.0- w/2;
+    float t = 768.0/2.0 - h/2;
+    l = l + 1024.0;
+    t = t + 768.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l,t,w,h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    UIImage *img = [ UIImage imageNamed:@"THESTUDIO_RED copy" ];
+    [ iv setImage:img ];
+    [ self.top_view addSubview:iv ];
 }
 
 
@@ -425,13 +779,23 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(1024*2, 768, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.0 green:0.0 blue:0.8 alpha:1.0 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
+    
+    float l = 1024.0*2 + 180.0f;
+    float t = 768.0 + 130.0f;
+    float w = 200.0;
+    float h = 50.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile6Preproduction.png" ];
+    [ iv setImage:img ];
     
     
-    [ self singlePic:1 :2 :0 :4 :nil: CGAffineTransformIdentity: YES];
-    [ self singlePic:1 :2 :2 :0 :nil: CGAffineTransformIdentity: YES];
+    [ self singlePic:1 :2 :0 :4 :nil: CGAffineTransformIdentity: YES:0:0:0:0  :5];
+    [ self singlePic:1 :2 :2 :0 :nil: CGAffineTransformIdentity: YES:EXTEND:0:0:0  :5];
     
-    [ self fourByTwoPic:1:2:1:1:YES:@"Preproduction_Reel"];
+    [ self fourByTwoPic:1:2:1:1:YES:@"Preproduction_Reel":CGAffineTransformIdentity:YES :0:0:0:0 :5];
     
 }
 
@@ -442,14 +806,14 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 768*2, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:1.0 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:2 :0 :0 :2 :nil: CGAffineTransformIdentity: YES];
-    [ self singlePic:2 :0 :0 :5 :nil: CGAffineTransformIdentity: YES];
-    [ self singlePic:2 :0 :3 :1 :nil: CGAffineTransformIdentity: YES];
-    [ self singlePic:2 :0 :3 :4 :nil: CGAffineTransformIdentity: YES];
+    [ self singlePic:2 :0 :0 :2 :nil: CGAffineTransformIdentity: YES:0:EXTEND:0:0  :6];
+    [ self singlePic:2 :0 :0 :5 :nil: CGAffineTransformIdentity: YES:0:EXTEND:EXTEND:0  :6];
+    [ self singlePic:2 :0 :3 :1 :nil: CGAffineTransformIdentity: YES:0:0:0:0  :6];
+    [ self singlePic:2 :0 :3 :4 :nil: CGAffineTransformIdentity: YES:0:0:0:0  :6];
     
-    [ self fourByTwoPic:2:0:1:0:NO:nil];
+    [ self fourByTwoPic:2:0:1:0:NO:nil:CGAffineTransformIdentity:YES  :0:0:0:0 :6];
 }
 
 
@@ -457,11 +821,21 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(1024, 768*2, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.0 green:0.5 blue:0.0 alpha:1.0 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:2 :1 :3 :5:nil: CGAffineTransformIdentity: YES ];
+    float l = 1024.0*1 + 180.0f;
+    float t = 768.0*2 + 130.0f;
+    float w = 200.0;
+    float h = 50.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile8Animation.png" ];
+    [ iv setImage:img ];
     
-    [ self sixByTwoPic:2 :1 :1 :0 ];
+    [ self singlePic:2 :1 :3 :5:nil: CGAffineTransformIdentity: YES:0:0:(EXTEND+3.0):0 :7];
+    
+    [ self sixByTwoPic:2 :1 :1 :0  :nil:CGAffineTransformIdentity:YES  :EXTEND:0:EXTEND:0  :7];
 }
 
 
@@ -469,15 +843,25 @@ CGRect lastZoomPicRect;
 {
     UIView *parent = [ [ UIView alloc ] initWithFrame:CGRectMake(1024*2, 768*2, 1024, 768) ];
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.0 green:0.0 blue:0.5 alpha:1.0 ] ];
-    [ self.top_view addSubview:parent ];
+    //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:2 :2 :0 :0 :nil: CGAffineTransformIdentity: YES ];
-    [ self singlePic:2 :2 :2 :5 :nil: CGAffineTransformIdentity: YES ];
+    float l = 1024.0*2 + 475.0f;
+    float t = 768.0*2 + 389.0f;
+    float w = 300.0;
+    float h = 100.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile9Storyboards.png" ];
+    [ iv setImage:img ];
     
-    [ self twoByOnePic:2:2:0:3];
-    [ self twoByOnePic:2:2:1:3];
-    [ self twoByOnePic:2:2:2:1];
-    [ self twoByOnePic:2:2:3:1];
+    [ self singlePic:2 :2 :0 :0 :nil: CGAffineTransformIdentity: YES:EXTEND:EXTEND:0:0 :8];
+    [ self singlePic:2 :2 :2 :5 :nil: CGAffineTransformIdentity: YES:0:0:0:0 :8];
+    
+    [ self twoByOnePic:2:2:0:3  :nil: CGAffineTransformIdentity: YES :0:EXTEND:0:0 :8];
+    [ self twoByOnePic:2:2:1:3  :nil: CGAffineTransformIdentity: YES :0:0:0:0 :8];
+    [ self twoByOnePic:2:2:2:1  :nil: CGAffineTransformIdentity: YES :0:0:0:0 :8];
+    [ self twoByOnePic:2:2:3:1  :nil: CGAffineTransformIdentity: YES :0:0:0:0 :8];
 }
 
 #pragma mark - zoom stuff...
@@ -523,7 +907,7 @@ CGRect lastZoomPicRect;
     //  top view...
     //
     self.top_view = [ [ UIView alloc ] initWithFrame:CGRectMake(0,0,1024*3,768*3) ];
-    //self.top_view.backgroundColor = [ UIColor colorWithRed:128 green:128 blue:128 alpha:0.5 ];
+    self.top_view.backgroundColor = [ UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0 ];
     [ self.sv addSubview:self.top_view ];
 
     //
@@ -539,6 +923,8 @@ CGRect lastZoomPicRect;
     [self.zoom_view addGestureRecognizer:ztap];
     [ self.sv addSubview:self.zoom_view ];
     [ self.sv bringSubviewToFront:self.zoom_view ];
+    
+    self.objSection = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
     
     //
     //  Init each section...
@@ -558,6 +944,8 @@ CGRect lastZoomPicRect;
     [ self initCharacterDev ];
     [ self initAnimation ];
     [ self initStoryboard ];
+    
+    
 }
 
 
@@ -565,13 +953,18 @@ CGRect lastZoomPicRect;
 - (void)viewDidUnload
 {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //  hide status bar...
+    [ [ UIApplication sharedApplication ] setStatusBarHidden:YES ];
+    
+    //  start in home section...
+    self.section = 4;
+    self.sv.contentOffset = CGPointMake(1024.0, 768.0);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -630,18 +1023,52 @@ CGRect lastZoomPicRect;
 #endif
 }
 
+- (CGPoint) getCenter: (enum Section)sct
+{
+    float fx = 1024.0;
+    float fy = 768.0;
+    float hx = 1024/2.0f;
+    float hy = 768/2.0f;
+    switch (sct)
+    {
+        case Section_AboutUs:
+            return CGPointMake( 0 + hx, 0 + hy );
+        case Section_Illustration:
+            return CGPointMake( fx + hx, 0 + hy );
+        case Section_Film:
+            return CGPointMake( fx*2 + hx, 0 + hy );
+        case Section_Design:
+            return CGPointMake( 0 + hx, fy + hy );
+        case Section_Home:
+            return CGPointMake( fx + hx, fy + hy );
+        case Section_Preproduction:   
+            return CGPointMake( fx*2 + hx, fy +hy );   
+        case Section_CharacterDevelopment:
+            return CGPointMake( 0 + hx, fy*2 + hy );
+        case Section_Animation:
+            return CGPointMake( fx + hx, fy*2 + +hy );
+        case Section_Storyboarding: 
+            return CGPointMake( fx*2 + hx, fy*2 + hy ); 
+    }
+}
 
+
+-(void) stopMovies
+{
+    [ self.fmv stop ];
+    [ self.fmv2 stop ];
+    [ self.fmv3 stop ];    
+}
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-#if 0
     //  Stop any movies...
-    [ self stopMovies ];
+    [ self stopMovies ]; 
     
-    enum Section lastSection = self.section;
+    //enum Section lastSection = self.section;
     
     //  Figure out the section we are in...
-    for ( int i=AboutUs;i<=Storyboarding;i++)
+    for ( int i=Section_AboutUs;i<=Section_Storyboarding;i++)
     {
         CGRect rect = CGRectMake(self.sv.contentOffset.x, self.sv.contentOffset.y, self.sv.frame.size.width, self.sv.frame.size.height);
         CGPoint pt = [self getCenter:i];
@@ -652,10 +1079,25 @@ CGRect lastZoomPicRect;
         }
     }
     
-    [ self togglePage:lastSection :NO ];
-    [ self togglePage:self.section :YES ];
-#endif
+    //[ self togglePage:lastSection :NO ];
+    //[ self togglePage:self.section :YES ];
+
 }
 
+#pragma mark - movieview del...
+
+-(BOOL) movieHandleBleed:(enum Section)sct
+{
+    enum Section osct = self.section;
+    if ( osct != sct )
+    {
+        [ self gotoSection:sct :YES ];
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
 
 @end

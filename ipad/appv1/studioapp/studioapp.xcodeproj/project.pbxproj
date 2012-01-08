@@ -30,6 +30,15 @@
 		B3F9DFEB14B7236F00BAD3B3 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3F9DFEA14B7236F00BAD3B3 /* CoreMedia.framework */; };
 		B3F9DFEE14B729C300BAD3B3 /* Animation_Reel.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFED14B729C300BAD3B3 /* Animation_Reel.mov */; };
 		B3F9DFF114B72A9A00BAD3B3 /* Preproduction_Reel.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFF014B72A9A00BAD3B3 /* Preproduction_Reel.mov */; };
+		B3F9DFF414B8439800BAD3B3 /* THESTUDIO_RED copy.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFF314B8439800BAD3B3 /* THESTUDIO_RED copy.png */; };
+		B3F9DFF614B8453500BAD3B3 /* Tile2Illustration.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFF514B8453500BAD3B3 /* Tile2Illustration.png */; };
+		B3F9DFF814B8455100BAD3B3 /* Tile3Film.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFF714B8455100BAD3B3 /* Tile3Film.png */; };
+		B3F9DFFA14B8456500BAD3B3 /* Tile8Animation.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFF914B8456500BAD3B3 /* Tile8Animation.png */; };
+		B3F9DFFC14B8457F00BAD3B3 /* Tile6Preproduction.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFFB14B8457F00BAD3B3 /* Tile6Preproduction.png */; };
+		B3F9DFFF14B845B500BAD3B3 /* Tile9Storyboards.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9DFFE14B845B500BAD3B3 /* Tile9Storyboards.png */; };
+		B3F9E00214B84AA200BAD3B3 /* Tile4Design.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F9E00114B84AA200BAD3B3 /* Tile4Design.png */; };
+		B3F9E00414B84DDA00BAD3B3 /* illustration14.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3F9E00314B84DDA00BAD3B3 /* illustration14.jpg */; };
+		B3F9E00614B84ECC00BAD3B3 /* illustration13.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3F9E00514B84ECB00BAD3B3 /* illustration13.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +74,15 @@
 		B3F9DFEA14B7236F00BAD3B3 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		B3F9DFED14B729C300BAD3B3 /* Animation_Reel.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = Animation_Reel.mov; path = ../../app_lite/ios5/assets/Animation_Reel.mov; sourceTree = "<group>"; };
 		B3F9DFF014B72A9A00BAD3B3 /* Preproduction_Reel.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = Preproduction_Reel.mov; path = ../../app_lite/ios5/assets/assets/Preproduction/Preproduction_Reel.mov; sourceTree = "<group>"; };
+		B3F9DFF314B8439800BAD3B3 /* THESTUDIO_RED copy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "THESTUDIO_RED copy.png"; path = "../../app_lite/ios5/assets/assets/THESTUDIO_RED copy.png"; sourceTree = "<group>"; };
+		B3F9DFF514B8453500BAD3B3 /* Tile2Illustration.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tile2Illustration.png; path = ../../app_lite/ios5/assets/Tile2Illustration.png; sourceTree = "<group>"; };
+		B3F9DFF714B8455100BAD3B3 /* Tile3Film.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tile3Film.png; path = ../../app_lite/ios5/assets/Tile3Film.png; sourceTree = "<group>"; };
+		B3F9DFF914B8456500BAD3B3 /* Tile8Animation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tile8Animation.png; path = ../../app_lite/ios5/assets/Tile8Animation.png; sourceTree = "<group>"; };
+		B3F9DFFB14B8457F00BAD3B3 /* Tile6Preproduction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tile6Preproduction.png; path = ../../app_lite/ios5/assets/Tile6Preproduction.png; sourceTree = "<group>"; };
+		B3F9DFFE14B845B500BAD3B3 /* Tile9Storyboards.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tile9Storyboards.png; path = ../../app_lite/ios5/assets/Tile9Storyboards.png; sourceTree = "<group>"; };
+		B3F9E00114B84AA200BAD3B3 /* Tile4Design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tile4Design.png; path = ../../app_lite/ios5/assets/Tile4Design.png; sourceTree = "<group>"; };
+		B3F9E00314B84DDA00BAD3B3 /* illustration14.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = illustration14.jpg; path = ../../app_lite/ios5/assets/assets/Illustration/illustration14.jpg; sourceTree = "<group>"; };
+		B3F9E00514B84ECB00BAD3B3 /* illustration13.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = illustration13.jpg; path = ../../app_lite/ios5/assets/assets/Illustration/illustration13.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +192,9 @@
 		B386520614B5D73D00C48BD3 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9E00014B84A9800BAD3B3 /* Design */,
+				B3F9DFFD14B845A500BAD3B3 /* Storyboard */,
+				B3F9DFF214B8438A00BAD3B3 /* Home */,
 				B3F9DFEF14B72A7B00BAD3B3 /* Preproduction */,
 				B3F9DFEC14B729B200BAD3B3 /* Animation */,
 				B3F9DFD614B71BF600BAD3B3 /* Film */,
@@ -194,6 +215,9 @@
 		B386520A14B5E39600C48BD3 /* Illustration */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9E00514B84ECB00BAD3B3 /* illustration13.jpg */,
+				B3F9E00314B84DDA00BAD3B3 /* illustration14.jpg */,
+				B3F9DFF514B8453500BAD3B3 /* Tile2Illustration.png */,
 				B386520D14B670EC00C48BD3 /* illustration04.jpg */,
 				B386520B14B5E3AC00C48BD3 /* illustration06.jpg */,
 			);
@@ -217,6 +241,7 @@
 		B3F9DFD614B71BF600BAD3B3 /* Film */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9DFF714B8455100BAD3B3 /* Tile3Film.png */,
 				B3F9DFD714B71C1400BAD3B3 /* FILM_REEL.mov */,
 			);
 			name = Film;
@@ -225,6 +250,7 @@
 		B3F9DFEC14B729B200BAD3B3 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9DFF914B8456500BAD3B3 /* Tile8Animation.png */,
 				B3F9DFED14B729C300BAD3B3 /* Animation_Reel.mov */,
 			);
 			name = Animation;
@@ -233,9 +259,34 @@
 		B3F9DFEF14B72A7B00BAD3B3 /* Preproduction */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9DFFB14B8457F00BAD3B3 /* Tile6Preproduction.png */,
 				B3F9DFF014B72A9A00BAD3B3 /* Preproduction_Reel.mov */,
 			);
 			name = Preproduction;
+			sourceTree = "<group>";
+		};
+		B3F9DFF214B8438A00BAD3B3 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFF314B8439800BAD3B3 /* THESTUDIO_RED copy.png */,
+			);
+			name = Home;
+			sourceTree = "<group>";
+		};
+		B3F9DFFD14B845A500BAD3B3 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9DFFE14B845B500BAD3B3 /* Tile9Storyboards.png */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		B3F9E00014B84A9800BAD3B3 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9E00114B84AA200BAD3B3 /* Tile4Design.png */,
+			);
+			name = Design;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -297,6 +348,15 @@
 				B3F9DFE214B7217F00BAD3B3 /* MyMoviePlayer.xib in Resources */,
 				B3F9DFEE14B729C300BAD3B3 /* Animation_Reel.mov in Resources */,
 				B3F9DFF114B72A9A00BAD3B3 /* Preproduction_Reel.mov in Resources */,
+				B3F9DFF414B8439800BAD3B3 /* THESTUDIO_RED copy.png in Resources */,
+				B3F9DFF614B8453500BAD3B3 /* Tile2Illustration.png in Resources */,
+				B3F9DFF814B8455100BAD3B3 /* Tile3Film.png in Resources */,
+				B3F9DFFA14B8456500BAD3B3 /* Tile8Animation.png in Resources */,
+				B3F9DFFC14B8457F00BAD3B3 /* Tile6Preproduction.png in Resources */,
+				B3F9DFFF14B845B500BAD3B3 /* Tile9Storyboards.png in Resources */,
+				B3F9E00214B84AA200BAD3B3 /* Tile4Design.png in Resources */,
+				B3F9E00414B84DDA00BAD3B3 /* illustration14.jpg in Resources */,
+				B3F9E00614B84ECC00BAD3B3 /* illustration13.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

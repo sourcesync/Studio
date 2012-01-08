@@ -11,8 +11,17 @@
 
 #import "MyMovieView.h"
 
+
+enum Direction
+{
+    Direction_Top = 0,
+    Direction_Right,
+    Direction_Bottom,
+    Direction_Left
+};
+
 @interface ViewController : UIViewController
-    <MyScrollViewDelegate, UIScrollViewDelegate>
+    <MyScrollViewDelegate, UIScrollViewDelegate, MyMovieViewDelegate>
 
 @property (strong,nonatomic) MyScrollView *sv;
 @property (strong,nonatomic) UIView *top_view;
@@ -22,15 +31,14 @@
 @property (strong,nonatomic) UIImage *zoom_img;
 @property (assign) BOOL zooming;
 
-
 @property (strong,nonatomic) MyMovieView *fmv;
+@property (strong,nonatomic) MyMovieView *fmv2;
+@property (strong,nonatomic) MyMovieView *fmv3;
 
-typedef enum 
-{
-    Top = 0,
-    Right,
-    Bottom,
-    Left
-}   Direction;
+@property (assign) enum Section section;
+
+@property (assign) BOOL gotoing;
+
+@property (strong,nonatomic) NSMutableDictionary *objSection;
 
 @end
