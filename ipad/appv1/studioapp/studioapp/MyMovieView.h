@@ -48,11 +48,10 @@ enum Section
 @property (strong,nonatomic) MyMoviePlayer *moviePlayer;
 @property (assign) enum Section section;
 
-#if 1
 - (id)initWithFrame:(CGRect)frame:(NSString *)mv:(int)offset;
 - (void) stop;
-- (void) pause;
-- (void)loadMoviePlayer;
-#endif
+//- (void) pause;
+//- (void)loadMoviePlayer;
+
 
 @end

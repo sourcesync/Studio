@@ -55,7 +55,7 @@
     
     //  Terminate the player...
     [ self.mp stop ];
-    [ self.mp release ];
+    //[ self.mp release ];
     self.mp = nil;
     
     //  Resign responder (TODO: need this?)...
@@ -136,7 +136,7 @@
 
 - (void)dealloc
 {
-    [super dealloc];
+    //[super dealloc];
 }
 
 - (void)didReceiveMemoryWarning

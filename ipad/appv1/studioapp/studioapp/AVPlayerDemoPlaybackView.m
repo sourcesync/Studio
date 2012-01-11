@@ -75,7 +75,7 @@ Copyright (C) 2010-2011 Apple Inc. All Rights Reserved.
 	return [(AVPlayerLayer*)[self layer] player];
 }
 
-- (void)setPlayer:(AVPlayer*)player
+- (void)settPlayer:(AVPlayer*)player
 {
 	[(AVPlayerLayer*)[self layer] setPlayer:player];
 }

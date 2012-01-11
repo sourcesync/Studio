@@ -41,4 +41,12 @@ enum Direction
 
 @property (strong,nonatomic) NSMutableDictionary *objSection;
 
+//  PUBLIC FUNCS...
+
+
+-(void) goright: (id)sender;
+-(void) goleft: (id)sender;
+-(void) goup: (id)sender;
+-(void) godown: (id)sender;
+
 @end

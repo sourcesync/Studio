@@ -73,7 +73,7 @@
     self.av =  [ [ AVPlayer alloc] initWithURL:internalURL ];
     //[self.av autorelease];
     
-    [ self.player setPlayer:self.av ]; 
+    [ self.player settPlayer:self.av ]; 
     //[ self.av play ];
     //[ self.av pause ];
     
