@@ -41,6 +41,19 @@ enum Direction
 
 @property (strong,nonatomic) NSMutableDictionary *objSection;
 
+@property (assign) BOOL menu_state;
+
+@property (assign) BOOL menu_animating;
+
+@property (strong,nonatomic) UIView *menu;
+
+@property (strong,nonatomic) NSMutableDictionary *fullPathDCT;
+
+@property (strong,nonatomic) UIButton *larr;
+@property (strong,nonatomic) UIButton *rarr;
+@property (strong,nonatomic) UIButton *tarr;
+@property (strong,nonatomic) UIButton *barr;
+
 //  PUBLIC FUNCS...
 
 
@@ -48,5 +61,7 @@ enum Direction
 -(void) goleft: (id)sender;
 -(void) goup: (id)sender;
 -(void) godown: (id)sender;
-
+-(void) toggleMenu: (id)sender;
+-(void) menuClicked: (id)sender;
+-(void) stopMovies;
 @end

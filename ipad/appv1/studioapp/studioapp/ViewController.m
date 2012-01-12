@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "DropShadowView.h"
 
 @implementation ViewController
 
@@ -28,6 +29,19 @@
 
 @synthesize gotoing=_gotoing;
 
+@synthesize menu_state=_menu_state;
+
+@synthesize menu_animating=_menu_animating;
+
+@synthesize menu = _menu;
+
+@synthesize fullPathDCT=_fullPathDCT;
+
+@synthesize larr=_larr;
+@synthesize rarr=_rarr;
+@synthesize barr=_barr;
+@synthesize tarr=_tarr;
+
 #define SPACING 10.0
 #define EXTEND 20.0
 
@@ -47,6 +61,8 @@ CGRect lastZoomPicRect;
     }
     else
     {
+        [ self stopMovies ];
+        
         CGPoint pt;
         switch (sct)
         {
@@ -149,7 +165,8 @@ CGRect lastZoomPicRect;
     {
         if ( [self.cur_zoom.subviews count] > 0 )
         {
-            UIImageView *iv = [ self.cur_zoom.subviews objectAtIndex:0 ];
+            UIView *pp = [ self.cur_zoom.subviews objectAtIndex:0 ];
+            UIImageView *iv = [ pp.subviews objectAtIndex:0 ];
             if ( CGAffineTransformIsIdentity( iv.transform ) )
             {
                 return;
@@ -211,8 +228,20 @@ CGRect lastZoomPicRect;
         self.cur_zoom = v;
         if ( [ v.subviews count ] > 0 )
         {
-            UIImageView *iv = (UIImageView *)[v.subviews objectAtIndex:0 ];
-            self.zoom_img = iv.image;
+            UIView *pp = [ self.cur_zoom.subviews objectAtIndex:0 ];
+            UIImageView *iv = [ pp.subviews objectAtIndex:0 ];
+            
+            long vint = (long)v;
+            NSString *fullimg = [ self.fullPathDCT objectForKey:[NSNumber numberWithLong:vint ] ];
+            if (fullimg)
+            {
+                UIImage *img = [ UIImage imageNamed:fullimg ];
+                self.zoom_img = img;
+            }
+            else
+            {
+                self.zoom_img = iv.image;
+            }
             [ self zoom ];
         }
     }
@@ -233,7 +262,9 @@ CGRect lastZoomPicRect;
 -(UIView *) singlePic: 
     (int)sr: (int)sc: 
     (int)row: (int)col: 
-    (NSString *)img: (CGAffineTransform)tr: (BOOL)clip:
+    (NSString *)img: 
+    (NSString *)fullimg:
+    (CGAffineTransform)tr: (BOOL)clip:
     (float) l:(float)t:(float)r:(float)b:
     (enum Section)sct
 {
@@ -272,8 +303,32 @@ CGRect lastZoomPicRect;
         ah = ah + 10;
     }
     
+    
+#if 0
     UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
-    [ v setBackgroundColor:[ UIColor whiteColor ] ];
+    CALayer *layer = [ CALayer layer ];
+    layer.masksToBounds = NO;
+    layer.frame = CGRectMake(0,0,aw,ah);
+    layer.cornerRadius = 10;
+    layer.backgroundColor = [ UIColor redColor ].CGColor;
+    layer.borderColor = [ UIColor blueColor].CGColor;
+    layer.borderWidth = 5;
+    layer.shadowOpacity = 0.5;
+    layer.shadowOffset = CGSizeMake(3.0,3.0); 
+    [ v.layer addSublayer:layer];
+#else
+    UIView *v = nil;
+    if ( CGAffineTransformIsIdentity(tr) ) // design elements bring their own drop shadow...
+    {
+        v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    }
+    else
+    {
+        v = [ [ DropShadowView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    }
+    v.clipsToBounds = NO;
+    //[ v setBackgroundColor:[ UIColor whiteColor ] ];
+#endif
     
     [ self.top_view addSubview:v ];
     
@@ -282,10 +337,15 @@ CGRect lastZoomPicRect;
         UIImage *p = [ UIImage imageNamed:img ];
         //UIImage *p = nil;
         
-        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
-        [ v addSubview:iv ];
+        UIView *pp = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, v.frame.size.width, v.frame.size.height)];
+        [ v addSubview:pp ];
+        pp.clipsToBounds = YES;
         
-        //iv.transform = tr;
+        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
+        //[ v addSubview:iv ];
+        [pp addSubview:iv ];
+        iv.clipsToBounds = YES;
+        
         iv.transform = tr;
         
         if ( CGAffineTransformIsIdentity(tr) ) // make imageview same size as parent...
@@ -293,7 +353,15 @@ CGRect lastZoomPicRect;
             iv.contentMode = UIViewContentModeScaleToFill;
             iv.frame = CGRectMake(0, 0, v.frame.size.width, v.frame.size.height);
         }
+        else
+        {
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.frame = CGRectMake(0, 0, v.frame.size.width, v.frame.size.height);
+        }
         
+        //iv.clipsToBounds = YES;
+        //v.clipsToBounds = NO;
+#if 0
         v.clipsToBounds = clip;
         
         if (!v.clipsToBounds)  // draw a debug rect...
@@ -304,6 +372,8 @@ CGRect lastZoomPicRect;
             [ v addSubview:t];  
             
         }
+#endif
+
     }
     
     //  gesture...
@@ -314,17 +384,31 @@ CGRect lastZoomPicRect;
     [ stap setNumberOfTouchesRequired:1];
     [ v addGestureRecognizer:stap ];
     
+    UIPinchGestureRecognizer *pinch = [ [ UIPinchGestureRecognizer alloc ] 
+                                       initWithTarget:self action:@selector(oneFingerOneTap:) ];
+    //[ztap setNumberOfTapsRequired:1];
+    //[ztap setNumberOfTouchesRequired:1];
+    [v addGestureRecognizer:pinch ];
+    
     //  map view to section...
     v.tag = sct;
     //NSNumber *num = [ NSNumber numberWithInt:sct ];
     //[ self.objSection setObject:num forKey:num ];
+    
+    if (fullimg)
+    {
+        long vint = (long)v;
+        [ self.fullPathDCT setObject:fullimg forKey:[ NSNumber numberWithLong:vint] ];
+    }
     
     return v;
 }
 
 
 -(UIView *) twoByOnePic: (int)sr: (int)sc: (int)row: (int)col:
-    (NSString *)img: (CGAffineTransform)tr: (BOOL)clip:
+    (NSString *)img: 
+    (NSString *)fullimg:
+    (CGAffineTransform)tr: (BOOL)clip:
     (float) l:(float)t:(float)r:(float)b:
     (enum Section)sct
 {
@@ -354,9 +438,10 @@ CGRect lastZoomPicRect;
         ah = ah + t + b;
     }
     
-    UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    //UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    UIView *v = [ [ DropShadowView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
     [ v setBackgroundColor:[ UIColor whiteColor ] ];
-    
+    v.clipsToBounds = NO;
     [ self.top_view addSubview:v ];
     
     if (img)
@@ -364,12 +449,23 @@ CGRect lastZoomPicRect;
         UIImage *p = [ UIImage imageNamed:img ];
         //UIImage *p = nil;
         
+        UIView *pp = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, v.frame.size.width, v.frame.size.height)];
+        [ v addSubview:pp ];
+        pp.clipsToBounds = YES;
+        
         UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
-        [ v addSubview:iv ];
+        //[ v addSubview:iv ];
+        [ pp addSubview:iv];
+        iv.clipsToBounds = YES;
         
         //iv.transform = tr;
         iv.transform = tr;
         
+        iv.contentMode = UIViewContentModeScaleAspectFill;
+        iv.frame = CGRectMake(0, 0, v.frame.size.width, v.frame.size.height);
+        
+        
+#if 0
         v.clipsToBounds = clip;
         if (!v.clipsToBounds)
         {
@@ -379,6 +475,7 @@ CGRect lastZoomPicRect;
             [ v addSubview:t];  
             
         }
+#endif
     }
     
     //  gesture...
@@ -394,14 +491,21 @@ CGRect lastZoomPicRect;
     //NSNumber *num = [ NSNumber numberWithInt:sct ];
     //[ self.objSection setObject:num forKey:num ];
     
-
+    if (fullimg)
+    {
+        long vint = (long)v;
+        [ self.fullPathDCT setObject:fullimg forKey:[ NSNumber numberWithLong:vint] ];
+    }
     
     return v;
 }
 
 
 -(UIView *) fourByTwoPic: (int)sr: (int)sc: (int)row: (int)col: 
-    (BOOL)movie: (NSString *)path:(CGAffineTransform)tr: (BOOL)clip:
+    (BOOL)movie: 
+    (NSString *)path:
+    (NSString *)fullimg:
+    (CGAffineTransform)tr: (BOOL)clip:
     (float) l:(float)t:(float)r:(float)b:
     (enum Section)sct
 {
@@ -432,7 +536,9 @@ CGRect lastZoomPicRect;
         ah = ah + t + b;
     }
 
-    UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    //UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    UIView *v = [ [ DropShadowView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    v.clipsToBounds = NO;
     if (movie)
     {
         [ v setBackgroundColor:[ UIColor blackColor ] ];
@@ -466,8 +572,14 @@ CGRect lastZoomPicRect;
         UIImage *p = [ UIImage imageNamed:path ];
             //UIImage *p = nil;
             
+        UIView *pp = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, v.frame.size.width, v.frame.size.height)];
+        [ v addSubview:pp ];
+        pp.clipsToBounds = YES;
+        
         UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
-        [ v addSubview:iv ];
+        //[ v addSubview:iv ];
+        [ pp addSubview:iv];
+        iv.clipsToBounds = YES;
             
             //iv.transform = tr;
         iv.transform = tr;
@@ -477,7 +589,13 @@ CGRect lastZoomPicRect;
             iv.contentMode = UIViewContentModeScaleToFill;
             iv.frame = CGRectMake(0, 0, v.frame.size.width, v.frame.size.height);
         }
-            
+        else
+        {
+            iv.contentMode = UIViewContentModeScaleAspectFill;
+            iv.frame = CGRectMake(0, 0, v.frame.size.width, v.frame.size.height);
+        }
+        
+#if 0
         v.clipsToBounds = clip;
         if (!v.clipsToBounds)
             {
@@ -487,6 +605,7 @@ CGRect lastZoomPicRect;
                 [ v addSubview:t];  
                 
             }
+#endif
         
     }
      
@@ -504,6 +623,12 @@ CGRect lastZoomPicRect;
         v.tag = sct;
         //NSNumber *num = [ NSNumber numberWithInt:sct ];
         //[ self.objSection setObject:num forKey:num ];
+        
+        if (fullimg)
+        {
+            long vint = (long)v;
+            [ self.fullPathDCT setObject:fullimg forKey:[ NSNumber numberWithLong:vint] ];
+        }
     }
     
     return v;
@@ -536,7 +661,9 @@ CGRect lastZoomPicRect;
         ah = ah + t + b;
     }
     
-    UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    //UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    UIView *v = [ [ DropShadowView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    v.clipsToBounds = NO;
     [ v setBackgroundColor:[ UIColor blackColor ] ];
     
     [ self.top_view addSubview:v ];
@@ -546,12 +673,19 @@ CGRect lastZoomPicRect;
         UIImage *p = [ UIImage imageNamed:img ];
         //UIImage *p = nil;
         
+        UIView *pp = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, v.frame.size.width, v.frame.size.height)];
+        [ v addSubview:pp ];
+        pp.clipsToBounds = YES;
+        
         UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
-        [ v addSubview:iv ];
+        //[ v addSubview:iv ];
+        [ pp addSubview:iv];
+        iv.clipsToBounds = YES;
         
         //iv.transform = tr;
         iv.transform = tr;
         
+#if 0
         v.clipsToBounds = clip;
         if (!v.clipsToBounds)
         {
@@ -561,6 +695,7 @@ CGRect lastZoomPicRect;
             [ v addSubview:t];  
             
         }
+#endif
         
         //  gesture...
         UITapGestureRecognizer *stap = 
@@ -626,7 +761,9 @@ CGRect lastZoomPicRect;
         ah = ah + t + b;
     }
     
-    UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    //UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    UIView *v = [ [ DropShadowView alloc ] initWithFrame:CGRectMake(x,y,aw,ah) ];
+    v.clipsToBounds = NO;
     [ v setBackgroundColor:[ UIColor blackColor ] ];
     
     [ self.top_view addSubview:v ];
@@ -636,12 +773,19 @@ CGRect lastZoomPicRect;
         UIImage *p = [ UIImage imageNamed:img ];
         //UIImage *p = nil;
         
+        UIView *pp = [ [ UIView alloc ] initWithFrame:CGRectMake(0, 0, v.frame.size.width, v.frame.size.height)];
+        [ v addSubview:pp ];
+        pp.clipsToBounds = YES;
+        
         UIImageView *iv = [ [ UIImageView alloc ] initWithImage:p ];
-        [ v addSubview:iv ];
+        //[ v addSubview:iv ];
+        [ pp addSubview:iv];
+        iv.clipsToBounds = YES;
         
         //iv.transform = tr;
         iv.transform = tr;
         
+#if 0
         v.clipsToBounds = clip;
         if (!v.clipsToBounds)
         {
@@ -651,6 +795,7 @@ CGRect lastZoomPicRect;
             [ v addSubview:t];  
             
         }
+#endif
         
         
         //  gesture...
@@ -703,25 +848,32 @@ CGRect lastZoomPicRect;
     [ people setBackgroundColor: [ UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.5 ] ];
     //[ self.top_view addSubview:people ];
     
-    float l = 100.0f;
-    float t = 100.0f;
-    float w = 300.0;
-    float h = 100.0;
+    float l = 120.0f;
+    float t = 120.0f;
+    float w = 200.0;
+    float h = 50.0;
     UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
     iv.contentMode = UIViewContentModeScaleAspectFit;
     [ self.top_view addSubview:iv ];
     UIImage *img = [ UIImage imageNamed:@"Tile1Aboutus.png" ];
     [ iv setImage:img ];
+        
+    img = [ UIImage imageNamed:@"Tile1Text.png" ];
+    iv = [ [ UIImageView alloc ] initWithImage:img ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    [ iv setImage:img ];
+    iv.frame = CGRectMake(150, 175, iv.frame.size.width, iv.frame.size.height );
     
-    [ self singlePic:0 :0 :0 :3 :@"Box.png": CGAffineTransformIdentity: YES:0:0:0:0 :0 ];
-    [ self singlePic:0 :0 :1 :4 :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :2 :3 :@"Box.png": CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :2 :4 :@"Box.png": CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :2 :5 :@"Box2.png": CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
-    [ self singlePic:0 :0 :3 :0 :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:EXTEND :0];
-    [ self singlePic:0 :0 :3 :2 :@"Box.png": CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :3 :4 :@"Box.png": CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :3 :5 :@"Box2.png": CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
+    [ self singlePic:0 :0 :0 :3 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0 ];
+    [ self singlePic:0 :0 :1 :4 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :3 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :4 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :5 :@"Box2.png": nil: CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
+    [ self singlePic:0 :0 :3 :0 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:EXTEND :0];
+    [ self singlePic:0 :0 :3 :2 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :3 :4 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :3 :5 :@"Box2.png": nil: CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
 }
 
 
@@ -741,12 +893,27 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile2Illustration.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:0 :1 :0 :0 :@"Boxdotted2.png": CGAffineTransformIdentity: YES :EXTEND:0:0:0 :1];
-    [ self singlePic:0 :1 :0 :5 :@"illustration14.jpg": CGAffineTransformMakeTranslation(-60,-130): YES :0:0:EXTEND:0 :1];
-    [ self singlePic:0 :1 :1 :2 :@"illustration06.jpg": CGAffineTransformMakeTranslation(-50, -215): YES:0:0:0:0  :1];
-    [ self singlePic:0 :1 :1 :3 :@"illustration04.jpg": CGAffineTransformMakeTranslation(-130, -170): YES:0:0:0:0 :1];
-    [ self singlePic:0 :1 :2 :4 :@"illustration03.jpg": CGAffineTransformMakeTranslation(-750,-120): YES :0:0:0:0 :1];
-    [ self singlePic:0 :1 :3 :1 :@"illustration15.jpg": CGAffineTransformMakeTranslation(-100,-210): YES:0:0:0:EXTEND :1];
+    [ self singlePic:0 :1 :0 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES :EXTEND:0:0:0 :1];
+    [ self singlePic:0 :1 :0 :5 :@"Tile2Dudecropped.png":@"illustration14.jpg":
+        //CGAffineTransformMakeTranslation(-60,-130): 
+        CGAffineTransformMakeTranslation(0.01,0.01): 
+        YES :0:0:EXTEND:0 :1];
+    [ self singlePic:0 :1 :1 :2 :@"Tile2Boatcropped.png":@"illustration06.jpg": 
+        //CGAffineTransformMakeTranslation(-50, -215): 
+                 CGAffineTransformMakeTranslation(0.01,0.01):
+                 YES:0:0:0:0  :1];
+    [ self singlePic:0 :1 :1 :3 :@"Tile2Clockcropped.png":@"illustration04.jpg": 
+            //CGAffineTransformMakeTranslation(-130, -170): 
+                CGAffineTransformMakeTranslation(0.01,0.01):
+                 YES:0:0:0:0 :1];
+    [ self singlePic:0 :1 :2 :4 :@"Tile2Classroomcropped.png":@"illustration03.jpg":
+                //CGAffineTransformMakeTranslation(-750,-120): 
+                CGAffineTransformMakeTranslation(0.01,0.01):
+                YES :0:0:0:0 :1];
+    [ self singlePic:0 :1 :3 :1 :@"Tile2Mnmcropped.png":@"illustration15.jpg":
+                //CGAffineTransformMakeTranslation(-100,-210): 
+                CGAffineTransformMakeTranslation(0.01,0.01):
+                YES:0:0:0:EXTEND :1];
 }
 
 
@@ -768,7 +935,7 @@ CGRect lastZoomPicRect;
     [ iv setImage:img ];
 
     
-    [ self singlePic:0 :2 :0 :3  :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:0  :2];
+    [ self singlePic:0 :2 :0 :3  :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :2];
     [ self sixByThreePic:0 :2 :1 :0: nil: CGAffineTransformIdentity: YES:  EXTEND:0:0:EXTEND :2];
 }
 
@@ -790,12 +957,29 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile4Design.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:1 :0 :2 :3 :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:0 :3];
+    [ self singlePic:1 :0 :2 :3 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :3];
     
-    [ self twoByOnePic:1 :0 :2 :0 :@"design12.jpg": CGAffineTransformMakeTranslation(-50, -60): YES :0:0:0:0 :3];
-    [ self twoByOnePic:1 :0 :3 :0 :@"design04.jpg": CGAffineTransformMakeTranslation(-60, -80): YES:0:0:0:EXTEND :3];
+    [ self twoByOnePic:1 :0 :2 :0 :@"Tile4Bryancropped.png":@"design12.jpg": 
+        //CGAffineTransformMakeTranslation(-50, -60): 
+        CGAffineTransformMakeTranslation(0.01, 0.01):
+            YES :0:0:0:0 :3];
+    [ self twoByOnePic:1 :0 :3 :0 :@"Tile4Billiecropped.png":@"design04.jpg": 
+        //CGAffineTransformMakeTranslation(-60, -80):
+        CGAffineTransformMakeTranslation(0.01, 0.01):
+                   YES:0:0:0:EXTEND :3];
     
-    [ self fourByTwoPic:1:0:0:2:NO:@"design15.jpg":CGAffineTransformMakeTranslation(0.01, 0.01) :YES  :0:EXTEND:EXTEND:0 :3];
+    [ self fourByTwoPic:1:0:0:2:NO:@"design15.jpg":@"design15.jpg":CGAffineTransformMakeTranslation(0.01, 0.01) :YES  :0:EXTEND:EXTEND:0 :3];
+    
+    //fixup some bleed...
+    UIView *bf = [ [ UIView alloc ] initWithFrame:CGRectMake(1024-340, 768-30, 340, 30) ];
+    bf.backgroundColor = [ UIColor whiteColor ];
+    [ self.top_view addSubview:bf ];
+    
+    bf = [ [ UIView alloc ] initWithFrame:CGRectMake(1024-665, 768-30, 150, 30) ];
+    bf.backgroundColor = [ UIColor whiteColor ];
+    [ self.top_view addSubview:bf ];
+                  
+    
 }
 
 
@@ -832,6 +1016,7 @@ CGRect lastZoomPicRect;
     //iv.image = img;
     //[ self.top_view addSubview:iv ];
     [ self.top_view addSubview:button ];
+    self.rarr = button;
     
     //  Left arrow...
     img = [ UIImage imageNamed:@"Tile5Arrowleft.png"];
@@ -846,6 +1031,7 @@ CGRect lastZoomPicRect;
     //iv.image = img;
     //[ self.top_view addSubview:iv ];
     [ self.top_view addSubview:button ];
+    self.larr = button;
     
     //  Down arrow...
     img = [ UIImage imageNamed:@"Tile5Arrowdown.png"];
@@ -860,6 +1046,7 @@ CGRect lastZoomPicRect;
     //iv.image = img;
     //[ self.top_view addSubview:iv ];
     [ self.top_view addSubview:button ];
+    self.barr = button;
     
     //  Left arrow...
     img = [ UIImage imageNamed:@"Tile5Arrowup.png"];
@@ -874,6 +1061,7 @@ CGRect lastZoomPicRect;
     //iv.image = img;
     //[ self.top_view addSubview:iv ];
     [ self.top_view addSubview:button ];
+    self.tarr = button;
 }
 
 
@@ -894,10 +1082,10 @@ CGRect lastZoomPicRect;
     [ iv setImage:img ];
     
     
-    [ self singlePic:1 :2 :0 :4 :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:0  :5];
-    [ self singlePic:1 :2 :2 :0 :@"Boxdotted2.png": CGAffineTransformIdentity: YES:EXTEND:0:0:0  :5];
+    [ self singlePic:1 :2 :0 :4 :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :5];
+    [ self singlePic:1 :2 :2 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:EXTEND:0:0:0  :5];
     
-    [ self fourByTwoPic:1:2:1:1:YES:@"Preproduction_Reel":CGAffineTransformIdentity:YES :0:0:0:0 :5];
+    [ self fourByTwoPic:1:2:1:1:YES:@"Preproduction_Reel":nil:CGAffineTransformIdentity:YES :0:0:0:0 :5];
     
 }
 
@@ -910,12 +1098,28 @@ CGRect lastZoomPicRect;
     [ parent setBackgroundColor: [ UIColor colorWithRed:0.5 green:0.0 blue:0.0 alpha:1.0 ] ];
     //[ self.top_view addSubview:parent ];
     
-    [ self singlePic:2 :0 :0 :2 :@"charDev12.jpg": CGAffineTransformMakeTranslation(-460, -110): YES:0:EXTEND:0:0 :6];
-    [ self singlePic:2 :0 :0 :5 :@"Boxdotted2.png": CGAffineTransformIdentity: YES:0:EXTEND:EXTEND:0  :6];
-    [ self singlePic:2 :0 :3 :1 :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:0  :6];
-    [ self singlePic:2 :0 :3 :4 :@"charDev15.jpg": CGAffineTransformMakeTranslation(-230, -240): YES:0:0:0:0 :6];
+    float l = 0 + 680.0f;
+    float t = 768.0*2 + 384.0f;
+    float w = 250.0;
+    float h = 100.0;
+    UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l, t, w, h) ];
+    iv.contentMode = UIViewContentModeScaleAspectFit;
+    [ self.top_view addSubview:iv ];
+    UIImage *img = [ UIImage imageNamed:@"Tile7Characterdevelopment.png" ];
+    [ iv setImage:img ];
     
-    [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":CGAffineTransformIdentity:YES  :0:0:0:0 :6];
+    [ self singlePic:2 :0 :0 :2 :@"Tile7Maestrocropped.png":@"charDev12.jpg":
+        //CGAffineTransformMakeTranslation(-460, -110): 
+        CGAffineTransformMakeTranslation(0.01, 0.01):
+                 YES:0:EXTEND:0:0 :6];
+    [ self singlePic:2 :0 :0 :5 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:0:EXTEND:EXTEND:0  :6];
+    [ self singlePic:2 :0 :3 :1 :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :6];
+    [ self singlePic:2 :0 :3 :4 :@"Tile7Kimonocropped.png":@"charDev15.jpg":
+        //CGAffineTransformMakeTranslation(-230, -240): 
+        CGAffineTransformMakeTranslation(0.01, 0.01):
+                 YES:0:0:0:0 :6];
+    
+    [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformIdentity:YES  :0:0:0:0 :6];
 }
 
 
@@ -935,7 +1139,7 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile8Animation.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:2 :1 :3 :5:@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:(EXTEND+3.0):0 :7];
+    [ self singlePic:2 :1 :3 :5:@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:(EXTEND+3.0):0 :7];
     
     [ self sixByTwoPic:2 :1 :1 :0  :nil:CGAffineTransformIdentity:YES  :EXTEND:0:EXTEND:0  :7];
 }
@@ -957,13 +1161,165 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile9Storyboards.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:2 :2 :0 :0 :@"Boxdotted2.png": CGAffineTransformIdentity: YES:EXTEND:EXTEND:0:0 :8];
-    [ self singlePic:2 :2 :2 :5 :@"Boxdotted.png": CGAffineTransformIdentity: YES:0:0:0:0 :8];
+    [ self singlePic:2 :2 :0 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:EXTEND:EXTEND:0:0 :8];
+    [ self singlePic:2 :2 :2 :5 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :8];
+    [ self twoByOnePic:2:2:0:3  :@"Tile9Redcropped.png":@"SB_Concepts04.jpg": 
+        CGAffineTransformMakeTranslation(0.01,0.01): 
+        YES :0:EXTEND:0:0 :8];
+    [ self twoByOnePic:2:2:1:3  :@"Tile9Bikescropped.png":@"SB_Concepts08.jpg": 
+        //CGAffineTransformMakeTranslation(-200,-200): 
+        CGAffineTransformMakeTranslation(0.01,0.01): 
+        YES :0:0:0:0 :8];
+    [ self twoByOnePic:2:2:2:1  :@"Tile9Drapercropped.png":@"SB_Concepts21.jpg":
+        //CGAffineTransformMakeTranslation(-160,0): 
+        CGAffineTransformMakeTranslation(0.01,0.01): 
+        YES :0:0:0:0 :8];
+    [ self twoByOnePic:2:2:3:1  :@"Tile9Sariscropped.png":@"SB_Concepts29.jpg":
+        CGAffineTransformMakeTranslation(0.01,0.01): 
+        //CGAffineTransformMakeTranslation(-200,-40): 
+        YES :0:0:0:0 :8];
+}
+
+
+-(void) initMenu
+{
+    UIImage *img = [ UIImage imageNamed:@"Tile5Redarrow2.png" ]; 
+    UIButton *button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    [ button addTarget:self action:@selector(toggleMenu:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(1024-img.size.width+20, 768.0/2.0 - 300, img.size.width, img.size.height );
+    [ button setImage:img forState:UIControlStateNormal ];
+    [ self.view addSubview:button ];
     
-    [ self twoByOnePic:2:2:0:3  :@"SB_Concepts04.jpg": CGAffineTransformMakeTranslation(0.01,0.01): YES :0:EXTEND:0:0 :8];
-    [ self twoByOnePic:2:2:1:3  :@"SB_Concepts08.jpg": CGAffineTransformMakeTranslation(-200,-200): YES :0:0:0:0 :8];
-    [ self twoByOnePic:2:2:2:1  :@"SB_Concepts21.jpg": CGAffineTransformMakeTranslation(-160,0): YES :0:0:0:0 :8];
-    [ self twoByOnePic:2:2:3:1  :@"SB_Concepts29.jpg": CGAffineTransformMakeTranslation(-200,-40): YES :0:0:0:0 :8];
+    img = [ UIImage imageNamed:@"Tile5Menu_Background2.png" ];
+    UIView *iv = [ [ UIView alloc] initWithFrame:CGRectMake(1024-img.size.width+10, 768.0/2.0 - 200, 
+            img.size.width, img.size.height ) ];
+    [ self.view addSubview:iv ]; 
+    self.menu = iv;
+    
+    UIImageView *bgview = [ [ UIImageView alloc] initWithFrame:CGRectMake(0, 0, 
+                    img.size.width, img.size.height ) ];
+    [ bgview  setImage:img ];
+    [ iv addSubview:bgview ];
+    
+    float ox = 45;
+    float oy = 40;
+    float spacing = 25.0;
+    img = [ UIImage imageNamed:@"Tile5Menu_content2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    //button.backgroundColor = [ UIColor greenColor ];
+    [ button setImage:img forState:UIControlStateNormal ];
+    [ iv addSubview:button ];
+    oy += spacing + 20 + img.size.height;
+    
+    ox = ox - 15;
+    img = [ UIImage imageNamed:@"Tile5Menu_Thestudio2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_Home;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    //button.backgroundColor = [ UIColor greenColor ];
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Thestudiored2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Illustration2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_Illustration;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    //button.backgroundColor = [ UIColor greenColor ];
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Illustrationred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Animation2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_Animation;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Animationred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Preproduction2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_Preproduction;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Preproductionred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+#if 0
+    img = [ UIImage imageNamed:@"Tile5Menu_Preproduction2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_Preproduction;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Preproductionred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+#endif
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Film2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_Film;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Filmred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Characterdevelopment2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.tag = Section_CharacterDevelopment;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Characterdevelopmentred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Design2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    button.tag = Section_Design;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Designred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    //[ button setImage:img forState:UIControlStateHighlighted ];
+    //[ self.view addSubview:button ];
+    [ iv addSubview:button ];
+    oy += spacing + img.size.height;
+    
+    img = [ UIImage imageNamed:@"Tile5Menu_Aboutus2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    button.tag = Section_AboutUs;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Aboutusred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    //[ button setImage:img forState:UIControlStateHighlighted ];
+    //[ self.view addSubview:button ];
+    [ iv addSubview:button ];
+    
 }
 
 #pragma mark - zoom stuff...
@@ -981,6 +1337,21 @@ CGRect lastZoomPicRect;
 #endif
 }
 
+-(void) fixBleeds
+{
+    UIView *v = [ [ UIView alloc ] initWithFrame:CGRectMake(1024*2 - 50,768, 50,50 ) ];
+    v.backgroundColor = [ UIColor whiteColor ];
+    [ self.top_view addSubview:v ];
+    
+    v = [ [ UIView alloc ] initWithFrame:CGRectMake(1024,768*2-50, 50,50 ) ];
+    v.backgroundColor = [ UIColor whiteColor ];
+    [ self.top_view addSubview:v ];
+    
+    v = [ [ UIView alloc ] initWithFrame:CGRectMake(1024*2-50,768*2-50, 50,50 ) ];
+    v.backgroundColor = [ UIColor whiteColor ];
+    [ self.top_view addSubview:v ];
+    
+}
 
 
 #pragma mark - View lifecycle
@@ -1017,6 +1388,13 @@ CGRect lastZoomPicRect;
     //
     self.zoom_view = [ [ UIImageView alloc ] initWithFrame:CGRectMake(0,0,1,1) ];
     self.zoom_view.contentMode = UIViewContentModeScaleAspectFit;
+    
+    UIPinchGestureRecognizer *pinch = [ [ UIPinchGestureRecognizer alloc ] 
+                                    initWithTarget:self action:@selector(zoom_view_tapped) ];
+    //[ztap setNumberOfTapsRequired:1];
+    //[ztap setNumberOfTouchesRequired:1];
+    [self.zoom_view addGestureRecognizer:pinch ];
+    
     UITapGestureRecognizer *ztap = [ [ UITapGestureRecognizer alloc ] 
                                     initWithTarget:self action:@selector(zoom_view_tapped) ];
     [ztap setNumberOfTapsRequired:1];
@@ -1027,6 +1405,8 @@ CGRect lastZoomPicRect;
     [ self.sv bringSubviewToFront:self.zoom_view ];
     
     self.objSection = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
+    
+    self.fullPathDCT = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
     
     //
     //  Init each section...
@@ -1049,6 +1429,11 @@ CGRect lastZoomPicRect;
     [ self initPeople ];
     [ self initFilm ];
 
+    //  Menu...
+    [ self initMenu ];
+    
+    //  Fix some bleed overs...
+    [ self fixBleeds ];
 }
 
 
@@ -1068,6 +1453,11 @@ CGRect lastZoomPicRect;
     //  start in home section...
     self.section = 4;
     self.sv.contentOffset = CGPointMake(1024.0, 768.0);
+    
+    //  menu is off...
+    self.menu_state = 0;
+    self.menu.frame = CGRectMake(1024, self.menu.frame.origin.y, 
+                                 self.menu.frame.size.width, self.menu.frame.size.height);
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -1087,8 +1477,22 @@ CGRect lastZoomPicRect;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
+    //return NO;
+    if (interfaceOrientation ==  UIInterfaceOrientationLandscapeLeft )
+    {
+        return YES;
+    }
+    else if (interfaceOrientation ==  UIInterfaceOrientationLandscapeRight )
+    {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+
     // Return YES for supported orientations
-    return YES;
+    //return YES;
 }
 
 
@@ -1163,6 +1567,24 @@ CGRect lastZoomPicRect;
     [ self.fmv3 stop ];    
 }
 
+-(void) arrowState: (BOOL)show
+{
+    if (show)
+    {
+        self.larr.hidden = NO;
+        self.rarr.hidden = NO;
+        self.barr.hidden = NO;
+        self.tarr.hidden = NO;
+    }
+    else
+    {
+        self.larr.hidden = YES;
+        self.rarr.hidden = YES;
+        self.barr.hidden = YES;
+        self.tarr.hidden = YES;
+    }
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     //  Stop any movies...
@@ -1180,6 +1602,15 @@ CGRect lastZoomPicRect;
             self.section = i;
             break;
         }
+    }
+    
+    if (self.section == Section_Home )
+    {
+        [ self arrowState:YES ];
+    }
+    else
+    {
+        [ self arrowState:NO ];
     }
     
     //[ self togglePage:lastSection :NO ];
@@ -1223,6 +1654,57 @@ CGRect lastZoomPicRect;
 -(void) godown: (id)sender
 {
     [ self gotoSection:Section_Animation:YES ];
+}
+
+-(void) toggleMenu: (id)sender
+{
+    if ( self.menu_animating ) return;
+    
+    self.menu_animating = YES;
+    
+    if (self.menu_state)
+    {
+        [UIView animateWithDuration:0.3
+                              delay: 0.0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             self.menu.frame = CGRectMake(1024, self.menu.frame.origin.y, 
+                                                          self.menu.frame.size.width, self.menu.frame.size.height);
+                         }
+                         completion:^(BOOL finished){
+                             self.menu.frame = CGRectMake(1024, self.menu.frame.origin.y, 
+                                                          self.menu.frame.size.width, self.menu.frame.size.height);
+                             self.menu_animating = NO;
+                             self.menu_state = 0;
+                         }
+         ];
+    }
+    else
+    {
+        [UIView animateWithDuration:0.3
+                              delay: 0.0
+                            options: UIViewAnimationOptionCurveEaseIn
+                         animations:^{
+                             self.menu.frame = CGRectMake(1024 - self.menu.frame.size.width + 10, self.menu.frame.origin.y, 
+                                                          self.menu.frame.size.width, self.menu.frame.size.height);
+                         }
+                         completion:^(BOOL finished){
+                             self.menu.frame = CGRectMake(1024 - self.menu.frame.size.width + 10, self.menu.frame.origin.y, 
+                                                          self.menu.frame.size.width, self.menu.frame.size.height);
+                             self.menu_animating = NO;
+                             self.menu_state = 1;
+                         }
+         ];
+    }
+}
+
+
+-(void) menuClicked: (id)sender
+{
+    UIButton *btn = (UIButton *)sender;
+    
+    enum Section tag = btn.tag;
+    [ self gotoSection:tag:YES];
 }
 
 @end
