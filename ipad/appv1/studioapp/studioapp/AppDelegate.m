@@ -11,6 +11,7 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize vc=_vc;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -46,6 +47,18 @@
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
+    if ( self.vc != nil )
+    {
+        [ self.vc gotoSection:Section_Home :NO ];
+        if ( !self.vc.blinking )
+        {
+            self.vc.larr.hidden = NO;
+            self.vc.rarr.hidden = NO;
+            self.vc.barr.hidden = NO;
+            self.vc.tarr.hidden = NO;
+            [ self.vc blink:YES ];
+        }
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -56,5 +69,12 @@
      See also applicationDidEnterBackground:.
      */
 }
+ 
+
+-(void) SetMainVC:(ViewController *)vc
+{
+    self.vc = vc;
+}
+
 
 @end

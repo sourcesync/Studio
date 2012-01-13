@@ -1,13 +1,15 @@
 //
 //  ViewController.m
 //  studioapp
-//
+//∂gsv
+
 //  Created by George Williams on 1/5/12.
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
 #import "ViewController.h"
 #import "DropShadowView.h"
+#import "AppDelegate.h"
 
 @implementation ViewController
 
@@ -34,6 +36,7 @@
 @synthesize menu_animating=_menu_animating;
 
 @synthesize menu = _menu;
+@synthesize menu_tag=_menu_tag;
 
 @synthesize fullPathDCT=_fullPathDCT;
 
@@ -41,6 +44,26 @@
 @synthesize rarr=_rarr;
 @synthesize barr=_barr;
 @synthesize tarr=_tarr;
+
+@synthesize gsv=_gsv;
+@synthesize gtv=_gtv;
+@synthesize pc=_pc;
+@synthesize galleryDCT=_galleryDCT;
+@synthesize grarrow=_grarrow;
+@synthesize glarrow=_glarrow;
+
+@synthesize ivs=_ivs;
+
+@synthesize pageDCT=_pageDCT;
+
+@synthesize flipanimation=_flipanimation;
+
+@synthesize fatboy=_fatboy;
+@synthesize fatboys=_fatboys;
+@synthesize fatboyimgs=_fatboyimgs;
+@synthesize anim_index=_anim_index;
+
+@synthesize  blinking=_blinking;
 
 #define SPACING 10.0
 #define EXTEND 20.0
@@ -50,6 +73,13 @@ CGRect lastZoomPicRect;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Low Memory" 
+                                                    message:@"Low Memory" 
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 
 
@@ -212,6 +242,51 @@ CGRect lastZoomPicRect;
 
 #pragma mark - gestures...
 
+- (void) setupGallery: (NSMutableArray *)arr
+{
+    if (self.ivs)
+    {
+        for (int i=0;i<[ self.ivs count ];i++)
+        {
+            UIImageView *iv = [ self.ivs objectAtIndex:i ];
+            iv.image = nil;
+            
+            [ iv removeFromSuperview ];
+            //UIImage *img = iv.image;
+            
+        }
+    }
+    self.ivs = nil;
+    
+    int num_items = [ arr count ];
+    self.ivs = [[ NSMutableArray alloc ] initWithCapacity:num_items ];
+    
+    for (int i=0;i<num_items;i++)
+    {
+        NSString *path = [ arr objectAtIndex:i];
+        UIImage *img = [ UIImage imageNamed:path ];
+        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:img ];
+        iv.frame = CGRectMake(i*1024+20, 20, 1024-40, 768-100);
+        iv.contentMode = UIViewContentModeScaleAspectFit;
+        [ self.gtv addSubview:iv ];
+        [ self.ivs addObject:iv ];
+    }
+    
+}
+
+-(void) animation:(id)obj
+{
+    if (self.anim_index<0) return;
+    
+    UIImage *img = [ self.fatboyimgs objectAtIndex:self.anim_index];
+    self.flipanimation.image = img;
+    self.anim_index += 1;
+    if (self.anim_index>=[ self.fatboyimgs count])
+        self.anim_index = 0;
+    
+    [ self performSelector:@selector(animation:) withObject:self afterDelay:0.05 ];
+}
+
 -(void) oneFingerOneTap: (UIGestureRecognizer *)g
 {
     UIView *v = g.view;
@@ -219,30 +294,121 @@ CGRect lastZoomPicRect;
     //  See if we need to handle bleed...
     enum Section nsct= v.tag;
     enum Section osct = self.section;
+    int vint = (int)v;
     if ( osct != nsct)
     {
         [ self handleBleed:nsct ];
     }
-    else // zoom
+    else if ( vint == (int)self.fatboy ) // fatboy anim...
     {
-        self.cur_zoom = v;
-        if ( [ v.subviews count ] > 0 )
+        if ( !self.fatboyimgs )
         {
-            UIView *pp = [ self.cur_zoom.subviews objectAtIndex:0 ];
-            UIImageView *iv = [ pp.subviews objectAtIndex:0 ];
+            self.fatboyimgs = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
+            for (int i=0;i< ([ self.fatboys count ]);i++)
+            {
+                NSString *path = [ self.fatboys objectAtIndex:i] ;
+                NSLog(@"path=%@",path);
+                UIImage *img = [ UIImage imageNamed:path ];
+                [ self.fatboyimgs addObject:img ];
+            }
+        }
+        self.anim_index = 0;
+        self.flipanimation.hidden = NO;
+        [ self.view addSubview:self.flipanimation ];
+        
+        [ self.sv removeFromSuperview ];
+        [ self.menu removeFromSuperview ];
+        [ self.menu_tag removeFromSuperview ];
+        
+        [ self animation: nil];
+    }
+    else // gallery...
+    {
+        
+        enum Section sct = v.tag;
+        NSMutableArray *arr = [ self.galleryDCT objectForKey:[ NSNumber numberWithInt:sct ] ];
+        if (arr)
+        {
+            int num_items = [ arr count ];
             
-            long vint = (long)v;
-            NSString *fullimg = [ self.fullPathDCT objectForKey:[NSNumber numberWithLong:vint ] ];
+            self.gtv.frame = CGRectMake(0,0,1024*num_items,768.0);
+            self.gsv.contentSize = CGSizeMake(1024*num_items, 768);
+            self.gsv.contentOffset = CGPointMake(0,0);
+            self.pc.numberOfPages = num_items;
+            self.pc.currentPage = 0;
+            
+            [ self.pc sizeToFit ];
+            self.pc.frame = CGRectMake( 0, //1024/2.0-self.pc.frame.size.width/2.0, 
+                                       768-self.pc.frame.size.height-20, 
+                                       1024, //self.pc.frame.size.width, 
+                                       self.pc.frame.size.height);
+            
+            [ self.view addSubview:self.gsv ];
+            [ self.view bringSubviewToFront:self.gsv];
+            [ self.view addSubview:self.pc ];
+            [ self.view bringSubviewToFront:self.pc];
+            
+            [ self setupGallery:arr ];
+            
+            [ self.view addSubview:self.grarrow];
+            [ self.view bringSubviewToFront:self.grarrow ];
+            [ self.view addSubview:self.glarrow];
+            [ self.view bringSubviewToFront:self.glarrow ];
+            
+            //  remove app views...
+            [ self.sv removeFromSuperview ];
+            [ self.menu removeFromSuperview ];
+            [ self.menu_tag removeFromSuperview ];
+            
+            //  Set initial page...
+            int vint = (int)v;
+            NSString *fullimg = [ self.fullPathDCT objectForKey:[ NSNumber numberWithInt:vint ] ];
             if (fullimg)
             {
-                UIImage *img = [ UIImage imageNamed:fullimg ];
-                self.zoom_img = img;
+                int page = [ arr indexOfObject:fullimg ];
+                if ((page>=0)&&(page< num_items))
+                {
+                    self.pc.currentPage = page;
+                    CGRect rct = CGRectMake(1024*page, 0, 1024, 768);
+                    [ self.gsv scrollRectToVisible:rct animated:NO ];
+                }
             }
-            else
+            
+            self.glarrow.hidden = NO;
+            self.grarrow.hidden = NO;
+            int cur_page = self.pc.currentPage;
+            if ( cur_page == 0 )
             {
-                self.zoom_img = iv.image;
+                self.glarrow.hidden = YES;
             }
-            [ self zoom ];
+            else if (cur_page == ( self.pc.numberOfPages-1 ) )
+            {
+                self.grarrow.hidden = YES;
+            }
+            
+        }
+        else // zoom image...
+        {
+            //  zoom...
+            self.cur_zoom = v;
+            if ( [ v.subviews count ] > 0 )
+            {
+                UIView *pp = [ self.cur_zoom.subviews objectAtIndex:0 ];
+                UIImageView *iv = [ pp.subviews objectAtIndex:0 ];
+            
+                long vint = (long)v;
+                NSString *fullimg = [ self.fullPathDCT objectForKey:[NSNumber numberWithLong:vint ] ];
+                if (fullimg)
+                {
+                    UIImage *img = [ UIImage imageNamed:fullimg ];
+                    self.zoom_img = img;
+                }
+                else
+                {
+                    self.zoom_img = iv.image;
+                }
+                [ self zoom ];
+            }
         }
     }
 }
@@ -289,6 +455,12 @@ CGRect lastZoomPicRect;
         y = y - t;
         aw = aw + l + r;
         ah = ah + t + b;
+    }
+    
+    //  adjust for dude with tie...
+    if ( (sr==0) && (sc==1) && (row==0) && (col== 4))
+    {
+        x = x + 60;
     }
     
     //  TODO: HACKS: extend certain bleeds a little more...
@@ -386,20 +558,17 @@ CGRect lastZoomPicRect;
     
     UIPinchGestureRecognizer *pinch = [ [ UIPinchGestureRecognizer alloc ] 
                                        initWithTarget:self action:@selector(oneFingerOneTap:) ];
-    //[ztap setNumberOfTapsRequired:1];
-    //[ztap setNumberOfTouchesRequired:1];
     [v addGestureRecognizer:pinch ];
     
     //  map view to section...
-    v.tag = sct;
-    //NSNumber *num = [ NSNumber numberWithInt:sct ];
-    //[ self.objSection setObject:num forKey:num ];
-    
+    v.tag = sct;    
     if (fullimg)
     {
         long vint = (long)v;
         [ self.fullPathDCT setObject:fullimg forKey:[ NSNumber numberWithLong:vint] ];
     }
+    
+    
     
     return v;
 }
@@ -858,22 +1027,31 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile1Aboutus.png" ];
     [ iv setImage:img ];
         
-    img = [ UIImage imageNamed:@"Tile1Text.png" ];
+    img = [ UIImage imageNamed:@"Tile1Text3.png" ];
     iv = [ [ UIImageView alloc ] initWithImage:img ];
     iv.contentMode = UIViewContentModeScaleAspectFit;
     [ self.top_view addSubview:iv ];
     [ iv setImage:img ];
     iv.frame = CGRectMake(150, 175, iv.frame.size.width, iv.frame.size.height );
     
-    [ self singlePic:0 :0 :0 :3 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0 ];
-    [ self singlePic:0 :0 :1 :4 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :2 :3 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :2 :4 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :2 :5 :@"Box2.png": nil: CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
-    [ self singlePic:0 :0 :3 :0 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:EXTEND :0];
-    [ self singlePic:0 :0 :3 :2 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :3 :4 :@"Box.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
-    [ self singlePic:0 :0 :3 :5 :@"Box2.png": nil: CGAffineTransformIdentity: YES:0:0:EXTEND:0 :0];
+    [ self singlePic:0 :0 :0 :3 :@"aboutUs01cropped.jpg": @"aboutUs01.jpg":CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:0:0 :0 ];
+    //[ self singlePic:0 :0 :1 :4 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :3 :@"aboutUs08cropped.jpg": @"aboutUs08.jpg": CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :4 :@"aboutUs19cropped.jpg": @"aboutUs19.jpg": CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :2 :5 :@"aboutUs04cropped.jpg": @"aboutUs04.jpg": 
+        CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:EXTEND:0 :0];
+    //[ self singlePic:0 :0 :3 :0 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:EXTEND :0];
+    [ self singlePic:0 :0 :3 :2 :@"aboutUs02cropped.jpg": @"aboutUs02.jpg": CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :3 :4 :@"aboutUs24cropped.jpg": @"aboutUs24.jpg": CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:0:0 :0];
+    [ self singlePic:0 :0 :3 :5 :@"aboutUs15cropped.jpg": @"aboutUs15.jpg": CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:EXTEND:0 :0];
+    
+    NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
+    for (int i=1;i<=5;i++) //27
+    {
+        NSString *path = [ NSString stringWithFormat:@"aboutUs%02d.jpg", i ];
+        [ arr addObject:path ];
+    }
+    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_AboutUs ]];
 }
 
 
@@ -893,8 +1071,8 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile2Illustration.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:0 :1 :0 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES :EXTEND:0:0:0 :1];
-    [ self singlePic:0 :1 :0 :5 :@"Tile2Dudecropped.png":@"illustration14.jpg":
+    //[ self singlePic:0 :1 :0 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES :EXTEND:0:0:0 :1];
+    [ self singlePic:0 :1 :0 :4 :@"Tile2Dudecropped.png":@"illustration14.jpg":
         //CGAffineTransformMakeTranslation(-60,-130): 
         CGAffineTransformMakeTranslation(0.01,0.01): 
         YES :0:0:EXTEND:0 :1];
@@ -914,6 +1092,20 @@ CGRect lastZoomPicRect;
                 //CGAffineTransformMakeTranslation(-100,-210): 
                 CGAffineTransformMakeTranslation(0.01,0.01):
                 YES:0:0:0:EXTEND :1];
+    
+    NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
+    
+    //[ NSMutableArray arrayWithObjects:@"illustration14.jpg",
+      //                     @"illustration06.jpg",@"illustration04.jpg",
+        //                   @"illustration03.jpg",@"illustration15.jpg",nil];
+    
+    for (int i=1;i<=5;i++) //30
+    {
+        NSString *path = [ NSString stringWithFormat:@"illustration%02d.jpg", i ];
+        [ arr addObject:path ];
+    }
+    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Illustration ] ];
+    
 }
 
 
@@ -935,7 +1127,7 @@ CGRect lastZoomPicRect;
     [ iv setImage:img ];
 
     
-    [ self singlePic:0 :2 :0 :3  :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :2];
+    //[ self singlePic:0 :2 :0 :3  :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :2];
     [ self sixByThreePic:0 :2 :1 :0: nil: CGAffineTransformIdentity: YES:  EXTEND:0:0:EXTEND :2];
 }
 
@@ -957,13 +1149,13 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile4Design.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:1 :0 :2 :3 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :3];
+    //[ self singlePic:1 :0 :2 :3 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :3];
     
     [ self twoByOnePic:1 :0 :2 :0 :@"Tile4Bryancropped.png":@"design12.jpg": 
         //CGAffineTransformMakeTranslation(-50, -60): 
         CGAffineTransformMakeTranslation(0.01, 0.01):
             YES :0:0:0:0 :3];
-    [ self twoByOnePic:1 :0 :3 :0 :@"Tile4Billiecropped.png":@"design04.jpg": 
+    [ self twoByOnePic:1 :0 :3 :0 :@"Tile4Wonderthrillscropped.jpg":@"design06.jpg": 
         //CGAffineTransformMakeTranslation(-60, -80):
         CGAffineTransformMakeTranslation(0.01, 0.01):
                    YES:0:0:0:EXTEND :3];
@@ -974,11 +1166,24 @@ CGRect lastZoomPicRect;
     UIView *bf = [ [ UIView alloc ] initWithFrame:CGRectMake(1024-340, 768-30, 340, 30) ];
     bf.backgroundColor = [ UIColor whiteColor ];
     [ self.top_view addSubview:bf ];
-    
     bf = [ [ UIView alloc ] initWithFrame:CGRectMake(1024-665, 768-30, 150, 30) ];
     bf.backgroundColor = [ UIColor whiteColor ];
     [ self.top_view addSubview:bf ];
                   
+    //  create the gallery dct...
+    NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
+    
+    //[ NSMutableArray arrayWithObjects:@"illustration14.jpg",
+    //                     @"illustration06.jpg",@"illustration04.jpg",
+    //                   @"illustration03.jpg",@"illustration15.jpg",nil];
+    
+    for (int i=1;i<=5;i++) //18
+    {
+        NSString *path = [ NSString stringWithFormat:@"design%02d.jpg", i ];
+        [ arr addObject:path ];
+    }
+    
+    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Design ] ];
     
 }
 
@@ -997,14 +1202,14 @@ CGRect lastZoomPicRect;
     t = t + 768.0;
     UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(l,t,w,h) ];
     iv.contentMode = UIViewContentModeScaleAspectFit;
-    UIImage *img = [ UIImage imageNamed:@"THESTUDIO_RED copy" ];
+    UIImage *img = [ UIImage imageNamed:@"THESTUDIO_with_logo_RED_withman.png" ];
     [ iv setImage:img ];
     [ self.top_view addSubview:iv ];
     
     float ox = 1024.0;
     float oy = 768.0;
     //  Right arrow...
-    img = [ UIImage imageNamed:@"Tile5Arrowright.png"];
+    img = [ UIImage imageNamed:@"Tile5Arrowrightred2.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom ];
     button.frame = CGRectMake(ox + 1024-img.size.width, oy + 768/2.0-img.size.height/2.0, 
                               img.size.width, img.size.height);
@@ -1019,7 +1224,7 @@ CGRect lastZoomPicRect;
     self.rarr = button;
     
     //  Left arrow...
-    img = [ UIImage imageNamed:@"Tile5Arrowleft.png"];
+    img = [ UIImage imageNamed:@"Tile5Arrowleftred2.png"];
     button = [UIButton buttonWithType:UIButtonTypeCustom ];
     button.frame = CGRectMake(ox + 0, oy + 768/2.0-img.size.height/2.0, 
                               img.size.width, img.size.height);
@@ -1034,7 +1239,7 @@ CGRect lastZoomPicRect;
     self.larr = button;
     
     //  Down arrow...
-    img = [ UIImage imageNamed:@"Tile5Arrowdown.png"];
+    img = [ UIImage imageNamed:@"Tile5Arrowdownred2.png"];
     button = [UIButton buttonWithType:UIButtonTypeCustom ];
     button.frame = CGRectMake(ox + 1024/2.0-img.size.width/2.0, oy + 768-img.size.height, 
                               img.size.width, img.size.height);
@@ -1049,7 +1254,7 @@ CGRect lastZoomPicRect;
     self.barr = button;
     
     //  Left arrow...
-    img = [ UIImage imageNamed:@"Tile5Arrowup.png"];
+    img = [ UIImage imageNamed:@"Tile5Arrowupred2.png"];
     button = [UIButton buttonWithType:UIButtonTypeCustom ];
     button.frame = CGRectMake(ox + 1024/2.0-img.size.width/2.0, oy + 0, 
                               img.size.width, img.size.height);
@@ -1082,8 +1287,8 @@ CGRect lastZoomPicRect;
     [ iv setImage:img ];
     
     
-    [ self singlePic:1 :2 :0 :4 :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :5];
-    [ self singlePic:1 :2 :2 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:EXTEND:0:0:0  :5];
+    //[ self singlePic:1 :2 :0 :4 :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :5];
+    //[ self singlePic:1 :2 :2 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:EXTEND:0:0:0  :5];
     
     [ self fourByTwoPic:1:2:1:1:YES:@"Preproduction_Reel":nil:CGAffineTransformIdentity:YES :0:0:0:0 :5];
     
@@ -1108,18 +1313,35 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile7Characterdevelopment.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:2 :0 :0 :2 :@"Tile7Maestrocropped.png":@"charDev12.jpg":
+    [ self singlePic:2 :0 :0 :2 :@"Tile7Maestrocropped2.jpg":@"charDev12.jpg":
         //CGAffineTransformMakeTranslation(-460, -110): 
         CGAffineTransformMakeTranslation(0.01, 0.01):
                  YES:0:EXTEND:0:0 :6];
-    [ self singlePic:2 :0 :0 :5 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:0:EXTEND:EXTEND:0  :6];
-    [ self singlePic:2 :0 :3 :1 :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :6];
+    //[ self singlePic:2 :0 :0 :5 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:0:EXTEND:EXTEND:0  :6];
+    //[ self singlePic:2 :0 :3 :1 :@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:0:0  :6];
     [ self singlePic:2 :0 :3 :4 :@"Tile7Kimonocropped.png":@"charDev15.jpg":
         //CGAffineTransformMakeTranslation(-230, -240): 
         CGAffineTransformMakeTranslation(0.01, 0.01):
                  YES:0:0:0:0 :6];
     
-    [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformIdentity:YES  :0:0:0:0 :6];
+    self.fatboy =  [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformIdentity:YES  :0:0:0:0 :6];
+    
+    NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
+    for (int i=1;i<=5;i++) //22
+    { 
+        NSString *path = [ NSString stringWithFormat:@"charDev%02d.jpg", i ];
+        [ arr addObject:path ];
+    }
+    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_CharacterDevelopment ] ];
+    
+    
+    self.fatboys = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
+    for (int i=0;i<=5;i++) //199
+    {
+        NSString *path = [ NSString stringWithFormat:@"fatboy.%04d.jpg", i ];
+        NSLog(@"addpath=%@",path);
+        [ self.fatboys addObject:path ];
+    }
 }
 
 
@@ -1139,7 +1361,7 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile8Animation.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:2 :1 :3 :5:@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:(EXTEND+3.0):0 :7];
+    //[ self singlePic:2 :1 :3 :5:@"Boxdottedbig.png": nil:CGAffineTransformIdentity: YES:0:0:(EXTEND+3.0):0 :7];
     
     [ self sixByTwoPic:2 :1 :1 :0  :nil:CGAffineTransformIdentity:YES  :EXTEND:0:EXTEND:0  :7];
 }
@@ -1161,8 +1383,8 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile9Storyboards.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:2 :2 :0 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:EXTEND:EXTEND:0:0 :8];
-    [ self singlePic:2 :2 :2 :5 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :8];
+    //[ self singlePic:2 :2 :0 :0 :@"Boxdottedbig2.png": nil:CGAffineTransformIdentity: YES:EXTEND:EXTEND:0:0 :8];
+    //[ self singlePic:2 :2 :2 :5 :@"Boxdottedbig.png": nil: CGAffineTransformIdentity: YES:0:0:0:0 :8];
     [ self twoByOnePic:2:2:0:3  :@"Tile9Redcropped.png":@"SB_Concepts04.jpg": 
         CGAffineTransformMakeTranslation(0.01,0.01): 
         YES :0:EXTEND:0:0 :8];
@@ -1178,6 +1400,15 @@ CGRect lastZoomPicRect;
         CGAffineTransformMakeTranslation(0.01,0.01): 
         //CGAffineTransformMakeTranslation(-200,-40): 
         YES :0:0:0:0 :8];
+    
+    NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
+    
+    for (int i=1;i<=5;i++) //29
+    {
+        NSString *path = [ NSString stringWithFormat:@"SB_Concepts%02d.jpg", i ];
+        [ arr addObject:path ];
+    }
+    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Storyboarding ] ];
 }
 
 
@@ -1186,12 +1417,13 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile5Redarrow2.png" ]; 
     UIButton *button = [ UIButton buttonWithType:UIButtonTypeCustom ];
     [ button addTarget:self action:@selector(toggleMenu:) forControlEvents:UIControlEventTouchUpInside ];
-    button.frame = CGRectMake(1024-img.size.width+20, 768.0/2.0 - 300, img.size.width, img.size.height );
+    button.frame = CGRectMake(1024-img.size.width+28, 768.0/2.0 - 350, img.size.width, img.size.height );
     [ button setImage:img forState:UIControlStateNormal ];
     [ self.view addSubview:button ];
+    self.menu_tag = button;
     
     img = [ UIImage imageNamed:@"Tile5Menu_Background2.png" ];
-    UIView *iv = [ [ UIView alloc] initWithFrame:CGRectMake(1024-img.size.width+10, 768.0/2.0 - 200, 
+    UIView *iv = [ [ UIView alloc] initWithFrame:CGRectMake(1024-img.size.width+8, 768.0/2.0 - 200, 
             img.size.width, img.size.height ) ];
     [ self.view addSubview:iv ]; 
     self.menu = iv;
@@ -1212,7 +1444,7 @@ CGRect lastZoomPicRect;
     [ iv addSubview:button ];
     oy += spacing + 20 + img.size.height;
     
-    ox = ox - 15;
+    ox = ox - 22;
     img = [ UIImage imageNamed:@"Tile5Menu_Thestudio2.png" ];
     button = [ UIButton buttonWithType:UIButtonTypeCustom ];
     button.tag = Section_Home;
@@ -1319,7 +1551,20 @@ CGRect lastZoomPicRect;
     //[ button setImage:img forState:UIControlStateHighlighted ];
     //[ self.view addSubview:button ];
     [ iv addSubview:button ];
+    oy += spacing + img.size.height;
     
+    img = [ UIImage imageNamed:@"Tile5Menu_Storyboards2.png" ];
+    button = [ UIButton buttonWithType:UIButtonTypeCustom ];
+    button.frame = CGRectMake(ox, oy, img.size.width, img.size.height );
+    button.tag = Section_Storyboarding;
+    [ button addTarget:self action:@selector(menuClicked:) forControlEvents:UIControlEventTouchUpInside ];
+    [ button setImage:img forState:UIControlStateNormal ];
+    img = [ UIImage imageNamed:@"Tile5Menu_Storyboardsred2.png" ];
+    [ button setImage:img forState:UIControlStateHighlighted ];
+    //[ button setImage:img forState:UIControlStateHighlighted ];
+    //[ self.view addSubview:button ];
+    [ iv addSubview:button ];
+    //oy += spacing + img.size.height;
 }
 
 #pragma mark - zoom stuff...
@@ -1354,12 +1599,64 @@ CGRect lastZoomPicRect;
 }
 
 
+-(void) galleryTap:(id)sender
+{
+    if ( self.ivs )
+    {
+        if (self.ivs)
+        {
+            for (int i=0;i<[ self.ivs count ];i++)
+            {
+                UIImageView *iv = [ self.ivs objectAtIndex:i ];
+                iv.image = nil;
+                
+                [ iv removeFromSuperview ];
+                //UIImage *img = iv.image;
+                
+            }
+        }
+        self.ivs = nil;
+    }
+    
+    [ self.gsv removeFromSuperview ];
+    
+    [ self.view addSubview:self.sv ];
+    [ self.view addSubview:self.menu ];
+    [ self.view addSubview:self.menu_tag ];
+}
+
+-(void) gallerygoright:(id)sender
+{
+    [ self nextPage ];
+}
+
+
+-(void) gallerygoleft:(id)sender
+{
+    [ self prevPage ];
+}
+
+-(void) animTap: (id)sender
+{
+    [ self.flipanimation removeFromSuperview ];
+    self.flipanimation.image = nil;
+    self.fatboyimgs = nil;
+    self.anim_index = -1;
+    
+    [ self.view addSubview:self.sv ];
+    [ self.view addSubview:self.menu_tag ];
+    [ self.view addSubview:self.menu ];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    AppDelegate *app = ( AppDelegate *) [ [ UIApplication sharedApplication ] delegate ];
+    [ app SetMainVC:self ];
+                        
     //
     //  Create scroll view...
     //
@@ -1375,6 +1672,7 @@ CGRect lastZoomPicRect;
     self.sv.scrollEnabled = YES;
     self.sv.showsVerticalScrollIndicator = YES;
     self.sv.showsHorizontalScrollIndicator = YES;
+    
     
     //
     //  top view...
@@ -1404,9 +1702,71 @@ CGRect lastZoomPicRect;
     [ self.sv addSubview:self.zoom_view ];
     [ self.sv bringSubviewToFront:self.zoom_view ];
     
-    self.objSection = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
     
+    //
+    //  Create gallery scroll view...
+    //
+    self.gsv = [ [ MyScrollView alloc ] initWithFrame:CGRectMake(0,0,1024,768) ];
+    self.gsv.delegate = self;
+    //self.gsv.backgroundColor = [ UIColor greenColor ];
+    self.gsv.contentSize = CGSizeMake(1024*10, 768);
+    //[ self.view addSubview:self.gsv ];
+    self.gsv.multipleTouchEnabled = YES;
+    self.gsv.directionalLockEnabled = YES;
+    self.gsv.contentOffset = CGPointMake(0,0);
+    self.gsv.pagingEnabled = YES;
+    self.gsv.scrollEnabled = YES;
+    self.gsv.showsVerticalScrollIndicator = YES;
+    self.gsv.showsHorizontalScrollIndicator = YES;
+    
+    //
+    //  top view...
+    //
+    self.gtv = [ [ UIView alloc ] initWithFrame:CGRectMake(0,0,1024*10,768) ];
+    //self.gtv.backgroundColor = [ UIColor blueColor ];
+    [ self.gsv addSubview:self.gtv ];
+    self.gtv.userInteractionEnabled = YES;
+    //  gesture...
+    UITapGestureRecognizer *stap = 
+    [[UITapGestureRecognizer alloc] 
+        initWithTarget:self action:@selector(galleryTap:)];
+    [ stap setNumberOfTapsRequired:1];
+    [ stap setNumberOfTouchesRequired:1];
+    [ self.gtv addGestureRecognizer:stap ];
+    
+    //  Right arrow...
+    UIImage *img = [ UIImage imageNamed:@"Tile5Arrowrightred2.png"];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom ];
+    button.frame = CGRectMake( 1024-img.size.width,  768/2.0-img.size.height/2.0, 
+                              img.size.width, img.size.height);
+    [ button setImage:img  forState:UIControlStateNormal ];
+    [ button addTarget:self action:@selector(gallerygoright:) forControlEvents:UIControlEventTouchUpInside ];
+    self.grarrow = button;
+    
+    //  Left arrow...
+    img = [ UIImage imageNamed:@"Tile5Arrowleftred2.png"];
+    button = [UIButton buttonWithType:UIButtonTypeCustom ];
+    button.frame = CGRectMake( 0, 768/2.0-img.size.height/2.0, 
+                              img.size.width, img.size.height);
+    [ button setImage:img  forState:UIControlStateNormal ];
+    [ button addTarget:self action:@selector(gallerygoleft:) forControlEvents:UIControlEventTouchUpInside ];
+    self.glarrow = button;
+    
+    //
+    //  page control...
+    self.pc = [ [ UIPageControl alloc ] initWithFrame:CGRectMake(0, 768 - 100, 1024, 100) ];
+    self.pc.backgroundColor = [ UIColor darkGrayColor ];
+    self.pc.numberOfPages = 10;
+    self.pc.userInteractionEnabled = YES;
+    self.pc.enabled = YES;
+    [ self.pc addTarget:self action:@selector(changePage:) forControlEvents:UIControlEventValueChanged ];
+    //[ self.view addSubview:self.pc ];
+    
+    //  Some mapping dcts...
+    self.objSection = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
     self.fullPathDCT = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
+    self.galleryDCT = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
+    self.pageDCT = [ [ NSMutableDictionary alloc ] initWithCapacity: 0 ];
     
     //
     //  Init each section...
@@ -1434,8 +1794,79 @@ CGRect lastZoomPicRect;
     
     //  Fix some bleed overs...
     [ self fixBleeds ];
+    
+    //  Flip animation...
+    self.flipanimation = [ [ UIImageView alloc ] initWithFrame:CGRectMake(0, 0, 1024, 768) ];
+    self.flipanimation.userInteractionEnabled = YES;
+    [ self.view addSubview:self.flipanimation ];
+    self.flipanimation.hidden = YES;
+    self.flipanimation.contentMode = UIViewContentModeScaleAspectFit;
+    stap = [[UITapGestureRecognizer alloc] 
+            initWithTarget:self action:@selector(animTap:)];
+    [ stap setNumberOfTapsRequired:1];
+    [ stap setNumberOfTouchesRequired:1];
+    [ self.flipanimation addGestureRecognizer:stap ];
+
+    
 }
 
+-(void) nextPage
+{
+    int cur_page = self.pc.currentPage;
+    
+    if (cur_page<( self.pc.numberOfPages - 1 ))
+    {
+        [ self.pc setCurrentPage:(cur_page+1) ];
+        CGRect rct = CGRectMake(1024.0*(cur_page+1), 0, 1024, 768); 
+        [self.gsv scrollRectToVisible:rct animated:YES];
+    }
+    
+    self.glarrow.hidden = NO;
+    self.grarrow.hidden = NO;
+    cur_page = self.pc.currentPage;
+    if ( cur_page == 0 )
+    {
+        self.glarrow.hidden = YES;
+    }
+    else if (cur_page == ( self.pc.numberOfPages-1 ) )
+    {
+        self.grarrow.hidden = YES;
+    }
+}
+
+
+-(void) prevPage
+{
+    int cur_page = self.pc.currentPage;
+    
+    if (cur_page>0)
+    {
+        [ self.pc setCurrentPage:(cur_page-1) ];
+        CGRect rct = CGRectMake(1024.0*(cur_page-1), 0, 1024, 768); 
+        [self.gsv scrollRectToVisible:rct animated:YES];
+    }
+    self.glarrow.hidden = NO;
+    self.grarrow.hidden = NO;
+    
+    cur_page = self.pc.currentPage;
+    if ( cur_page == 0 )
+    {
+        self.glarrow.hidden = YES;
+    }
+    else if (cur_page == ( self.pc.numberOfPages-1 ) )
+    {
+        self.grarrow.hidden = YES;
+    }
+}
+
+-(void) changePage: (id)sender
+{
+    int cur_page = self.pc.currentPage;
+    
+    CGRect rct = CGRectMake(1024.0*cur_page, 0, 1024, 768); 
+    [self.gsv scrollRectToVisible:rct animated:YES];
+    //self.gsv.contentOffset = CGPointMake(1024*cur_page,0);
+}
 
 
 - (void)viewDidUnload
@@ -1460,9 +1891,47 @@ CGRect lastZoomPicRect;
                                  self.menu.frame.size.width, self.menu.frame.size.height);
 }
 
+-(void) blink: (BOOL)again
+{
+    self.blinking = YES;
+#if 1
+    [UIView animateWithDuration:0.3
+                          delay: 1.0
+                        options: UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         self.larr.alpha = 0.0;
+                         self.barr.alpha = 0.0;
+                         self.rarr.alpha = 0.0;
+                         self.tarr.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished)
+     {
+         self.larr.alpha = 1.0;
+         self.barr.alpha = 1.0;
+         self.rarr.alpha = 1.0;
+         self.tarr.alpha = 1.0;
+         
+         if (again)
+         {
+             [ self blink: NO];
+         }
+         else
+         {
+             self.blinking = NO;
+         }
+     }
+     ];
+#endif
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+ 
+    if (!self.blinking)
+    {
+        [ self blink: YES];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -1587,30 +2056,61 @@ CGRect lastZoomPicRect;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    //  Stop any movies...
-    [ self stopMovies ]; 
-    
-    //enum Section lastSection = self.section;
-    
-    //  Figure out the section we are in...
-    for ( int i=Section_AboutUs;i<=Section_Storyboarding;i++)
+    if (scrollView==self.sv)
     {
-        CGRect rect = CGRectMake(self.sv.contentOffset.x, self.sv.contentOffset.y, self.sv.frame.size.width, self.sv.frame.size.height);
-        CGPoint pt = [self getCenter:i];
-        if ( CGRectContainsPoint(rect,pt ) )
+        //  Stop any movies...
+        [ self stopMovies ]; 
+    
+        //enum Section lastSection = self.section;
+    
+        //  Figure out the section we are in...
+        for ( int i=Section_AboutUs;i<=Section_Storyboarding;i++)
         {
-            self.section = i;
-            break;
+            CGRect rect = CGRectMake(self.sv.contentOffset.x, self.sv.contentOffset.y, self.sv.frame.size.width, self.sv.frame.size.height);
+            CGPoint pt = [self getCenter:i];
+            if ( CGRectContainsPoint(rect,pt ) )
+            {
+                self.section = i;
+                break;
+            }
+        }
+    
+        if (self.section == Section_Home )
+        {
+            [ self arrowState:YES ];
+        }
+        else
+        {
+            [ self arrowState:NO ];
         }
     }
-    
-    if (self.section == Section_Home )
+    else if (scrollView==self.gsv)
     {
-        [ self arrowState:YES ];
-    }
-    else
-    {
-        [ self arrowState:NO ];
+        //  Figure out the gallery page we are in...
+        int which_page = 0;
+        CGPoint pt = CGPointMake(self.gsv.contentOffset.x + 1024/2.0, 768/2.0);
+        for ( int i=0;i<self.pc.numberOfPages; i++)
+        {
+            CGRect rect = CGRectMake(1024*i, 0, 1024, 768 );
+                                     
+            if ( CGRectContainsPoint(rect,pt ) )
+            {
+                which_page = i;
+                self.pc.currentPage =which_page;
+                break;
+            }
+        }
+        
+        self.glarrow.hidden = NO;
+        self.grarrow.hidden = NO;
+        if ( which_page == 0 )
+        {
+            self.glarrow.hidden = YES;
+        }
+        else if (which_page == ( self.pc.numberOfPages-1 ) )
+        {
+            self.grarrow.hidden = YES;
+        }
     }
     
     //[ self togglePage:lastSection :NO ];
@@ -1685,11 +2185,11 @@ CGRect lastZoomPicRect;
                               delay: 0.0
                             options: UIViewAnimationOptionCurveEaseIn
                          animations:^{
-                             self.menu.frame = CGRectMake(1024 - self.menu.frame.size.width + 10, self.menu.frame.origin.y, 
+                             self.menu.frame = CGRectMake(1024 - self.menu.frame.size.width + 8, self.menu.frame.origin.y, 
                                                           self.menu.frame.size.width, self.menu.frame.size.height);
                          }
                          completion:^(BOOL finished){
-                             self.menu.frame = CGRectMake(1024 - self.menu.frame.size.width + 10, self.menu.frame.origin.y, 
+                             self.menu.frame = CGRectMake(1024 - self.menu.frame.size.width + 8, self.menu.frame.origin.y, 
                                                           self.menu.frame.size.width, self.menu.frame.size.height);
                              self.menu_animating = NO;
                              self.menu_state = 1;
@@ -1705,6 +2205,7 @@ CGRect lastZoomPicRect;
     
     enum Section tag = btn.tag;
     [ self gotoSection:tag:YES];
+    [ self toggleMenu:nil ];
 }
 
 @end
