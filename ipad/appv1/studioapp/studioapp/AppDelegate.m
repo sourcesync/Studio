@@ -13,9 +13,36 @@
 @synthesize window = _window;
 @synthesize vc=_vc;
 
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"App Low Memory" 
+                                                    message:@"App Low Memory" 
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+
+}
+
+-(void) lowMemNotification:(id)obj
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"App Low Memory" 
+                                                    message:@"App Low Memory" 
+                                                   delegate:nil 
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self 
+                                            selector:@selector(lowMemNotification:)
+                                            name: UIApplicationDidReceiveMemoryWarningNotification 
+                                            object:nil];
+    
     return YES;
 }
 							
@@ -49,6 +76,8 @@
      */
     if ( self.vc != nil )
     {
+        [ self.vc galleryTap:nil ];
+        
         [ self.vc gotoSection:Section_Home :NO ];
         if ( !self.vc.blinking )
         {

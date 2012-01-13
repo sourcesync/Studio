@@ -15,58 +15,49 @@
 
 @synthesize top_view=_top_view;
 @synthesize sv=_sv;
-
 @synthesize zoom_view=_zoom_view;
 @synthesize cur_zoom=_cur_zoom;
 @synthesize zooming=_zooming;
 @synthesize zoom_img=_zoom_img;
-
 @synthesize fmv=_fmv;
 @synthesize fmv2=_fmv2;
 @synthesize fmv3=_fmv3;
-
 @synthesize section=_section;
-
 @synthesize objSection=_objSection;
-
 @synthesize gotoing=_gotoing;
-
 @synthesize menu_state=_menu_state;
-
 @synthesize menu_animating=_menu_animating;
-
 @synthesize menu = _menu;
 @synthesize menu_tag=_menu_tag;
-
 @synthesize fullPathDCT=_fullPathDCT;
-
 @synthesize larr=_larr;
 @synthesize rarr=_rarr;
 @synthesize barr=_barr;
 @synthesize tarr=_tarr;
-
 @synthesize gsv=_gsv;
 @synthesize gtv=_gtv;
 @synthesize pc=_pc;
 @synthesize galleryDCT=_galleryDCT;
 @synthesize grarrow=_grarrow;
 @synthesize glarrow=_glarrow;
-
 @synthesize ivs=_ivs;
-
 @synthesize pageDCT=_pageDCT;
-
 @synthesize flipanimation=_flipanimation;
-
 @synthesize fatboy=_fatboy;
 @synthesize fatboys=_fatboys;
 @synthesize fatboyimgs=_fatboyimgs;
 @synthesize anim_index=_anim_index;
-
-@synthesize  blinking=_blinking;
+@synthesize blinking=_blinking;
+@synthesize galleryImage=_galleryImage;
+@synthesize cur_gallery=_cur_gallery;
+@synthesize arrow_scrolling=_arrow_scrolling;
+@synthesize lastrct=_lastrct;
+@synthesize new_page=_new_page;
 
 #define SPACING 10.0
 #define EXTEND 20.0
+#define MAX_GALLERY -1
+#define LOAD_NEIGHBORS YES
 
 CGRect lastZoomPicRect;
 
@@ -185,7 +176,7 @@ CGRect lastZoomPicRect;
 }
 
 
-- (void) zoom
+- (void) zoom:(UIView *)gallery_view
 {
     if (self.zooming)
     {
@@ -211,10 +202,14 @@ CGRect lastZoomPicRect;
         self.zoom_view.contentMode = UIViewContentModeScaleAspectFit;
         lastZoomPicRect = self.cur_zoom.frame;
            
-        CGRect rct = CGRectMake(self.sv.contentOffset.x, 
-                                    self.sv.contentOffset.y, 
-                                    1024,768);
-            
+        CGRect rct = CGRectMake(self.sv.contentOffset.x+20, 
+                                self.sv.contentOffset.y+20, 
+                                1024-40,768-100);
+        //CGRect rct = CGRectMake(self.sv.contentOffset.x, 
+        //                            self.sv.contentOffset.y, 
+        //                            1024,768);
+        //*1024+20, 20, 1024-40, 768-100)
+        
         [UIView animateWithDuration:0.3
                                   delay: 0.0
                                 options: UIViewAnimationOptionCurveEaseIn
@@ -230,6 +225,7 @@ CGRect lastZoomPicRect;
                                  self.sv.scrollEnabled = NO;
                                  self.top_view.alpha = 0.2;
                                  
+                                 if (gallery_view) [ self doGallery:gallery_view ];
                              }
              ];
     }
@@ -242,31 +238,37 @@ CGRect lastZoomPicRect;
 
 #pragma mark - gestures...
 
-- (void) setupGallery: (NSMutableArray *)arr
+-(void) freeGallery
 {
     if (self.ivs)
     {
         for (int i=0;i<[ self.ivs count ];i++)
         {
             UIImageView *iv = [ self.ivs objectAtIndex:i ];
-            iv.image = nil;
-            
             [ iv removeFromSuperview ];
             //UIImage *img = iv.image;
-            
+            iv.image = nil;
+            //[ img release ];
         }
     }
     self.ivs = nil;
+}
+
+- (void) setupGallery: (NSMutableArray *)arr
+{
+    [ self freeGallery ];
     
     int num_items = [ arr count ];
     self.ivs = [[ NSMutableArray alloc ] initWithCapacity:num_items ];
     
     for (int i=0;i<num_items;i++)
     {
-        NSString *path = [ arr objectAtIndex:i];
-        UIImage *img = [ UIImage imageNamed:path ];
-        UIImageView *iv = [ [ UIImageView alloc ] initWithImage:img ];
-        iv.frame = CGRectMake(i*1024+20, 20, 1024-40, 768-100);
+        //NSString *path = [ arr objectAtIndex:i];
+        //UIImage *img = [ UIImage imageNamed:path ];
+        //UIImageView *iv = [ [ UIImageView alloc ] initWithImage:img ];
+        //iv.frame = CGRectMake(i*1024+20, 20, 1024-40, 768-100);
+        UIImageView *iv = [ [ UIImageView alloc ] initWithFrame:CGRectMake(i*1024+20, 20, 1024-40, 768-100) ];
+        //iv.backgroundColor = [ UIColor greenColor ];
         iv.contentMode = UIViewContentModeScaleAspectFit;
         [ self.gtv addSubview:iv ];
         [ self.ivs addObject:iv ];
@@ -282,9 +284,171 @@ CGRect lastZoomPicRect;
     self.flipanimation.image = img;
     self.anim_index += 1;
     if (self.anim_index>=[ self.fatboyimgs count])
+    {
         self.anim_index = 0;
+    }
     
     [ self performSelector:@selector(animation:) withObject:self afterDelay:0.05 ];
+}
+
+-(void)loadPage
+{
+    //return;  // load no images...
+    
+    self.gsv.scrollEnabled = NO;
+    int page = self.pc.currentPage;
+    int num_items = self.pc.numberOfPages;  
+    
+    UIImageView *iv = [ self.ivs objectAtIndex:page ];
+     
+    int left = page-1;
+    UIImageView *leftiv= nil;
+    if (left>=0)
+        leftiv = [ self.ivs objectAtIndex:left ];
+    
+    int right = page+1;
+    UIImageView *rightiv= nil;
+    if (right<num_items)
+        rightiv = [ self.ivs objectAtIndex:right ];
+    
+    for (int i=0;i<num_items;i++)
+    {
+        // left...
+        if ( LOAD_NEIGHBORS && (i==left) )
+        {
+            if ( (leftiv) && (!leftiv.image ) )
+            {
+                NSString *path = [ self.cur_gallery objectAtIndex:left ];
+                UIImage *img = [ UIImage imageNamed:path ];
+                leftiv.image = img;
+            }
+        }
+        else if ( i==page ) // load cur page ?
+        {
+            if (!iv.image) 
+            {
+                NSString *path = [ self.cur_gallery objectAtIndex:page ];
+                UIImage *img = [ UIImage imageNamed:path ];
+                iv.image = img;
+            }
+        }
+        else if ( LOAD_NEIGHBORS && (i==right) ) // load right of cur page ?
+        {
+            if ( (rightiv) && (!rightiv.image) )
+            {
+                NSString *path = [ self.cur_gallery objectAtIndex:right ];
+                UIImage *img = [ UIImage imageNamed:path ];
+                rightiv.image = img;
+            }
+        }
+        else // everything else clear the image...
+        {
+            UIImageView *cv = [ self.ivs objectAtIndex:i ];
+            cv.image = nil;
+        }
+    }
+    
+    self.gsv.scrollEnabled = YES;
+}
+
+-(void) doZoom: (UIView *)v: (BOOL)gallery
+{
+    //  zoom...
+    self.cur_zoom = v;
+    if ( [ v.subviews count ] > 0 )
+        {
+            UIView *pp = [ self.cur_zoom.subviews objectAtIndex:0 ];
+            UIImageView *iv = [ pp.subviews objectAtIndex:0 ];
+            
+            long vint = (long)v;
+            NSString *fullimg = [ self.fullPathDCT objectForKey:[NSNumber numberWithLong:vint ] ];
+            if (fullimg)
+            {
+                UIImage *img = [ UIImage imageNamed:fullimg ];
+                self.zoom_img = img;
+            }
+            else
+            {
+                self.zoom_img = iv.image;
+            }
+            [ self zoom:v];
+    }
+    
+}
+
+
+-(void) doGallery: (UIView *)v
+{
+    
+    enum Section sct = v.tag;
+    NSMutableArray *arr = [ self.galleryDCT objectForKey:[ NSNumber numberWithInt:sct ] ];
+    self.cur_gallery = arr;
+    if (arr)
+    {
+        int num_items = [ arr count ];
+        
+        self.gtv.frame = CGRectMake(0,0,1024*num_items,768.0);
+        self.gsv.contentSize = CGSizeMake(1024*num_items, 768);
+        self.gsv.contentOffset = CGPointMake(0,0);
+        self.pc.numberOfPages = num_items;
+        self.pc.currentPage = 0;
+        
+        [ self.pc sizeToFit ];
+        self.pc.frame = CGRectMake( 0, //1024/2.0-self.pc.frame.size.width/2.0, 
+                                   768-self.pc.frame.size.height-20, 
+                                   1024, //self.pc.frame.size.width, 
+                                   self.pc.frame.size.height);
+        
+        [ self.view addSubview:self.gsv ];
+        [ self.view bringSubviewToFront:self.gsv];
+        [ self.view addSubview:self.pc ];
+        [ self.view bringSubviewToFront:self.pc];
+        
+        [ self setupGallery:arr ];
+        
+        [ self.view addSubview:self.grarrow];
+        [ self.view bringSubviewToFront:self.grarrow ];
+        [ self.view addSubview:self.glarrow];
+        [ self.view bringSubviewToFront:self.glarrow ];
+        
+        //  remove app views...
+        [ self.sv removeFromSuperview ];
+        [ self.menu removeFromSuperview ];
+        [ self.menu_tag removeFromSuperview ];
+        
+        //  Set initial page...
+        int vint = (int)v;
+        NSString *fullimg = [ self.fullPathDCT objectForKey:[ NSNumber numberWithInt:vint ] ];
+        if (fullimg)
+        {
+            int page = [ arr indexOfObject:fullimg ];
+            if ((page>=0)&&(page< num_items))
+            {
+                self.pc.currentPage = page;
+                CGRect rct = CGRectMake(1024*page, 0, 1024, 768);
+                [ self.gsv scrollRectToVisible:rct animated:NO ];
+            }
+            else
+            {
+                self.pc.currentPage = page;
+            }
+        }
+        
+        [ self loadPage ];
+        
+        //  determine which arrows are enabled...
+        self.glarrow.hidden = NO;
+        self.grarrow.hidden = NO;
+        int cur_page = self.pc.currentPage;
+        if ( cur_page == 0 )
+        {
+            self.glarrow.hidden = YES;
+        }
+        else if (cur_page == ( self.pc.numberOfPages-1 ) )
+        {
+            self.grarrow.hidden = YES;
+        }
+    }
 }
 
 -(void) oneFingerOneTap: (UIGestureRecognizer *)g
@@ -294,11 +458,12 @@ CGRect lastZoomPicRect;
     //  See if we need to handle bleed...
     enum Section nsct= v.tag;
     enum Section osct = self.section;
-    int vint = (int)v;
+    //int vint = (int)v;
     if ( osct != nsct)
     {
         [ self handleBleed:nsct ];
     }
+#if 0
     else if ( vint == (int)self.fatboy ) // fatboy anim...
     {
         if ( !self.fatboyimgs )
@@ -322,94 +487,11 @@ CGRect lastZoomPicRect;
         
         [ self animation: nil];
     }
-    else // gallery...
+#endif
+    else
     {
-        
-        enum Section sct = v.tag;
-        NSMutableArray *arr = [ self.galleryDCT objectForKey:[ NSNumber numberWithInt:sct ] ];
-        if (arr)
-        {
-            int num_items = [ arr count ];
-            
-            self.gtv.frame = CGRectMake(0,0,1024*num_items,768.0);
-            self.gsv.contentSize = CGSizeMake(1024*num_items, 768);
-            self.gsv.contentOffset = CGPointMake(0,0);
-            self.pc.numberOfPages = num_items;
-            self.pc.currentPage = 0;
-            
-            [ self.pc sizeToFit ];
-            self.pc.frame = CGRectMake( 0, //1024/2.0-self.pc.frame.size.width/2.0, 
-                                       768-self.pc.frame.size.height-20, 
-                                       1024, //self.pc.frame.size.width, 
-                                       self.pc.frame.size.height);
-            
-            [ self.view addSubview:self.gsv ];
-            [ self.view bringSubviewToFront:self.gsv];
-            [ self.view addSubview:self.pc ];
-            [ self.view bringSubviewToFront:self.pc];
-            
-            [ self setupGallery:arr ];
-            
-            [ self.view addSubview:self.grarrow];
-            [ self.view bringSubviewToFront:self.grarrow ];
-            [ self.view addSubview:self.glarrow];
-            [ self.view bringSubviewToFront:self.glarrow ];
-            
-            //  remove app views...
-            [ self.sv removeFromSuperview ];
-            [ self.menu removeFromSuperview ];
-            [ self.menu_tag removeFromSuperview ];
-            
-            //  Set initial page...
-            int vint = (int)v;
-            NSString *fullimg = [ self.fullPathDCT objectForKey:[ NSNumber numberWithInt:vint ] ];
-            if (fullimg)
-            {
-                int page = [ arr indexOfObject:fullimg ];
-                if ((page>=0)&&(page< num_items))
-                {
-                    self.pc.currentPage = page;
-                    CGRect rct = CGRectMake(1024*page, 0, 1024, 768);
-                    [ self.gsv scrollRectToVisible:rct animated:NO ];
-                }
-            }
-            
-            self.glarrow.hidden = NO;
-            self.grarrow.hidden = NO;
-            int cur_page = self.pc.currentPage;
-            if ( cur_page == 0 )
-            {
-                self.glarrow.hidden = YES;
-            }
-            else if (cur_page == ( self.pc.numberOfPages-1 ) )
-            {
-                self.grarrow.hidden = YES;
-            }
-            
-        }
-        else // zoom image...
-        {
-            //  zoom...
-            self.cur_zoom = v;
-            if ( [ v.subviews count ] > 0 )
-            {
-                UIView *pp = [ self.cur_zoom.subviews objectAtIndex:0 ];
-                UIImageView *iv = [ pp.subviews objectAtIndex:0 ];
-            
-                long vint = (long)v;
-                NSString *fullimg = [ self.fullPathDCT objectForKey:[NSNumber numberWithLong:vint ] ];
-                if (fullimg)
-                {
-                    UIImage *img = [ UIImage imageNamed:fullimg ];
-                    self.zoom_img = img;
-                }
-                else
-                {
-                    self.zoom_img = iv.image;
-                }
-                [ self zoom ];
-            }
-        }
+        [ self doZoom:v:YES ];
+        //[ self doGallery:v ];
     }
 }
 
@@ -650,7 +732,7 @@ CGRect lastZoomPicRect;
     //  gesture...
     UITapGestureRecognizer *stap = 
     [[UITapGestureRecognizer alloc] 
-     initWithTarget:self action:@selector(oneFingerOneTap:)];
+        initWithTarget:self action:@selector(oneFingerOneTap:)];
     [ stap setNumberOfTapsRequired:1];
     [ stap setNumberOfTouchesRequired:1];
     [ v addGestureRecognizer:stap ];
@@ -1046,7 +1128,9 @@ CGRect lastZoomPicRect;
     [ self singlePic:0 :0 :3 :5 :@"aboutUs15cropped.jpg": @"aboutUs15.jpg": CGAffineTransformMakeTranslation(0.01, 0.01): YES:0:0:EXTEND:0 :0];
     
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
-    for (int i=1;i<=5;i++) //27
+    int max = 27;
+    if (MAX_GALLERY>0) max = MAX_GALLERY;
+    for (int i=1;i<=max;i++) //27
     {
         NSString *path = [ NSString stringWithFormat:@"aboutUs%02d.jpg", i ];
         [ arr addObject:path ];
@@ -1098,8 +1182,9 @@ CGRect lastZoomPicRect;
     //[ NSMutableArray arrayWithObjects:@"illustration14.jpg",
       //                     @"illustration06.jpg",@"illustration04.jpg",
         //                   @"illustration03.jpg",@"illustration15.jpg",nil];
-    
-    for (int i=1;i<=5;i++) //30
+    int max = 30;
+    if (MAX_GALLERY>0) max = MAX_GALLERY;
+    for (int i=1;i<=max;i++) //30
     {
         NSString *path = [ NSString stringWithFormat:@"illustration%02d.jpg", i ];
         [ arr addObject:path ];
@@ -1176,10 +1261,15 @@ CGRect lastZoomPicRect;
     //[ NSMutableArray arrayWithObjects:@"illustration14.jpg",
     //                     @"illustration06.jpg",@"illustration04.jpg",
     //                   @"illustration03.jpg",@"illustration15.jpg",nil];
-    
-    for (int i=1;i<=5;i++) //18
+    int max = 18;
+    if (MAX_GALLERY>0) max = MAX_GALLERY;
+    for (int i=1;i<=max;i++) //18
     {
-        NSString *path = [ NSString stringWithFormat:@"design%02d.jpg", i ];
+        NSString *path = nil;
+        if (i==7)
+            path = [ NSString stringWithFormat:@"design%02d.png", i ];
+        else
+            path = [ NSString stringWithFormat:@"design%02d.jpg", i ];
         [ arr addObject:path ];
     }
     
@@ -1324,17 +1414,19 @@ CGRect lastZoomPicRect;
         CGAffineTransformMakeTranslation(0.01, 0.01):
                  YES:0:0:0:0 :6];
     
-    self.fatboy =  [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformIdentity:YES  :0:0:0:0 :6];
+    self.fatboy =  [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformMakeTranslation(0.01, 0.01):YES  :0:0:0:0 :6];
     
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
-    for (int i=1;i<=5;i++) //22
+    int max = 22;
+    if (MAX_GALLERY>0) max = MAX_GALLERY;
+    for (int i=1;i<=max;i++) //22
     { 
         NSString *path = [ NSString stringWithFormat:@"charDev%02d.jpg", i ];
         [ arr addObject:path ];
     }
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_CharacterDevelopment ] ];
     
-    
+#if 0
     self.fatboys = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
     for (int i=0;i<=5;i++) //199
     {
@@ -1342,6 +1434,8 @@ CGRect lastZoomPicRect;
         NSLog(@"addpath=%@",path);
         [ self.fatboys addObject:path ];
     }
+#endif
+    
 }
 
 
@@ -1402,8 +1496,9 @@ CGRect lastZoomPicRect;
         YES :0:0:0:0 :8];
     
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
-    
-    for (int i=1;i<=5;i++) //29
+    int max = 29;
+    if (MAX_GALLERY>0) max = MAX_GALLERY;
+    for (int i=1;i<=max;i++) //29
     {
         NSString *path = [ NSString stringWithFormat:@"SB_Concepts%02d.jpg", i ];
         [ arr addObject:path ];
@@ -1601,28 +1696,22 @@ CGRect lastZoomPicRect;
 
 -(void) galleryTap:(id)sender
 {
-    if ( self.ivs )
-    {
-        if (self.ivs)
-        {
-            for (int i=0;i<[ self.ivs count ];i++)
-            {
-                UIImageView *iv = [ self.ivs objectAtIndex:i ];
-                iv.image = nil;
-                
-                [ iv removeFromSuperview ];
-                //UIImage *img = iv.image;
-                
-            }
-        }
-        self.ivs = nil;
-    }
+    [ self freeGallery ];
     
-    [ self.gsv removeFromSuperview ];
+    //  Take out of zoom...
+    self.cur_zoom = nil;
+    self.zoom_view.hidden = YES;
+    self.top_view.alpha = 1.0;
+    self.sv.scrollEnabled = YES;
     
+    //  Add board back...
     [ self.view addSubview:self.sv ];
     [ self.view addSubview:self.menu ];
     [ self.view addSubview:self.menu_tag ];
+    
+    //  Remove gallery scroll...
+    [ self.gsv removeFromSuperview ];
+    
 }
 
 -(void) gallerygoright:(id)sender
@@ -1638,9 +1727,10 @@ CGRect lastZoomPicRect;
 
 -(void) animTap: (id)sender
 {
-    [ self.flipanimation removeFromSuperview ];
     self.flipanimation.image = nil;
     self.fatboyimgs = nil;
+    
+    [ self.flipanimation removeFromSuperview ];
     self.anim_index = -1;
     
     [ self.view addSubview:self.sv ];
@@ -1735,7 +1825,7 @@ CGRect lastZoomPicRect;
     [ self.gtv addGestureRecognizer:stap ];
     
     //  Right arrow...
-    UIImage *img = [ UIImage imageNamed:@"Tile5Arrowrightred2.png"];
+    UIImage *img = [ UIImage imageNamed:@"Tile5Arrowright.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom ];
     button.frame = CGRectMake( 1024-img.size.width,  768/2.0-img.size.height/2.0, 
                               img.size.width, img.size.height);
@@ -1744,7 +1834,7 @@ CGRect lastZoomPicRect;
     self.grarrow = button;
     
     //  Left arrow...
-    img = [ UIImage imageNamed:@"Tile5Arrowleftred2.png"];
+    img = [ UIImage imageNamed:@"Tile5Arrowleft.png"];
     button = [UIButton buttonWithType:UIButtonTypeCustom ];
     button.frame = CGRectMake( 0, 768/2.0-img.size.height/2.0, 
                               img.size.width, img.size.height);
@@ -1810,52 +1900,67 @@ CGRect lastZoomPicRect;
     
 }
 
+-(void) scrollToPage:(int)page
+{
+    
+    if (self.arrow_scrolling) return;
+    self.arrow_scrolling = YES;
+    
+    CGRect rct = CGRectMake(1024.0*page, 0, 1024, 768); 
+    self.lastrct = rct;
+    self.new_page = page;
+    //[self.gsv scrollRectToVisible:rct animated:YES];
+    [UIView animateWithDuration:0.4
+                          delay: 0.03
+                        options: UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.gsv.contentOffset = CGPointMake(self.lastrct.origin.x, self.lastrct.origin.y);
+                     }
+                     completion:^(BOOL finished)
+                     {
+                         self.gsv.contentOffset = CGPointMake(self.lastrct.origin.x, self.lastrct.origin.y);
+                         self.arrow_scrolling = NO;
+                         self.pc.currentPage = self.new_page;
+                         self.glarrow.hidden = NO;
+                         self.grarrow.hidden = NO;
+                         if ( self.pc.currentPage == 0 )
+                         {
+                             self.glarrow.hidden = YES;
+                         }
+                         else if (self.pc.currentPage == ( self.pc.numberOfPages-1 ) )
+                         {
+                             self.grarrow.hidden = YES;
+                         }
+                         [ self loadPage ];
+                     }
+     ];
+}
+
 -(void) nextPage
 {
+    if (self.arrow_scrolling) return;
     int cur_page = self.pc.currentPage;
     
     if (cur_page<( self.pc.numberOfPages - 1 ))
     {
-        [ self.pc setCurrentPage:(cur_page+1) ];
-        CGRect rct = CGRectMake(1024.0*(cur_page+1), 0, 1024, 768); 
-        [self.gsv scrollRectToVisible:rct animated:YES];
+        //[ self.pc setCurrentPage:(cur_page+1) ];
+        [ self scrollToPage:(cur_page+1)];
     }
     
-    self.glarrow.hidden = NO;
-    self.grarrow.hidden = NO;
-    cur_page = self.pc.currentPage;
-    if ( cur_page == 0 )
-    {
-        self.glarrow.hidden = YES;
-    }
-    else if (cur_page == ( self.pc.numberOfPages-1 ) )
-    {
-        self.grarrow.hidden = YES;
-    }
+    
 }
 
 
 -(void) prevPage
 {
+    
+    if (self.arrow_scrolling) return;
     int cur_page = self.pc.currentPage;
     
     if (cur_page>0)
     {
         [ self.pc setCurrentPage:(cur_page-1) ];
-        CGRect rct = CGRectMake(1024.0*(cur_page-1), 0, 1024, 768); 
-        [self.gsv scrollRectToVisible:rct animated:YES];
-    }
-    self.glarrow.hidden = NO;
-    self.grarrow.hidden = NO;
-    
-    cur_page = self.pc.currentPage;
-    if ( cur_page == 0 )
-    {
-        self.glarrow.hidden = YES;
-    }
-    else if (cur_page == ( self.pc.numberOfPages-1 ) )
-    {
-        self.grarrow.hidden = YES;
+        [ self scrollToPage:(cur_page-1)];
     }
 }
 
@@ -1863,8 +1968,10 @@ CGRect lastZoomPicRect;
 {
     int cur_page = self.pc.currentPage;
     
-    CGRect rct = CGRectMake(1024.0*cur_page, 0, 1024, 768); 
-    [self.gsv scrollRectToVisible:rct animated:YES];
+    [ self scrollToPage:cur_page ];
+    
+    //CGRect rct = CGRectMake(1024.0*cur_page, 0, 1024, 768); 
+    //[self.gsv scrollRectToVisible:rct animated:YES];
     //self.gsv.contentOffset = CGPointMake(1024*cur_page,0);
 }
 
@@ -2111,6 +2218,8 @@ CGRect lastZoomPicRect;
         {
             self.grarrow.hidden = YES;
         }
+        
+        [ self loadPage ];
     }
     
     //[ self togglePage:lastSection :NO ];

@@ -167,6 +167,9 @@
 		B3B0CA7114B99F1E007D035B /* SB_Concepts21.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3B0CA6D14B99F1E007D035B /* SB_Concepts21.jpg */; };
 		B3B0CA7414B9A3F2007D035B /* Tile8Playbutton.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B0CA7314B9A3F2007D035B /* Tile8Playbutton.png */; };
 		B3B0CA7614B9A559007D035B /* Tile1Aboutus.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B0CA7514B9A559007D035B /* Tile1Aboutus.png */; };
+		B3B7B45D14C0470F004F6F82 /* Tile5Arrowleft.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B7B45B14C0470F004F6F82 /* Tile5Arrowleft.png */; };
+		B3B7B45E14C0470F004F6F82 /* Tile5Arrowright.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B7B45C14C0470F004F6F82 /* Tile5Arrowright.png */; };
+		B3B7B46114C04AF7004F6F82 /* illustration15.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3B7B46014C04AF7004F6F82 /* illustration15.jpg */; };
 		B3F1E5AA14BDA73500CDACE1 /* Boxdottedbig.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5A814BDA73500CDACE1 /* Boxdottedbig.png */; };
 		B3F1E5AB14BDA73500CDACE1 /* Boxdottedbig2.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5A914BDA73500CDACE1 /* Boxdottedbig2.png */; };
 		B3F1E5AD14BDAA2000CDACE1 /* Tile7Characterdevelopment.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5AC14BDAA2000CDACE1 /* Tile7Characterdevelopment.png */; };
@@ -610,6 +613,9 @@
 		B3B0CA6D14B99F1E007D035B /* SB_Concepts21.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = SB_Concepts21.jpg; sourceTree = "<group>"; };
 		B3B0CA7314B9A3F2007D035B /* Tile8Playbutton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile8Playbutton.png; sourceTree = "<group>"; };
 		B3B0CA7514B9A559007D035B /* Tile1Aboutus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile1Aboutus.png; sourceTree = "<group>"; };
+		B3B7B45B14C0470F004F6F82 /* Tile5Arrowleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile5Arrowleft.png; sourceTree = "<group>"; };
+		B3B7B45C14C0470F004F6F82 /* Tile5Arrowright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile5Arrowright.png; sourceTree = "<group>"; };
+		B3B7B46014C04AF7004F6F82 /* illustration15.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = illustration15.jpg; sourceTree = "<group>"; };
 		B3F1E5A814BDA73500CDACE1 /* Boxdottedbig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boxdottedbig.png; sourceTree = "<group>"; };
 		B3F1E5A914BDA73500CDACE1 /* Boxdottedbig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boxdottedbig2.png; sourceTree = "<group>"; };
 		B3F1E5AC14BDAA2000CDACE1 /* Tile7Characterdevelopment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile7Characterdevelopment.png; sourceTree = "<group>"; };
@@ -1013,6 +1019,8 @@
 		B386520614B5D73D00C48BD3 /* Content */ = {
 			isa = PBXGroup;
 			children = (
+				B3B7B45B14C0470F004F6F82 /* Tile5Arrowleft.png */,
+				B3B7B45C14C0470F004F6F82 /* Tile5Arrowright.png */,
 				B3F1E5B814BDC21A00CDACE1 /* Icon.png */,
 				B3F1E58114BD815F00CDACE1 /* Menu */,
 				B3346F8314BC1878007C5A59 /* Elements */,
@@ -1114,6 +1122,7 @@
 				B39BCC5B14BFA64B00EEAF97 /* illustration13.jpg */,
 				B39BCC5C14BFA64B00EEAF97 /* illustration14.jpg */,
 				B39BCC5D14BFA64B00EEAF97 /* illustration16.jpg */,
+				B3B7B46014C04AF7004F6F82 /* illustration15.jpg */,
 				B39BCC5E14BFA64B00EEAF97 /* illustration17.jpg */,
 				B39BCC5F14BFA64B00EEAF97 /* illustration18.jpg */,
 				B39BCC6014BFA64B00EEAF97 /* illustration19.jpg */,
@@ -2054,6 +2063,9 @@
 				B39BCD2E14BFCD0800EEAF97 /* charDev12.jpg in Resources */,
 				B39BCD2F14BFCD0800EEAF97 /* charDev15.jpg in Resources */,
 				B39BCD3114BFD8C300EEAF97 /* Tile5Redarrow2.png in Resources */,
+				B3B7B45D14C0470F004F6F82 /* Tile5Arrowleft.png in Resources */,
+				B3B7B45E14C0470F004F6F82 /* Tile5Arrowright.png in Resources */,
+				B3B7B46114C04AF7004F6F82 /* illustration15.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
