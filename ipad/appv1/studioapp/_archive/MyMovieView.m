@@ -26,10 +26,9 @@
 //@synthesize delegate=_delegate;
 @synthesize offset=_offset;
 @synthesize playv=_playv;
-//@synthesize moviePlayer=_moviePlayer;
+@synthesize moviePlayer=_moviePlayer;
 @synthesize del=_del;
 @synthesize section=_section;
-@synthesize item=_item;
 
 - (BOOL) handleBleed
 {
@@ -42,28 +41,47 @@
     {
         return NO;
     }
-   
+    
+#if 0
+    ViewController *vc = (ViewController *)self.vparent;
+    if ( self.section != vc.section )
+    {
+        if ( self.delegate != nil )
+        {
+            [ self.delegate section_goto:self.section ];
+        }
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+#endif
 }
 
+#if 1
 
 - (void) load
 {
+    //  Get splash screen resource as url...
+    //NSString *internalPath = [[NSBundle mainBundle] pathForResource: @"gunhill" ofType: @"mp4"];
     NSString *internalPath = [[NSBundle mainBundle] 
-                              pathForResource:self.movie ofType: @"mov"];
+                              pathForResource: self.movie ofType: @"mov"];
     NSURL *internalURL = [NSURL fileURLWithPath: internalPath];
-    self.item= [ [[AVPlayerItem alloc] initWithURL:internalURL] autorelease ];
-    self.av = [ [[AVPlayer alloc] initWithPlayerItem:self.item] autorelease ];
-    [ self.player setPlayer:self.av ];
-    [ self addSubview:self.player ];
     
-#if 0
+    //  Create/set player...
+    self.av =  [ [ AVPlayer alloc] initWithURL:internalURL ];
+    //[self.av autorelease];
+    
+    [ self.player settPlayer:self.av ]; 
+    //[ self.av play ];
+    //[ self.av pause ];
     
     if (self.offset>0 )
     {
         CMTime time1 = CMTimeMake(self.offset, 4);
         [ self.av seekToTime:time1 ];
     }
-#endif
 }
 
 - (void) play
@@ -74,9 +92,9 @@
     }
     else
     {
-        
-        [self load];
+
         [ self.av play ]; 
+
         
         self.playing = YES;
         self.playv.hidden = YES;
@@ -98,13 +116,16 @@
     {
         
         self.playing = NO;
-        
+   
         [ self.av pause ];
-        [ self.player removeFromSuperview ];
-        [ self.player setPlayer:nil];
-        //[ self.item release ];
-        //[ self.av release ];  
+        if (self.offset>0 )
+        {
+            CMTime time1 = CMTimeMake(self.offset, 4);
+            [ self.av seekToTime:time1 ];
+        }
 
+        
+         
         self.playv.hidden = NO;
          
     }
@@ -141,33 +162,50 @@
         self.movie = mv;
         self.offset = offset;
         self.playing = NO;
-        
-        //  Player...
-        self.player = [ [ [ PlayerView alloc ] initWithFrame:                       
-                         CGRectMake(0, 0, frame.size.width, frame.size.height)] autorelease ];
+    
+        self.player = [ [ AVPlayerDemoPlaybackView alloc ] 
+                       initWithFrame:                       
+                       CGRectMake(0, 0, frame.size.width, frame.size.height)];
         [ self addSubview:self.player ];
+
+        
         
         //  Tap gesture...
         self.tap = 
-            [ [[UITapGestureRecognizer alloc] initWithTarget:self 
-                                                      action:@selector(oneFingerTwoTaps)] autorelease ];
+            [[UITapGestureRecognizer alloc] initWithTarget:self 
+                                                    action:@selector(oneFingerTwoTaps)];;
         // Set required taps and number of touches
         [self.tap setNumberOfTapsRequired:1];
         [self.tap setNumberOfTouchesRequired:1];
-        [ self addGestureRecognizer:self.tap ];
+        //[ self addGestureRecognizer:self.tap];
+        
+        [ self.player addGestureRecognizer:self.tap ];
+        
+        [self load];
         
         //  Play button...
         UIImage *img = [ UIImage imageNamed:@"Tile8Playbutton.png" ];
         float w = img.size.width;
         float h = img.size.height;
-        CGRect rect = CGRectMake( frame.size.width/2.0, frame.size.height/2.0, w, h );
-        self.playv = [ [ [ UIImageView alloc] initWithFrame:rect ] autorelease ];
+        CGRect rect = CGRectMake( frame.size.width/2.0, frame.size.height/2.0, w, h ); //frame.size.width, frame.size.height );
+        self.playv = [ [ UIImageView alloc] initWithFrame:rect ];
         [ self.playv setImage:img ];
         [ self addSubview:self.playv ];
         
+        //self.backgroundColor = [ UIColor blueColor ];
     }
     return self;
 }
 
+/*
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect
+{
+    // Drawing code
+}
+*/
+
+#endif
 
 @end

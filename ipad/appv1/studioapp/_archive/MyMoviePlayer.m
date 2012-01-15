@@ -81,8 +81,7 @@
 
 - (void) readyPlayer
 {
-    self.mp =  [ [[MPMoviePlayerController alloc] initWithContentURL:movieURL] autorelease ];
-    
+    self.mp =  [[MPMoviePlayerController alloc] initWithContentURL:movieURL];
     
     [ self.view addSubview:self.mp.view ];
     

@@ -13,48 +13,25 @@
 @synthesize window = _window;
 @synthesize vc=_vc;
 
--(void) report_memory {
-    struct task_basic_info info;
-    mach_msg_type_number_t size = sizeof(info);
-    kern_return_t kerr = task_info(mach_task_self(),
-                                   TASK_BASIC_INFO,
-                                   (task_info_t)&info,
-                                   &size);
-    if( kerr == KERN_SUCCESS ) {
-        NSLog(@"Memory in use (in bytes): %u", info.resident_size);
-    } else {
-        NSLog(@"Error with task_info(): %s", mach_error_string(kerr));
-    }
-}
-
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
-    [ self report_memory ];
-#if 0
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"App Low Memory" 
                                                     message:@"App Low Memory" 
                                                    delegate:nil 
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
-#endif
+
 }
 
 -(void) lowMemNotification:(id)obj
 {
-    
-    [ self report_memory ];
-    
-#if 0
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"App Low Memory" 
                                                     message:@"App Low Memory" 
                                                    delegate:nil 
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
-    [alert release];
-#endif
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -99,9 +76,7 @@
      */
     if ( self.vc != nil )
     {
-#ifdef DO_GALLERY
         [ self.vc galleryTap:nil ];
-#endif
         
         [ self.vc gotoSection:Section_Home :NO ];
         if ( !self.vc.blinking )

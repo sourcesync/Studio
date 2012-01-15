@@ -170,8 +170,6 @@
 		B3B7B45D14C0470F004F6F82 /* Tile5Arrowleft.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B7B45B14C0470F004F6F82 /* Tile5Arrowleft.png */; };
 		B3B7B45E14C0470F004F6F82 /* Tile5Arrowright.png in Resources */ = {isa = PBXBuildFile; fileRef = B3B7B45C14C0470F004F6F82 /* Tile5Arrowright.png */; };
 		B3B7B46114C04AF7004F6F82 /* illustration15.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3B7B46014C04AF7004F6F82 /* illustration15.jpg */; };
-		B3B7B46414C14FB2004F6F82 /* Section.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7B46314C14FB1004F6F82 /* Section.m */; };
-		B3B7B4F814C18D7E004F6F82 /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3B7B4F714C18D7E004F6F82 /* PlayerView.m */; };
 		B3F1E5AA14BDA73500CDACE1 /* Boxdottedbig.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5A814BDA73500CDACE1 /* Boxdottedbig.png */; };
 		B3F1E5AB14BDA73500CDACE1 /* Boxdottedbig2.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5A914BDA73500CDACE1 /* Boxdottedbig2.png */; };
 		B3F1E5AD14BDAA2000CDACE1 /* Tile7Characterdevelopment.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5AC14BDAA2000CDACE1 /* Tile7Characterdevelopment.png */; };
@@ -618,10 +616,6 @@
 		B3B7B45B14C0470F004F6F82 /* Tile5Arrowleft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile5Arrowleft.png; sourceTree = "<group>"; };
 		B3B7B45C14C0470F004F6F82 /* Tile5Arrowright.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile5Arrowright.png; sourceTree = "<group>"; };
 		B3B7B46014C04AF7004F6F82 /* illustration15.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = illustration15.jpg; sourceTree = "<group>"; };
-		B3B7B46214C14FB1004F6F82 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Section.h; sourceTree = "<group>"; };
-		B3B7B46314C14FB1004F6F82 /* Section.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Section.m; sourceTree = "<group>"; };
-		B3B7B4F614C18D7E004F6F82 /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayerView.h; path = ../../../../VideoTest/VideoTest/VideoTest/PlayerView.h; sourceTree = "<group>"; };
-		B3B7B4F714C18D7E004F6F82 /* PlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayerView.m; path = ../../../../VideoTest/VideoTest/VideoTest/PlayerView.m; sourceTree = "<group>"; };
 		B3F1E5A814BDA73500CDACE1 /* Boxdottedbig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boxdottedbig.png; sourceTree = "<group>"; };
 		B3F1E5A914BDA73500CDACE1 /* Boxdottedbig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boxdottedbig2.png; sourceTree = "<group>"; };
 		B3F1E5AC14BDAA2000CDACE1 /* Tile7Characterdevelopment.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile7Characterdevelopment.png; sourceTree = "<group>"; };
@@ -976,8 +970,6 @@
 				B38651FD14B5B22900C48BD3 /* main */,
 				B38651FE14B5B23E00C48BD3 /* mainviewctl */,
 				B38651E714B5B1D700C48BD3 /* Supporting Files */,
-				B3B7B46214C14FB1004F6F82 /* Section.h */,
-				B3B7B46314C14FB1004F6F82 /* Section.m */,
 			);
 			path = studioapp;
 			sourceTree = "<group>";
@@ -1525,8 +1517,6 @@
 		B3F9DFC614B70CB800BAD3B3 /* mymovieview */ = {
 			isa = PBXGroup;
 			children = (
-				B3B7B4F614C18D7E004F6F82 /* PlayerView.h */,
-				B3B7B4F714C18D7E004F6F82 /* PlayerView.m */,
 				B3F9DFD914B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.h */,
 				B3F9DFDA14B7217F00BAD3B3 /* AVPlayerDemoPlaybackView.m */,
 				B3F9DFDB14B7217F00BAD3B3 /* MyMoviePlayer.h */,
@@ -2094,8 +2084,6 @@
 				B3F9DFE114B7217F00BAD3B3 /* MyMoviePlayer.m in Sources */,
 				B3F9DFE314B7217F00BAD3B3 /* MyMovieView.m in Sources */,
 				B3F1E5B114BDADED00CDACE1 /* DropShadowView.m in Sources */,
-				B3B7B46414C14FB2004F6F82 /* Section.m in Sources */,
-				B3B7B4F814C18D7E004F6F82 /* PlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2172,7 +2160,6 @@
 		B38651FB14B5B1D700C48BD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: George Williams";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: George Williams";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2188,7 +2175,6 @@
 		B38651FC14B5B1D700C48BD3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: George Williams";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: George Williams";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

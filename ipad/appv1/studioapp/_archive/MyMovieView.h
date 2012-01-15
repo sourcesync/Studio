@@ -10,10 +10,22 @@
 #import <AVFoundation/AVFoundation.h>
 
 #import "AVPlayerDemoPlaybackView.h"
-#import "PlayerView.h"
 //#import "ZoomPicViewDelegate.h"
-//#import "MyMoviePlayer.h"
-#import "Section.h"
+#import "MyMoviePlayer.h"
+
+enum Section
+{
+    Section_AboutUs = 0,
+    Section_Illustration,
+    Section_Film,
+    Section_Design,
+    Section_Home,
+    Section_Preproduction,
+    Section_CharacterDevelopment,
+    Section_Animation,
+    Section_Storyboarding
+};
+
 
 @protocol MyMovieViewDelegate <NSObject>
 -(BOOL) movieHandleBleed:(enum Section)sct;
@@ -22,9 +34,7 @@
 
 @interface MyMovieView : UIView
 
-//@property (strong,nonatomic) AVPlayerDemoPlaybackView *player;
-@property (strong,nonatomic) PlayerView *player;
-@property (strong,nonatomic) AVPlayerItem *item;
+@property (strong,nonatomic) AVPlayerDemoPlaybackView *player;
 @property (strong,nonatomic) AVPlayer *av;
 @property (strong,nonatomic) UITapGestureRecognizer *tap;
 @property (nonatomic) BOOL playing;
@@ -35,7 +45,7 @@
 @property (assign) id<MyMovieViewDelegate> del;
 @property (assign) int offset;
 @property (strong,nonatomic) UIImageView *playv;
-//@property (strong,nonatomic) MyMoviePlayer *moviePlayer;
+@property (strong,nonatomic) MyMoviePlayer *moviePlayer;
 @property (assign) enum Section section;
 
 - (id)initWithFrame:(CGRect)frame:(NSString *)mv:(int)offset;
