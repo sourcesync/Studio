@@ -3,8 +3,8 @@ if(window.Event && document.captureEvents)
 	
 document.onmousemove = getMouseMovingPos;
 
-var total_images = 14;
-var arrMap = [ 1,1,2,3,4,5,6,7,8,9,10,12,13,14 ];
+var total_images = 15;
+var arrMap = [ 0,8,1,3,4,5,6,7,2,9,10,12,13,14,17 ];
 
 var in_zone = false;
 
@@ -14,7 +14,7 @@ var mouse_y;
 var locationX;
 var locationY;
 
-var max_table_right = 1045;
+var max_table_right = 1120;
 var max_table_left = 0;
 
 var image_table_position = 0;
@@ -49,7 +49,7 @@ adjustSharedLinks();
 
 var image_cells = new Array(total_images);
 var image_preview = new Array(total_images);
-var slide_text = new Array("", "Leflein Research: Greenfish","Concept Ad: Chevy Volt","Concept Ad: Tropical Crush","Concept Ad: E-Trade","The Studio: Holiday Greeting","VFX: Colgate","VFX: Colgate","SSK: Chevy Volt","DraftFCB: Gerber Treatment","Concept Ad: Allstate","DraftFCB: Oreo","Johnson and Johnson: Concerta","DraftFCB: Gerber Treatment","MPC Global Connect: Srina Tea");
+var slide_text = new Array("Tribeca Film Institute Trailer", "SSK: Chevy Volt","Leflein Research: Greenfish","Concept Ad: Tropical Crush","Concept Ad: E-Trade","The Studio: Holiday Greeting","VFX: Colgate","VFX: Colgate","Concept Ad: Chevy Volt","DraftFCB: Gerber Treatment","Concept Ad: Allstate","Johnson and Johnson: Concerta","DraftFCB: Gerber Treatment","MPC Global Connect: Srina Tea","Walton Isaacson - 'Success Academy'");
 
 
  function getMouseMovingPos(e)
@@ -189,9 +189,9 @@ function coverWithRed()
 	for (i = 0; i < (total_images); i++)
 	{
 		image_cells[i].innerHTML = '&nbsp;';
-		thidx = arrMap[i];
+		rthidx = arrMap[i];
 		if (image_cells[i].style.backgroundImage == "")
-			image_cells[i].style.backgroundImage =  "url(commercial/thumbs/red_preview_" + thidx + ".png)";
+			image_cells[i].style.backgroundImage =  "url(commercial/thumbs/red_preview_" + rthidx + ".png)";
 	}
 }
 
@@ -209,8 +209,6 @@ function previewImage(theObject)
 	  //Handle errors here
 	}
 	
-	alert('yo');
-	
 	video_controls.style.visibility = "hidden";
 	coverWithRed();
 	theObject.style.backgroundImage = "";
@@ -220,14 +218,12 @@ function previewImage(theObject)
 	//current_slide = theObject.id;
 	
 	i = theObject.id.toString();
-	alert(i);
 	thidx = arrMap[i];
-	alert(thidx);
 	theObject.innerHTML = '<img src="commercial/thumbs/preview_' + thidx + '.png" width="107" height="60" border="0" />';
 	video_sector.innerHTML = image_preview[i];
 	current_slide = thidx;
 
-	slide_data.innerHTML = slide_text[current_slide];
+	slide_data.innerHTML = slide_text[i];
 	adjustSharedLinks();
 }
 
@@ -243,15 +239,18 @@ function previewImageBySlide(slide_number)
 	{
 	  //Handle errors here
 	}
-	
+
+	thidx = arrMap[slide_number];
+
+	//alert('pibs' + slide_number);	
 	video_controls.style.visibility = "hidden";
 	coverWithRed();
 	var theObject = document.getElementById(slide_number);
 	theObject.style.backgroundImage = "";
-	theObject.innerHTML = '<img src="commercial/thumbs/preview_' + slide_number + '.png" width="107" height="60" border="0" />';
+	theObject.innerHTML = '<img src="commercial/thumbs/preview_' + thidx + '.png" width="107" height="60" border="0" />';
 	video_sector.innerHTML = image_preview[slide_number];
-	current_slide = slide_number;
-	slide_data.innerHTML = slide_text[current_slide];
+	current_slide = thidx;
+	slide_data.innerHTML = slide_text[slide_number];
 	adjustSharedLinks();
 }
 

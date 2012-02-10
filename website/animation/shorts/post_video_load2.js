@@ -1,0 +1,2 @@
+
+previewImageBySlide(0);

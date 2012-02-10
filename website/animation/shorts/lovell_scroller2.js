@@ -5,7 +5,10 @@ document.onmousemove = getMouseMovingPos;
 
 var video_sector = document.getElementById("video_sector");
 
-var total_images = 7;
+//var total_images = 7;
+var total_images = 11;
+var arrMap = [ 0,1,2,3,4,5,6,8,9,10,11 ];
+
 var in_zone = false;
 
 var mouse_x;
@@ -14,7 +17,8 @@ var mouse_y;
 var locationX;
 var locationY;
 
-var max_table_right = 286; //395
+//var max_table_right = 286; 
+var max_table_right = 695
 var max_table_left = 0;
 
 var image_table_position = 0;
@@ -49,7 +53,7 @@ adjustSharedLinks();
 
 var image_cells = new Array(total_images);
 var image_preview = new Array(total_images);
-var slide_text = new Array("", "'Snow Globe'", "'Love Sentence'", "'Airhead'", "'Rocks'", "'Take Me There'", "'Bizzywater'", "'Engard'");
+var slide_text = new Array("'The Global Fund'", "'Snow Globe'", "'Love Sentence'", "'Airhead'", "'Rocks'", "'Take Me There'", "'Bizzywater'", "'Engard'", "The Metropolitan Museum of Art - 'My Met'","ABC Whiteboard Animation - 'Industrial Revolution'","ABC Whiteboard Animation - 'Butterfly'");
 
 
  function getMouseMovingPos(e)
@@ -80,11 +84,13 @@ function inZone(state)
 
 
 
-for (i = 1; i < (total_images + 1); i++)
+//for (i = 1; i < (total_images + 1); i++)
+for (i = 0; i < (total_images ); i++)
 {
 	image_cells[i] = document.getElementById(i);
-	image_cells[i].style.backgroundImage =  "url(shorts/thumbs2/red_preview_" + i + ".png)";
-	image_preview[i] = '<div id="preview_div" style="background-image:url(shorts/mth/' + i + '.png); height:281px; width:480px; overflow:hidden;" align="center" onclick="setVideo(\'shorts\')"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">  <tr> <td align="center" valign="middle"><img src="../images/play.png" width="50" height="50" border="0"/></td>  </tr></table></div>';
+	thidx = arrMap[i];
+	image_cells[i].style.backgroundImage =  "url(shorts/thumbs/red_preview_" + thidx + ".png)";
+	image_preview[i] = '<div id="preview_div" style="background-image:url(shorts/' + thidx + '.png); height:281px; width:480px; overflow:hidden;" align="center" onclick="setVideo(\'shorts\')"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">  <tr> <td align="center" valign="middle"><img src="../images/play.png" width="50" height="50" border="0"/></td>  </tr></table></div>';
 }
 
 
@@ -184,11 +190,13 @@ function checkBounderies()
 
 function coverWithRed()
 {
-	for (i = 1; i < (total_images + 1); i++)
+	//for (i = 1; i < (total_images + 1); i++)
+	for (i = 0; i < (total_images ); i++)
 	{
 		image_cells[i].innerHTML = '&nbsp;';
+		thidx = arrMap[i];
 		if (image_cells[i].style.backgroundImage == "")
-			image_cells[i].style.backgroundImage =  "url(shorts/thumbs2/red_preview_" + i + ".png)";
+			image_cells[i].style.backgroundImage =  "url(shorts/thumbs/red_preview_" + thidx + ".png)";
 	}
 }
 
@@ -210,11 +218,15 @@ function previewImage(theObject)
 	loading_div.style.visibility = "hidden";
 	
 	coverWithRed();
+
+        i = theObject.id.toString();
+        thidx = arrMap[i];
+
 	theObject.style.backgroundImage = "";
-	theObject.innerHTML = '<img src="shorts/thumbs2/preview_' + theObject.id + '.png" width="107" height="60" border="0" />';
-	video_sector.innerHTML = image_preview[theObject.id];
-	current_slide = theObject.id;
-	slide_data.innerHTML = slide_text[current_slide];
+	theObject.innerHTML = '<img src="shorts/thumbs/preview_' + thidx + '.png" width="107" height="60" border="0" />';
+	video_sector.innerHTML = image_preview[i];
+	current_slide = thidx;
+	slide_data.innerHTML = slide_text[i];
 	adjustSharedLinks();
 }
 
@@ -237,7 +249,7 @@ function previewImageBySlide(slide_number)
 	coverWithRed();
 	var theObject = document.getElementById(slide_number);
 	theObject.style.backgroundImage = "";
-	theObject.innerHTML = '<img src="shorts/thumbs2/preview_' + slide_number + '.png" width="107" height="60" border="0" />';
+	theObject.innerHTML = '<img src="shorts/thumbs/preview_' + slide_number + '.png" width="107" height="60" border="0" />';
 	video_sector.innerHTML = image_preview[slide_number];
 	current_slide = slide_number;
 	slide_data.innerHTML = slide_text[current_slide];

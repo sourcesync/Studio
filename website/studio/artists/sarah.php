@@ -231,10 +231,12 @@
                   <td>&nbsp;</td>
                   <td><a href="anthony.php" target="_self" onmouseover="animate_sub_sub_link('anthony')" onmouseout="hide_sub_sub_link_animation('anthony', 75)"><img src="images/font_final2/anthony.png" width="200" height="16" border="0" /></a></td>
                 </tr>
+		<!--
                 <tr>
                   <td>&nbsp;</td>
                   <td><a href="alyssa.php" target="_self" onmouseover="animate_sub_sub_link('alyssa')" onmouseout="hide_sub_sub_link_animation('alyssa', 75)"><img src="images/font_final2/alyssa.png" width="200" height="15" border="0" /></a></td>
                 </tr>
+		-->
 		<!-- gw 10/5/2011 removed
                 <tr>
                   <td>&nbsp;</td>

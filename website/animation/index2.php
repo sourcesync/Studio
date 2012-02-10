@@ -37,8 +37,10 @@
 
 <div id="top_section" style="height: 59px; width: 480px; position:absolute; top: 61px; left: 345px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
   <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
-<table width="763" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+<table width="1163" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
     <tr>
+      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
+      <td width="107px" id="0" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="1" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
@@ -54,10 +56,12 @@
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="7" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-<!--
       <td width="107px" id="8" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
--->
+      <td width="107px" id="9" onclick="previewImage(this)">&nbsp;</td>
+      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
+      <td width="107px" id="10" onclick="previewImage(this)">&nbsp;</td>
+      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
     </tr>
   </table> 
 
@@ -84,14 +88,14 @@
      <?php if (!$is_ie)	{	?>
     <video id="theVideo" width="480" height="282" poster="shorts/1.png" controls="controls" preload="auto">
         <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 -->
-        <source type="video/mp4" src="shorts/sd2/1.mp4video.mp4" />
+        <source type="video/mp4" src="shorts/sd/0.mp4video.mp4" />
         <!-- Ogg/Vorbis for older Firefox and Opera versions -->
-        <source type="video/ogg" src="shorts/sd2/1.theora.ogv" />
+        <source type="video/ogg" src="shorts/sd/0.theora.ogv" />
         <!-- Optional: Add subtitles for each language -->
         <!-- Flash fallback for non-HTML5 browsers without JavaScript -->	
         <object width="480" height="282" type="application/x-shockwave-flash" data="shorts/flashmediaelement.swf">
             <param name="movie" value="shorts/flashmediaelement.swf" />
-            <param name="flashvars" value="controls=true&poster=shorts/1.png&file=shorts/sd2/1.mp4video.mp4" />
+            <param name="flashvars" value="controls=true&poster=shorts/1.png&file=shorts/sd/0.mp4video.mp4" />
             <!-- Image as a last resort -->
             <img src="shorts/1.png" width="480" height="282" title="No video playback capabilities. Please get Google Chrome" />
         </object>
@@ -103,7 +107,7 @@
         <object id="wmp" height="282" width="480" classid="clsid:6BF52A52-394A-11d3-B153-00C04F79FAA6" type="application/x-oleobject">
        		<param name="autostart" value="true">
    		  	<param name="uimode" value="none">
-			<param name="url" value="shorts/sd2/1.wmv">
+			<param name="url" value="shorts/sd/0.wmv">
        		<param name="sendplaystatechangeevents" value="true">
     	</object>
   </div>
@@ -315,7 +319,7 @@ function videoEnded()
     onload=function() 
 	{
       player = document.getElementById("wmp");
-      player.URL = "shorts/sd2/1.wmv";
+      player.URL = "shorts/sd/0.wmv";
     };
 
     function eventTrigger(text) 
@@ -395,7 +399,7 @@ function videoEnded()
 		var ret = '<object id="wmp" height="282" width="480" classid="clsid:6BF52A52-394A-11d3-B153-00C04F79FAA6" type="application/x-oleobject">' + 
        		'<param name="autostart" value="true">' +
    		  	'<param name="uimode" value="none">' +
-			'<param name="url" value="' + pageFolder + '/sd2/' + fileNumber + '.wmv">' +
+			'<param name="url" value="' + pageFolder + '/sd/' + fileNumber + '.wmv">' +
        		'<param name="sendplaystatechangeevents" value="true">' +
     	'</object>';
 	   
@@ -413,5 +417,6 @@ function videoEnded()
     <?php } ?>
     
 <script language="javascript" src="shorts/lovell_scroller2.js"></script>
+<script language="javascript" src="shorts/post_video_load2.js"></script>
 <script language="javascript" src="shorts/shorts.js"></script>
 </html>

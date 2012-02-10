@@ -37,7 +37,7 @@
 
 <div id="top_section" style="height: 59px; width: 480px; position:absolute; top: 61px; left: 345px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
   <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
-<table width="1526" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+<table width="1600" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
     <tr>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="0" onclick="previewImage(this)">&nbsp;</td>
@@ -67,6 +67,8 @@
       <td width="107px" id="12" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="13" onclick="previewImage(this)">&nbsp;</td>
+      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
+      <td width="107px" id="14" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
     </tr>
   </table> 
@@ -263,7 +265,7 @@
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
 <script language="javascript" type="text/javascript" src="animation.js"></script>
-<script language="javascript" type="text/javascript" src="../scripts/video.js"></script>
+<script language="javascript" type="text/javascript" src="../scripts/video2.js"></script>
 <script language="javascript" type="text/javascript">
 	animate_selected_sub_link('commercial');
 	video_controls.style.visibility = "visible";	
@@ -286,6 +288,6 @@ function videoEnded()
 </script>
 
 <script language="javascript" src="commercial/lovell_scroller2.js"></script>
-<script language="javascript" src="commercial/post_video_load.js"></script>
+<script language="javascript" src="commercial/post_video_load2.js"></script>
 <script language="javascript" src="commercial/commercial.js"></script>
 </html>

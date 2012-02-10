@@ -77,14 +77,15 @@ function setVideo(directory)
 
 function loadVideo(pageFolder, fileNumber, width, height)
 {
-	var ret = '<video id="theVideo" width="' + width + '" height="' + height + '" poster="' + pageFolder + '/mth/' + fileNumber + '.png" controls="controls" preload="auto" autoplay onclick="PlayPause()">' +
-        '<source type="video/mp4" src="' + pageFolder + '/sd2/' + fileNumber + '.mp4video.mp4" />' +
-        '<source type="video/webm" src="' + pageFolder + '/sd2/' + fileNumber + '.webmvp8.webm" />' + 
-        '<source type="video/ogg" src="' + pageFolder + '/sd2/' + fileNumber + '.theora.ogv" />' + 
+	var ret = '<video id="theVideo" width="' + width + '" height="' + height + '" poster="' + pageFolder + '/' + fileNumber + '.png" controls="controls" preload="auto" autoplay onclick="PlayPause()">' +
+        '<source type="video/quicktime" src="' + pageFolder + '/sd/' + fileNumber + '.mov" />' +
+        '<source type="video/mp4" src="' + pageFolder + '/sd/' + fileNumber + '.mp4video.mp4" />' +
+        '<source type="video/webm" src="' + pageFolder + '/sd/' + fileNumber + '.webmvp8.webm" />' + 
+        '<source type="video/ogg" src="' + pageFolder + '/sd/' + fileNumber + '.theora.ogv" />' + 
 
         '<object width="' + width + '" height="' + height + '" type="application/x-shockwave-flash" data="' + pageFolder + '/flashmediaelement.swf">' + 
             '<param name="movie" value="' + pageFolder + '/flashmediaelement.swf" />' +
-            '<param name="flashvars" value="controls=true&poster=' + pageFolder + '/' + fileNumber + '.png&file=' + pageFolder + '/sd2/' + fileNumber + '.mp4video.mp4" />' +
+            '<param name="flashvars" value="controls=true&poster=' + pageFolder + '/' + fileNumber + '.png&file=' + pageFolder + '/sd/' + fileNumber + '.mp4video.mp4" />' +
             '<img src="' + pageFolder + '/' + fileNumber + '.png" width="' + width + '" height="' + height + '" title="No video playback capabilities detected. Use Google Chrome" />' +
         '</object>' +
    '</video>';
