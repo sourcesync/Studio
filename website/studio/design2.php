@@ -18,7 +18,7 @@
 <div id="top_section" style="height: 60px; width: 419px; position:absolute; top: 61px; left: 344px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
   <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
 
-<table border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+<table width="1600" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
     <tr>
       <td><img src="../images/bar.png" width="2" border="0" /></td>
       <td><div id="0" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
@@ -69,6 +69,46 @@
       <td><img src="../images/bar.png" width="2" border="0" /></td>
       <td><div id="23" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
       <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="24" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="25" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="26" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="27" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="28" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="29" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="30" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="31" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="32" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="33" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="34" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="35" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="36" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="37" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="38" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="39" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="40" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="41" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="42" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="43" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
     </tr>
   </table> 
 
@@ -89,7 +129,7 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td align="center" valign="middle" id="preview"><img src="design/20.png" alt=" " width="428" height="305" border="0" /></td>
+    <td align="center" valign="middle" id="preview"><img src="design/01.png" alt=" " width="428" height="305" border="0" /></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
