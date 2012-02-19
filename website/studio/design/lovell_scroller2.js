@@ -1,8 +1,8 @@
-var max_table_right = 2450;
+var max_table_right = 1700;
 var max_table_left = 0;
 //var total_images = 19;
-var total_images = 43;
-var current_slide = 0;
+var total_images = 32;
+var current_slide = -1;
 var image_path = "design/";
 
 redbox = '<img src="../images/red_thumb.png" width="64" height="64" border="0" />';
@@ -46,7 +46,7 @@ var share_delicious = document.getElementById("share_delicious");
 var share_stumbleupon = document.getElementById("share_stumbleupon");
 var share_digg = document.getElementById("share_digg");
 
-var arrMap = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43);
+var arrMap = new Array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32);
 	
 //"Museum Shop Identity, Designer: Mariana Pariani", 
 
@@ -59,41 +59,30 @@ var slide_text = new Array(
 	"Exodus, Art & Design: Andrew Reid", //6 //17
 	"Goulue Logo & Signage, Art & Design: Andrew Reid", //7 //18
 	"Srina Logotype Concept, Designer: Ray Behar", //8 //19
-	"", //9
-	"Package Design Srina Tea", //10
-	"Srina Website Homepage, Designer: Ray Behar", //11
-	"", //12
-	"", //13
-	"", //14
-	"Glenfiddich, Momentum WW, Art & Design: Andrew Reid", //15
-	"", //16
-	"Exodus, Art & Design: Andrew Reid", //17
-	"Goulue Logo & Signage, Art & Design: Andrew Reid", //18
-        "Srina Logotype Concept, Designer: Ray Behar", //19
-	"Srina Label Design", //20
-	"Lenox Lounge Site Installation",//21
-	"Lenox Lounge Site Installation",//22
-	"Lenox Lounge Produce Line",//23
-	"Belle Glade Library-Etched Glass Design, Andrew Reid", //24
-	"Belle Glade Library-Etched Glass Design, Andrew Reid", //25
-	"Lenox Lounge Website", //26
-	"ABC Infographic", //27
-	"ABC Infographic", //28
-	"ABC Infographic", //29
-	"Self Promotional TShirts", //30
-	"Self Promotional TShirts", //31
-	"The Global Fund Presentation", //32
-	"The Global Func Presenation", //33
-	"Ford Foundation Presentation", //34
-	"Ford Foundation Presentation", //35
-	"Outten and Golden Webdesign- Ray Behar", //36
-	"Room Dividers and Screens- Andrew Reid", //37
-	"Room Dividers and Screens- Andrew Reid", //38
-	"Room Diviers and Screens- Andrew Reid", //39
-	"Site Installation- Red Rocks Amphitheater- Andrew Reid", //40
-	"Victory Garden Fence Designs- Andrew Reid", //41
-	"Starbucks", //42
-	"Starbucks" //43
+	"Srina Label Design", //9
+	"Lenox Lounge Site Installation",//10
+	"Lenox Lounge Site Installation",//11
+	"Lenox Lounge Product Line",//12
+	"Belle Glade Library-Etched Glass Design, Andrew Reid", //13
+	"Belle Glade Library-Etched Glass Design, Andrew Reid", //14
+	"Lenox Lounge Website", //15
+	"ABC Infographic", //16
+	"ABC Infographic", //17
+	"ABC Infographic", //18
+	"Self Promotional TShirts", //19
+	"Self Promotional TShirts", //20
+	"The Global Fund Presentation", //21
+	"The Global Fund Presenation", //22
+	"Ford Foundation Presentation", //23
+	"Ford Foundation Presentation", //24
+	"Outten and Golden Webdesign- Ray Behar", //25
+	"Room Dividers and Screens- Andrew Reid", //26
+	"Room Dividers and Screens- Andrew Reid", //27
+	"Room Dividers and Screens- Andrew Reid", //28
+	"Site Installation- Red Rocks Amphitheater- Andrew Reid", //29
+	"Victory Garden Fence Designs- Andrew Reid", //30
+	"Starbucks Cross Platform Marketing", //31
+	"Starbucks Cross Platform Marketing" //32
 	);
 			
 /*
@@ -304,8 +293,10 @@ function previewImage(theObject)
 }
 
 
-
-
+// initial text...
+$("#0").html("");
+txt = slide_text[0];
+$("#slide_data").html(txt);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

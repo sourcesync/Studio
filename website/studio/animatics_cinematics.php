@@ -39,21 +39,23 @@
 <div id="mid_section" style="height: 336px; width: 517px; position:absolute; top: 148px; left: 337px; z-index:2">
 
 
-	<div style="background-image:url(animatics_cinematics/1.png); background-repeat:no-repeat; height:282px; width:480px" onclick="imageClickAction()">
+	<div style="background-image:url(animatics_cinematics/1new.png); background-repeat:no-repeat; height:282px; width:480px" onclick="imageClickAction()">
  
 
-         <video id="theVideo" width="480" height="282" poster="animatics_cinematics/1.png" controls="controls" preload="auto" style="visibility:hidden">
+         <video id="theVideo" width="480" height="282" poster="animatics_cinematics/1new.png" controls="controls" preload="auto" style="visibility:hidden">
             <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 -->
-            <source type="video/mp4" src="animatics_cinematics/sd/1.mp4" />
+            <source type="video/mp4" src="animatics_cinematics/sd/1new.mov" />
             <!-- Ogg/Vorbis for older Firefox and Opera versions -->
-            <source type="video/ogg" src="animatics_cinematics/sd/1.ogv" />
+            <source type="video/ogg" src="animatics_cinematics/sd/1new.theora.ogv" />
+	    <!--webm-->
+            <source type="video/ogg" src="animatics_cinematics/sd/1new.webmvp8.webm" />
             <!-- Optional: Add subtitles for each language -->
             <!-- Flash fallback for non-HTML5 browsers without JavaScript -->	
             <object width="480" height="282" type="application/x-shockwave-flash" data="animatics_cinematics/flashmediaelement.swf">
                 <param name="movie" value="animatics_cinematics/flashmediaelement.swf" />
-                <param name="flashvars" value="controls=true&poster=animatics_cinematics/1.png&file=animatics_cinematics/sd/1.mp4" />
+                <param name="flashvars" value="controls=true&poster=animatics_cinematics/1.png&file=animatics_cinematics/sd/1new.mov" />
                 <!-- Image as a last resort -->
-                <img src="animatics_cinematics/1.png" width="480" height="282" title="No video playback capabilities. Get Google Chrome" />
+                <img src="animatics_cinematics/1new.png" width="480" height="282" title="No video playback capabilities. Get Google Chrome" />
             </object>
         </video>
     
@@ -260,16 +262,16 @@ function videoEnded()
 {
 	video_is_paused = true;
 	video_controls.style.visibility = "hidden";
-	mid_section.innerHTML = '<div id="preview_div" style="background-image:url(animatics_cinematics/1.png); height:281px; width:480px; overflow:hidden;" align="center"  onclick="loadVideoAgain()"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">  <tr> <td align="center" valign="middle"><img src="../images/play.png" width="50" height="50" border="0/></td>  </tr></table></div>';
+	mid_section.innerHTML = '<div id="preview_div" style="background-image:url(animatics_cinematics/1new.png); height:281px; width:480px; overflow:hidden;" align="center"  onclick="loadVideoAgain()"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">  <tr> <td align="center" valign="middle"><img src="../images/play.png" width="50" height="50" border="0/></td>  </tr></table></div>';
 }
 
 
 function loadVideoAgain()
 {
-	mid_section.innerHTML = '<video id="theVideo" width="480" height="282" poster="animatics_cinematics/1.png" controls="controls" preload="auto" autoplay onclick="PlayPause()" >' +
-            '<source type="video/mp4" src="animatics_cinematics/sd/1.mp4" />' +
-           ' <source type="video/webm" src="animatics_cinematics/sd/1.webm" />' +
-           ' <source type="video/ogg" src="animatics_cinematics/sd/1.ogv" />' +
+	mid_section.innerHTML = '<video id="theVideo" width="480" height="282" poster="animatics_cinematics/1new.png" controls="controls" preload="auto" autoplay onclick="PlayPause()" >' +
+            '<source type="video/mp4" src="animatics_cinematics/sd/1new.mov" />' +
+           ' <source type="video/webm" src="animatics_cinematics/sd/1.webmvp8.webm" />' +
+           ' <source type="video/ogg" src="animatics_cinematics/sd/1.theora.ogv" />' +
            ' <object width="480" height="282" type="application/x-shockwave-flash" data="animatics_cinematics/flashmediaelement.swf">' +
                ' <param name="movie" value="animatics_cinematics/flashmediaelement.swf" />' + 
                ' <param name="flashvars" value="controls=true&poster=animatics_cinematics/1.png&file=animatics_cinematics/sd/1.mp4" />' +

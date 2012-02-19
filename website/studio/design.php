@@ -18,8 +18,10 @@
 <div id="top_section" style="height: 60px; width: 419px; position:absolute; top: 61px; left: 344px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
   <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
 
-<table border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+<table width="1700" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
     <tr>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="0" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
       <td><img src="../images/bar.png" width="2" border="0" /></td>
       <td><div id="1" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
       <td><img src="../images/bar.png" width="2" border="0" /></td>
@@ -59,6 +61,30 @@
       <td><img src="../images/bar.png" width="2" border="0" /></td>
       <td><div id="19" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
       <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="20" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="21" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="22" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="23" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="24" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="25" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="26" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="27" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="28" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="29" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="30" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="31" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
     </tr>
   </table> 
 
@@ -79,7 +105,7 @@
   </tr>
   <tr>
     <td>&nbsp;</td>
-    <td align="center" valign="middle" id="preview"><img src="design/1.png" alt=" " width="428" height="305" border="0" /></td>
+    <td align="center" valign="middle" id="preview"><img src="design/01.png" alt=" " width="428" height="305" border="0" /></td>
     <td>&nbsp;</td>
   </tr>
   <tr>
@@ -235,5 +261,12 @@
 	animate_selected_sub_link('design');
 </script>
 
-<script language="javascript" src="design/lovell_scroller.js"></script>
+<script language="javascript" src="design/lovell_scroller2.js"></script>
+
+<script language="javascript" type="text/javascript">
+    onload=function()
+    {
+    };
+</script>
+
 </html>

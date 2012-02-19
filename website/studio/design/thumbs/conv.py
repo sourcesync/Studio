@@ -1,6 +1,6 @@
 import commands
 
-for i in range(1,44):
+for i in range(1,33):
 	print i
 	src = "%02d_thumb.png" % i
 	cmd = "cp %s preview_%d.png" % (src,i)

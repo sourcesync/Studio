@@ -4,20 +4,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>The Studio</title>
-<meta name="keywords" content="design, animation, visual effects, based in New York, high-end, commercials, post production, music video, digital effects, special effects, showreel, production, editing, animatics, cinematics, postproduction, digital, mobile, web design, 3-D, 2-D, motion graphics" />
-<meta name="description" content="The STUDIO is an design, animation and visual effects company based in New York which specializes in high-end storyboards, animatics, cinematics, animation, editing, and production." />
-<meta name="distribution" content="global"/>
-<meta name="copyright" content="&copy; 2011 The Studio" />
-<meta http-equiv="content-language" content="en-US" />
-<meta name="author" content="Saimon Lovell" />
-<meta name="robots" content="all" /> 
-<meta name="reply-to" content="info@studionyc.com">
-<meta name="rating" content="14 years">
-<meta name="zipcode" content="10001" >
-<meta name="address" content="12 West 27th Street" />
-<meta name="city" content="NY" />
-<meta name="state" content="NY" />
-
 <link type="text/css" href="../css/smoothness/jquery-ui-1.8.12.custom.css" rel="stylesheet" />	
 
 <script language="javascript" src="../scripts/jquery.js"></script>
@@ -27,55 +13,136 @@
 
 <body>
 <!-- -->
-<div id="top_section" style="height: 61px; width: 520px; position:absolute; top: 61px; left: 321px; z-index:2"> &nbsp;&nbsp;&nbsp;<img src="../images/orange_bar.png" width="122" height="60" border="0" /></div>
+<img src="../images/images_template_artists.png" width="846" height="530" style="position:absolute; left: 14px; top: 36px; z-index:1"  />
+
+<div id="top_section" style="height: 60px; width: 419px; position:absolute; top: 61px; left: 344px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
+  <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
+
+<table width="400" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+    <tr>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="0" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="1" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="2" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="3" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="4" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="5" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="6" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="7" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="8" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="9" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="10" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+      <td><div id="11" class="imageSlideThumbs" onclick="previewImage(this)"></div></td>
+      <td><img src="../images/bar.png" width="2" border="0" /></td>
+    </tr>
+  </table> 
 
 
-<img src="../images/images_template_extended_v2.png" width="900" height="549" style="position:absolute; left: 14px; top: 36px; z-index:1"  />
-
-<div style="position:absolute; left: 330px; top: 134px;">
-	<img src="main/<?php print rand(1, 2); ?>.png" width="428" height="305" alt=" " />
 </div>
 
-<div id="down_section" style="position:absolute; width: 440px; height: 90px; left: 339px; top: 482px; z-index:3; overflow:hidden;">
-
-  <div style="position:absolute; z-index:4; left: 411px; top: 9px;" onmouseover="TextDivMoveDirection('up')" onmouseout="TextDivMoveDirection(''); text_scroll_speed=2;" onclick="text_scroll_speed +=2"><img src="../images/scroll_arrow_up.png" alt=" Scroll Up " width="18" height="14" border="0" onmouseout="swapEffect(this, '../images/scroll_arrow_up.png')" onmouseover="swapEffect(this, '../images/scroll_arrow_up_colored.png')"/></div>
-<div style="position:absolute; z-index:4; left: 412px; top: 69px;" onmouseover="TextDivMoveDirection('down')" onmouseout="TextDivMoveDirection(''); text_scroll_speed=2" onclick="text_scroll_speed +=2"><img src="../images/scroll_arrow_down.png" alt=" Scroll Up " width="18" height="13" border="0" onmouseout="swapEffect(this, '../images/scroll_arrow_down.png')" onmouseover="swapEffect(this, '../images/scroll arrow_down_colored.png')"/></div>
 
 
-  <div id="text_div" style="position:relative; width:400px; top: 0px; left:0px">
-    
-   We believe in the studio both as concept and actual workspace… a space where art meets commerce.<br /><br />
 
-Every day, our team of  illustrators, animators, directors, technologists, editors and vfx artisans come together to collaborate and experiment on projects for pages and screens everywhere.
+
+<div id="mid_section" style="height: 334px; width: 456px; position:absolute; top: 123px; left: 321px; z-index:2">
+ 
+<table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td align="center" valign="middle" id="preview"><img src="main/01.png" alt=" " width="428" height="305" border="0" /></td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</div>
+
+
+
+
+
+
+<div id="down_section" style="position:absolute; width: 468px; height: 153px; left: 316px; top: 460px; z-index:3; overflow:hidden;">
+ <table width="100%" border="0" cellspacing="2" cellpadding="2">
+  <tr>
+    <td colspan="3" align="right" id="slide_data" style="font-size:11px">&nbsp;</td>
+    </tr>
+  <tr>
+    <td width="16%">&nbsp;</td>
+    <td width="36%">&nbsp;</td>
+    <td width="48%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;<img src="../images/share.png" alt=" [SHARE] " width="40" height="26" border="0" onclick="triggerSocial()" id="thesharebutton" /></td>
+    <td colspan="2" align="left">    
   
-
-  </div>
+      <table width="100" border="0" cellspacing="2" cellpadding="2" id="social" style="opacity:0.0;filter:alpha(opacity=0);visibility:hidden; position:relative;">
+        <tr>
+          <td width="50"><a id="share_email" href="mailto:.com?subject=Studio Reel&body=Check out this reel: http://www.studionyc.com/reel.php"><img src="../images/mini/email.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/email_colored.png');ToolTip('E-Mail')" onmouseout="swapEffect(this, '../images/mini/email.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="50"><a id="share_facebook" href="https://www.facebook.com/sharer.php?u=http://studionyc.com/reel.php" target="_blank"><img src="../images/mini/facebook.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/facebook_colored.png');ToolTip('Facebook')" onmouseout="swapEffect(this, '../images/mini/facebook.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="50"><a id="share_twitter" href="https://twitter.com/share?url=http://studionyc.com/reel.php" target="_blank"><img src="../images/mini/twitter.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/twitter_colored.png');ToolTip('Twitter')" onmouseout="swapEffect(this, '../images/mini/twitter.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="50"><a id="share_delicious" href="https://secure.delicious.com/login?jump=http://www.studionyc.com/reel.php" target="_blank"><img src="../images/mini/delicious.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/delicious_colored.png');ToolTip('Delicious')" onmouseout="swapEffect(this, '../images/mini/delicious.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="50"><a id="share_stumbleupon" href="http://www.stumbleupon.com/submit?url=http://studionyc.com/reel.php" target="_blank"><img src="../images/mini/stumbleupon.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/stumbleupon_colored.png');ToolTip('StumbleUpon')" onmouseout="swapEffect(this, '../images/mini/stumbleupon.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="50"><a href="http://www.blogger.com/home" target="_blank"><img src="../images/mini/blogger.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/blogger_colored.png');ToolTip('Blogger')" onmouseout="swapEffect(this, '../images/mini/blogger.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="50"><a id="share_digg" href="http://digg.com/submit?url=http://studionyc.com/reel.php" target="_blank"><img src="../images/mini/digg.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/digg_colored.png');ToolTip('Digg')" onmouseout="swapEffect(this, '../images/mini/digg.png');ToolTip('&nbsp;')"/></a></td>
+          <td width="56"><a id="share_technorati" href="http://technorati.com/" target="_blank"><img src="../images/mini/technorati.png" width="16" height="16" border="0" onmouseover="swapEffect(this, '../images/mini/technorati_colored.png');ToolTip('Technorati')" onmouseout="swapEffect(this, '../images/mini/technorati.png');ToolTip('&nbsp;')"/></a></td>
+        </tr>
+      </table>
+      
+      
+      </td>
+    </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td colspan="2" id="tooltip" style="color:#666">&nbsp;</td>
+  </tr>
+</table>
 
 </div>
-<img src="../images/scroll_brown_bar.png" style="position:absolute; z-index:4; left: 758px; top: 502px;" />
-
-</div>
 
 
-<?php bulbs("images_template_extended_v2", "../images"); ?>
+
+<?php bulbs("images_template_artists", "../images"); ?>
 
 <table width="1240" border="0" cellspacing="0" cellpadding="0" style="position:absolute">
       <tr>
         <td width="529" align="left" valign="top"><a href="../reel.php" target="_self"><img src="../images/icon.png" alt="LOGO" border="0" class="logo" /></a></td>
         <td width="105" valign="middle">&nbsp;</td>
         <td width="586" align="right" valign="top">
-        
         <table width="300" border="0" cellspacing="2" cellpadding="2">
           <tr>
             <td width="303">                <div class="ui-widget">
                     <label for="search_input"></label>
-                    <input type="text" id="search_input" style="visibility:hidden" size="32" maxlength="64" onkeyup="activeSearch(event)">
+                    <input type="text" id="search_input" style="visibility:hidden" size="32" maxlength="64" onkeyup="activeSearch(event)" x-webkit-speech>
                 </div></td>
             <td width="47"><img src="http://studionyc.com/images/search.png" alt=" SEARCH " width="47" height="18" border="0" onclick="searchNow()" /></td>
             <td width="30"><img src="http://studionyc.com/images/x_grey.png" alt="X" name="close_x" width="30" height="22" border="0" id="close_x" style="visibility:hidden" onclick="searchClose()" onmouseover="this.src='http://studionyc.com/images/x_white.png'" onmouseout="this.src='http://studionyc.com/images/x_grey.png'" title=" Close Search " /></td>
           </tr>
         </table>
-        
         </td>
   </tr>
 </table>
@@ -95,7 +162,7 @@ Every day, our team of  illustrators, animators, directors, technologists, edito
           <td><a href="../film/index.php" target="_self" onmouseover="animate_link('film')" onmouseout="hide_link_animation('film', 75)"><img src="../images/film.png" width="256" height="37" border="0"  /></a></td>
         </tr>
         <tr>
-          <td><img src="../images/the_studio.png" width="256" height="33" border="0"  /></td>
+          <td><a href="index.php" target="_self" onmouseover="animate_link('studio')" onmouseout="hide_link_animation('studio', 0)"><img src="../images/the_studio.png" width="256" height="33" border="0"  /></a></td>
         </tr>
         <tr>
           <td><table width="100%" border="0" cellspacing="2" cellpadding="1">
@@ -117,7 +184,7 @@ Every day, our team of  illustrators, animators, directors, technologists, edito
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><a href="design.php" target="_self" onmouseover="animate_sub_link('design')" onmouseout="hide_sub_link_animation('design', 75)"><img src="../images/design.png" width="250" height="19" border="0" /></a></td>
+              <td><img src="../images/design.png" width="250" height="19" border="0" /></td>
             </tr>
           </table></td>
         </tr>
@@ -146,15 +213,27 @@ Every day, our team of  illustrators, animators, directors, technologists, edito
 
     <?php include("../codes/footer.php"); ?>
     
-    
-    <div style="position:absolute; z-index:3; color:#F00; left: 338px; top: 454px; font-size:small">[The Studio]</div>
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
 <script language="javascript" type="text/javascript" src="studio.js"></script>
-    
-<script language="javascript" type="text/javascript">
-	animate_selected_sub_link('studio');
-</script>
 
-<script language="javascript" src="main/lovell_scroller.js"></script>
+<script language="javascript" type="text/javascript">
+        animate_selected_sub_link('studio');
+</script>
+<!--    
+<script language="javascript" type="text/javascript">
+	animate_selected_sub_link('design');
+</script>
+-->
+<script language="javascript" src="main/lovell_scroller2.js"></script>
+
+<!--
+<script language="javascript" type="text/javascript">
+    onload=function()
+    {
+	alert($("#0"));
+	previewImage($("#0"));
+    };
+</script>
+-->
 </html>
