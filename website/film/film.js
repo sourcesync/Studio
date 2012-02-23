@@ -63,7 +63,7 @@
 	linkArrays["studio"].style.zIndex = 2;
 	linkArrays["studio"].setAttribute("alt", "");
 	linkArrays["studio"].style.position = "absolute";
-	linkArrays["studio"].style.top = (256 + absolute_shift) + "px";
+	linkArrays["studio"].style.top = (272 + absolute_shift) + "px";
 	linkArrays["studio"].style.left = menu_left + "px";
 	linkArrays["studio"].style.visibility = "hidden";
 	document.body.appendChild(linkArrays["studio"]);
@@ -76,7 +76,7 @@
 	linkArrays["about"].style.zIndex = 2;
 	linkArrays["about"].setAttribute("alt", "");
 	linkArrays["about"].style.position = "absolute";
-	linkArrays["about"].style.top = (296 + absolute_shift) + "px";
+	linkArrays["about"].style.top = (313 + absolute_shift) + "px";
 	linkArrays["about"].style.left = menu_left + "px";
 	linkArrays["about"].style.visibility = "hidden";
 	document.body.appendChild(linkArrays["about"]);	
@@ -89,7 +89,7 @@
 	linkArrays["contact"].style.zIndex = 2;
 	linkArrays["contact"].setAttribute("alt", "");
 	linkArrays["contact"].style.position = "absolute";
-	linkArrays["contact"].style.top = (332 + absolute_shift) + "px";
+	linkArrays["contact"].style.top = (349 + absolute_shift) + "px";
 	linkArrays["contact"].style.left = menu_left + "px";
 	linkArrays["contact"].style.visibility = "hidden";
 	document.body.appendChild(linkArrays["contact"]);	
@@ -122,6 +122,18 @@
 	sub_linkArray["dp"].style.left = sub_menu_left + "px";
 	sub_linkArray["dp"].style.visibility = "hidden";
 	document.body.appendChild(sub_linkArray["dp"]);	
+	
+	sub_linkArray["spots"] = document.createElement("img");
+	sub_linkArray["spots"].setAttribute("src", "../images/links/unselected/sub_links/1.gif");
+	sub_linkArray["spots"].setAttribute("height", "28");
+	sub_linkArray["spots"].setAttribute("width", "227");
+	sub_linkArray["spots"].style.zIndex = 2;
+	sub_linkArray["spots"].setAttribute("alt", "");
+	sub_linkArray["spots"].style.position = "absolute";
+	sub_linkArray["spots"].style.top = (232 + absolute_shift) + "px";
+	sub_linkArray["spots"].style.left = sub_menu_left + "px";
+	sub_linkArray["spots"].style.visibility = "hidden";
+	document.body.appendChild(sub_linkArray["spots"]);	
 
 
 	///////////////////////////////////
@@ -164,8 +176,18 @@
 	selected_link["dp"].style.left = sub_menu_left + "px";
 	selected_link["dp"].style.visibility = "hidden";
 	document.body.appendChild(selected_link["dp"]);
-
 	
+	selected_link["spots"] = document.createElement("img");
+	selected_link["spots"].setAttribute("src", "../images/links/selected/sub_links/3.gif");
+	selected_link["spots"].setAttribute("height", "28");
+	selected_link["spots"].setAttribute("width", "227");
+	selected_link["spots"].style.zIndex = 2;
+	selected_link["spots"].setAttribute("alt", "");
+	selected_link["spots"].style.position = "absolute";
+	selected_link["spots"].style.top = (232 + absolute_shift) + "px";
+	selected_link["spots"].style.left = sub_menu_left + "px";
+	selected_link["spots"].style.visibility = "hidden";
+	document.body.appendChild(selected_link["spots"]);
 	
 	
 	

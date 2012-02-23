@@ -68,18 +68,18 @@
     <td align="center" valign="middle" id="video_sector" style="cursor:pointer;">
     
             
-    <video id="theVideo" width="480" height="282" poster="spots/1.png" controls="controls" preload="auto" onclick="RewindTheVideo('commercial')">
+    <video id="theVideo" width="480" height="282" poster="spots/0.png" controls="controls" preload="auto" onclick="RewindTheVideo('commercial')">
         <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 -->
-        <source type="video/mp4" src="spots/sd/1.mp4video.mp4" />
+        <source type="video/mp4" src="spots/sd/0.mp4video.mp4" />
         <!-- Ogg/Vorbis for older Firefox and Opera versions -->
-        <source type="video/ogg" src="spots/sd/1.theora.ogv" />
+        <source type="video/ogg" src="spots/sd/0.theora.ogv" />
         <!-- Optional: Add subtitles for each language -->
         <!-- Flash fallback for non-HTML5 browsers without JavaScript -->	
         <object width="480" height="282" type="application/x-shockwave-flash" data="spots/flashmediaelement.swf">
             <param name="movie" value="spots/flashmediaelement.swf" />
-            <param name="flashvars" value="controls=true&poster=spots/1.png&file=spots/sd/1.mp4video.mp4" />
+            <param name="flashvars" value="controls=true&poster=spots/0.png&file=spots/sd/0.mp4video.mp4" />
             <!-- Image as a last resort -->
-            <img src="spots/1.png" width="480" height="282" title="No video playback capabilities. Please get Google Chrome" />
+            <img src="spots/0.png" width="480" height="282" title="No video playback capabilities. Please get Google Chrome" />
         </object>
     </video>
     

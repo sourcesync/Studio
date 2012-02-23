@@ -37,36 +37,16 @@
 
 <div id="top_section" style="height: 59px; width: 480px; position:absolute; top: 61px; left: 345px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
   <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
-<table width="1526" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+<table width="440" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
     <tr>
+      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
+      <td width="107px" id="0" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="1" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="2" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="3" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="4" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="5" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="6" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="7" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="8" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="9" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="10" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="11" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="12" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="13" onclick="previewImage(this)">&nbsp;</td>
-      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
-      <td width="107px" id="14" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
     </tr>
   </table> 
@@ -92,18 +72,18 @@
     <td align="center" valign="middle" id="video_sector" style="cursor:pointer;">
     
             
-    <video id="theVideo" width="480" height="282" poster="director/1.png" controls="controls" preload="auto" onclick="RewindTheVideo('commercial')">
+    <video id="theVideo" width="480" height="282" poster="director/10.png" controls="controls" preload="auto" onclick="RewindTheVideo('commercial')">
         <!-- MP4 for Safari, IE9, iPhone, iPad, Android, and Windows Phone 7 -->
-        <source type="video/mp4" src="director/sd/1.mp4video.mp4" />
+        <source type="video/mp4" src="director/sd/10.mp4video.mp4" />
         <!-- Ogg/Vorbis for older Firefox and Opera versions -->
-        <source type="video/ogg" src="director/sd/1.theora.ogv" />
+        <source type="video/ogg" src="director/sd/10.theora.ogv" />
         <!-- Optional: Add subtitles for each language -->
         <!-- Flash fallback for non-HTML5 browsers without JavaScript -->	
         <object width="480" height="282" type="application/x-shockwave-flash" data="director/flashmediaelement.swf">
             <param name="movie" value="director/flashmediaelement.swf" />
-            <param name="flashvars" value="controls=true&poster=director/1.png&file=director/sd/1.mp4video.mp4" />
+            <param name="flashvars" value="controls=true&poster=director/10.png&file=director/sd/10.mp4video.mp4" />
             <!-- Image as a last resort -->
-            <img src="director/1.png" width="480" height="282" title="No video playback capabilities. Please get Google Chrome" />
+            <img src="director/10.png" width="480" height="282" title="No video playback capabilities. Please get Google Chrome" />
         </object>
     </video>
     
@@ -221,7 +201,11 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><a href="dp.php" target="_self" onmouseover="animate_sub_link('dp')" onmouseout="hide_sub_link_animation('dp', 75)"><img src="../images/dp.png" width="200" height="16" border="0" /></a></td>
+              <td><a href="dp2.php" target="_self" onmouseover="animate_sub_link('dp')" onmouseout="hide_sub_link_animation('dp', 75)"><img src="../images/dp.png" width="200" height="16" border="0" /></a></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><a href="spots2.php" target="_self" onmouseover="animate_sub_link('spots')" onmouseout="hide_sub_link_animation('spots', 75)"><img src="../images/spots_6.png" width="139" height="16" border="0" /></a></td>
             </tr>
           </table></td>
         </tr>
@@ -286,7 +270,7 @@
     
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
-<script language="javascript" type="text/javascript" src="film.js"></script>
+<script language="javascript" type="text/javascript" src="film2.js"></script>
 <script language="javascript" type="text/javascript" src="../scripts/video.js"></script>
     
 <script language="javascript" type="text/javascript">
@@ -311,7 +295,7 @@
 	
 </script>
 
-<script language="javascript" src="director/lovell_scroller.js"></script>
-<script language="javascript" src="director/post_video_load.js"></script>
+<script language="javascript" src="director/lovell_scroller2.js"></script>
+<script language="javascript" src="director/post_video_load2.js"></script>
 <script language="javascript" src="director/director.js"></script>
 </html>

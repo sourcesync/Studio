@@ -37,8 +37,10 @@
 
 <div id="top_section" style="height: 59px; width: 480px; position:absolute; top: 61px; left: 345px; z-index:2; overflow:hidden;"  onmouseover="inZone(true)" onmouseout="inZone(false)">
   <img src="../images/bar.png" width="2" height="60" border="0" style="position:absolute;z-index:3;" />
-<table width="1526" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
+<table width="1600" height="100%" border="0" cellspacing="0" cellpadding="0" id="image_table" style="position:relative; right:0px; cursor:pointer;" onmouseout="checkBounderies()">
     <tr>
+      <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
+      <td width="107px" id="0" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
       <td width="107px" id="1" onclick="previewImage(this)">&nbsp;</td>
       <td width="2px"><img src="../images/bar.png" width="2" border="0" /></td>
@@ -201,7 +203,7 @@
           <td><table width="100%" border="0" cellspacing="1" cellpadding="0">
             <tr>
               <td width="6%">&nbsp;</td>
-              <td width="94%"><a href="index.php" target="_self" onmouseover="animate_sub_link('shorts')" onmouseout="hide_sub_link_animation('shorts', 75)"><img src="../images/shorts.png" width="250" height="14" border="0" /></a></td>
+              <td width="94%"><a href="index2.php" target="_self" onmouseover="animate_sub_link('shorts')" onmouseout="hide_sub_link_animation('shorts', 75)"><img src="../images/shorts.png" width="250" height="14" border="0" /></a></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
@@ -263,7 +265,7 @@
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
 <script language="javascript" type="text/javascript" src="animation.js"></script>
-<script language="javascript" type="text/javascript" src="../scripts/video.js"></script>
+<script language="javascript" type="text/javascript" src="../scripts/video2.js"></script>
 <script language="javascript" type="text/javascript">
 	animate_selected_sub_link('commercial');
 	video_controls.style.visibility = "visible";	
@@ -285,7 +287,7 @@ function videoEnded()
 }
 </script>
 
-<script language="javascript" src="commercial/lovell_scroller.js"></script>
-<script language="javascript" src="commercial/post_video_load.js"></script>
+<script language="javascript" src="commercial/lovell_scroller2.js"></script>
+<script language="javascript" src="commercial/post_video_load2.js"></script>
 <script language="javascript" src="commercial/commercial.js"></script>
 </html>

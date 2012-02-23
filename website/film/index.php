@@ -152,11 +152,15 @@
           <td><table width="100%" border="0" cellspacing="1" cellpadding="1">
             <tr>
               <td width="7%">&nbsp;</td>
-              <td width="93%"><a href="director.php" target="_self" onmouseover="animate_sub_link('director')" onmouseout="hide_sub_link_animation('director', 75)"><img src="../images/director.png" width="200" height="14" border="0" /></a></td>
+              <td width="93%"><a href="director2.php" target="_self" onmouseover="animate_sub_link('director')" onmouseout="hide_sub_link_animation('director', 75)"><img src="../images/director.png" width="200" height="14" border="0" /></a></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><a href="dp.php" target="_self" onmouseover="animate_sub_link('dp')" onmouseout="hide_sub_link_animation('dp', 75)"><img src="../images/dp.png" width="200" height="16" border="0" /></a></td>
+              <td><a href="dp2.php" target="_self" onmouseover="animate_sub_link('dp')" onmouseout="hide_sub_link_animation('dp', 75)"><img src="../images/dp.png" width="200" height="16" border="0" /></a></td>
+            </tr>
+            <tr>
+              <td>&nbsp;</td>
+              <td><a href="spots2.php" target="_self" onmouseover="animate_sub_link('spots')" onmouseout="hide_sub_link_animation('spots', 75)"><img src="../images/spots_6.png" width="139" height="16" border="0" /></a></td>
             </tr>
           </table></td>
         </tr>
@@ -204,7 +208,7 @@
 <?php include("../codes/footer.php"); ?>
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
-<script language="javascript" type="text/javascript" src="film.js"></script>
+<script language="javascript" type="text/javascript" src="film2.js"></script>
 
 
 <script language="javascript" type="text/javascript" src="../scripts/video.js"></script>

@@ -160,7 +160,7 @@
             </tr>
             <tr>
               <td>&nbsp;</td>
-              <td><a href="spots2.php" target="_self" onmouseover="animate_sub_link('spots')" onmouseout="hide_sub_link_animation('spots', 75)"><img src="../images/film_spots.png" width="200" height="16" border="0" /></a></td>
+              <td><a href="spots2.php" target="_self" onmouseover="animate_sub_link('spots')" onmouseout="hide_sub_link_animation('spots', 75)"><img src="../images/spots_6.png" width="139" height="16" border="0" /></a></td>
             </tr>
           </table></td>
         </tr>
@@ -208,7 +208,7 @@
 <?php include("../codes/footer.php"); ?>
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
-<script language="javascript" type="text/javascript" src="film.js"></script>
+<script language="javascript" type="text/javascript" src="film2.js"></script>
 
 
 <script language="javascript" type="text/javascript" src="../scripts/video.js"></script>

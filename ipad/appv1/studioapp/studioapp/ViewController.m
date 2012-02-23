@@ -1153,7 +1153,7 @@ CGRect lastZoomPicRect;
         //
         self.fmv3 = [ [ [ MyMovieView alloc ] 
                initWithFrame:
-                       CGRectMake(x, y, aw, ah):@"FILM_REEL":2 ] autorelease ];
+                       CGRectMake(x, y, aw, ah):@"1new":2 ] autorelease ];
         self.fmv3.section = sct;
         self.fmv3.del = self;
         [ self.top_view addSubview:self.fmv3 ];
@@ -1183,7 +1183,7 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile1Aboutus.png" ];
     [ iv setImage:img ];
         
-    img = [ UIImage imageNamed:@"Tile1Text3.png" ];
+    img = [ UIImage imageNamed:@"Tile1Text4.png" ];
     iv = [ [ UIImageView alloc ] initWithImage:img ];
     iv.contentMode = UIViewContentModeScaleAspectFit;
     [ self.top_view addSubview:iv ];
