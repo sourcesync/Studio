@@ -158,7 +158,6 @@ Our mission is to help grow our clients' businesses by bringing strategic vision
         <tr>
           <td><img src="../images/about_us.png" width="256" height="35" border="0"  /></td>
         </tr>
-	<!--
         <tr>
           <td><table width="100%" border="0" cellspacing="2" cellpadding="2">
             <tr>
@@ -167,7 +166,6 @@ Our mission is to help grow our clients' businesses by bringing strategic vision
             </tr>
           </table></td>
         </tr>
-	-->
         <tr>
           <td><a href="../contact/index.php" target="_self" onmouseover="animate_link('contact')" onmouseout="hide_link_animation('contact', 75)"><img src="../images/contact.png" width="256" height="30" border="0" /></a></td>
         </tr>
@@ -208,7 +206,7 @@ Our mission is to help grow our clients' businesses by bringing strategic vision
     <div style="position:absolute; z-index:3; color:#F00; left: 338px; top: 454px; font-size:small">[About Us]</div>
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
-<script language="javascript" type="text/javascript" src="about2.js"></script>
+<script language="javascript" type="text/javascript" src="about.js"></script>
 <script language="javascript" type="text/javascript">
 	animate_selected_sub_link('about');	
 </script>
