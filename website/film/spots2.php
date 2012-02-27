@@ -269,7 +269,7 @@
 </body>
 <script language="javascript" type="text/javascript" src="../scripts/common.js"></script>
 <script language="javascript" type="text/javascript" src="film2.js"></script>
-<script language="javascript" type="text/javascript" src="../scripts/video.js"></script>
+<script language="javascript" type="text/javascript" src="../scripts/video2.js"></script>
     
 <script language="javascript" type="text/javascript">
 	animate_selected('spots');
