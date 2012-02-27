@@ -221,7 +221,7 @@
 <script language="javascript" type="text/javascript" src="studio.js"></script>
 
 
-<script language="javascript" type="text/javascript" src="../scripts/video.js"></script>
+<script language="javascript" type="text/javascript" src="../scripts/video2.js"></script>
 
 <script language="javascript" type="text/javascript">
 	animate_selected_sub_link('animatics_cinematics');
