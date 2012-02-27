@@ -1183,7 +1183,7 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile1Aboutus.png" ];
     [ iv setImage:img ];
         
-    img = [ UIImage imageNamed:@"Tile1Text4.png" ];
+    img = [ UIImage imageNamed:@"Tile1Text5.png" ];
     iv = [ [ UIImageView alloc ] initWithImage:img ];
     iv.contentMode = UIViewContentModeScaleAspectFit;
     [ self.top_view addSubview:iv ];
@@ -1203,10 +1203,21 @@ CGRect lastZoomPicRect;
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
     int max = 27;
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+    int prefix[7] = {1,8,19,4,2,24,15};
+    for (int i=0;i<7;i++)
+    {
+        NSString *path = [ NSString stringWithFormat:@"aboutUs%02d.jpg", prefix[i] ];
+        [ arr addObject:path ];
+    }
+    
     for (int i=1;i<=max;i++) //27
     {
         NSString *path = [ NSString stringWithFormat:@"aboutUs%02d.jpg", i ];
-        [ arr addObject:path ];
+        if (! [ arr containsObject:path] )
+        {
+            [ arr addObject:path ];
+        }
     }
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_AboutUs ]];
 #endif
@@ -1246,10 +1257,21 @@ CGRect lastZoomPicRect;
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
     int max = 30;
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+    int prefix[5] = {14,6,4,3,15};
+    for (int i=0;i<5;i++)
+    {
+        NSString *path = [ NSString stringWithFormat:@"illustration%02d.jpg", prefix[i] ];
+        [ arr addObject:path ];
+    }
+    
     for (int i=1;i<=max;i++) //30
     {
         NSString *path = [ NSString stringWithFormat:@"illustration%02d.jpg", i ];
-        [ arr addObject:path ];
+        if (!([arr containsObject:path]))
+        {
+            [ arr addObject:path ];
+        }
     }
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Illustration ] ];
 #endif
@@ -1310,6 +1332,14 @@ CGRect lastZoomPicRect;
     
     int max = 18;
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+    int prefix[3] = {15,12,6};
+    for (int i=0;i<3;i++)
+    {
+        NSString *path = [ NSString stringWithFormat:@"design%02d.jpg", prefix[i] ];
+        [ arr addObject:path ];
+    }
+    
     for (int i=1;i<=max;i++) //18
     {
         NSString *path = nil;
@@ -1317,7 +1347,10 @@ CGRect lastZoomPicRect;
             path = [ NSString stringWithFormat:@"design%02d.png", i ];
         else
             path = [ NSString stringWithFormat:@"design%02d.jpg", i ];
-        [ arr addObject:path ];
+        if (!([arr containsObject:path]))
+        {
+            [ arr addObject:path ];
+        }
     }
     
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Design ] ];
@@ -1394,7 +1427,7 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile6Preproduction.png" ];
     [ iv setImage:img ];
     
-    [ self fourByTwoPic:1:2:1:1:YES:@"Preproduction_Reel":nil:CGAffineTransformIdentity:YES :0:0:0:0 :5];
+    [ self fourByTwoPic:1:2:1:1:YES:@"Cinematic.AnimaticReel":nil:CGAffineTransformIdentity:YES :0:0:0:0 :5];
     
 }
 
@@ -1430,10 +1463,27 @@ CGRect lastZoomPicRect;
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
     int max = 22;
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+#ifdef FATBOY
+    int prefix[2] = {12,15};
+    for (int i=0;i<2;i++)
+    {
+#else
+    int prefix[3] = {12,1,15};
+    for (int i=0;i<3;i++)
+    { 
+#endif
+        NSString *path = [ NSString stringWithFormat:@"charDev%02d.jpg", prefix[i] ];
+        [ arr addObject:path ];
+    }
+    
     for (int i=1;i<=max;i++) //22
     { 
         NSString *path = [ NSString stringWithFormat:@"charDev%02d.jpg", i ];
-        [ arr addObject:path ];
+        if (!([arr containsObject:path]))
+        {
+            [ arr addObject:path ];
+        }
     }
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_CharacterDevelopment ] ];
 #endif
@@ -1487,10 +1537,22 @@ CGRect lastZoomPicRect;
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
     int max = 29;
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+    
+    int prefix[4] = {4,8,21,29};
+    for (int i=0;i<4;i++)
+    {
+        NSString *path = [ NSString stringWithFormat:@"SB_Concepts%02d.jpg", prefix[i] ];
+        [ arr addObject:path ];
+    }
+    
     for (int i=1;i<=max;i++) //29
     {
         NSString *path = [ NSString stringWithFormat:@"SB_Concepts%02d.jpg", i ];
-        [ arr addObject:path ];
+        if (!([arr containsObject:path]))
+        {
+            [ arr addObject:path ];
+        }
     }
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Storyboarding ] ];
 #endif

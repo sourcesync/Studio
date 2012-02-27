@@ -65,12 +65,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "348231990.439967"
+         timestampString = "351993379.986558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1502"
-         endingLineNumber = "1502"
-         landmarkName = "-initMenu"
+         startingLineNumber = "1564"
+         endingLineNumber = "1564"
+         landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -93,11 +93,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "348231990.439967"
+         timestampString = "351993085.830532"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1441"
-         endingLineNumber = "1441"
+         startingLineNumber = "1491"
+         endingLineNumber = "1491"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,12 +177,12 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "348231990.439967"
+         timestampString = "351993379.986558"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1883"
-         endingLineNumber = "1883"
-         landmarkName = "-oneFingerOneTap:"
+         startingLineNumber = "1945"
+         endingLineNumber = "1945"
+         landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -267,6 +267,20 @@
          startingLineNumber = "78"
          endingLineNumber = "78"
          landmarkName = "-loadImage:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         isPathRelative = "1"
+         filePath = "studioapp/ViewController.m"
+         timestampString = "351993176.030153"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "1468"
+         endingLineNumber = "1468"
+         landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
