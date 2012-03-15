@@ -7,7 +7,7 @@ document.onmousemove = getMouseMovingPos;
 //var arrMap = [ 1,2,3,4,5,6,7,8,9,10 ];
 
 var total_images = 2;
-var arrMap = [ 0,1 ];
+var arrMap = [ 100,101 ];
 var in_zone = false;
 
 var mouse_x;
@@ -162,7 +162,7 @@ for (i = 0; i < (total_images ); i++)
 	image_cells[i] = document.getElementById(i);
 	thidx = arrMap[i];
 	image_cells[i].style.backgroundImage =  "url(spots/thumbs/red_preview_" + thidx + ".png)";
-	image_preview[i] = '<div id="preview_div" style="background-image:url(spots/' + thidx + '.png); height:281px; width:480px; overflow:hidden;" align="center" onclick="setVideo(\'spots\')"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">  <tr> <td align="center" valign="middle"><img src="../images/play.png" width="50" height="50" border="0"/></td>  </tr></table></div>';
+	image_preview[i] = '<div id="preview_div" style="background-image:url(spots/' + thidx + '.png); height:281px; width:480px; overflow:hidden;" align="center" onclick="setVideo(\'/film/film\')"><table width="100%" height="100%" border="0" cellspacing="0" cellpadding="0">  <tr> <td align="center" valign="middle"><img src="../images/play.png" width="50" height="50" border="0"/></td>  </tr></table></div>';
 	
 }
 
