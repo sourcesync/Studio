@@ -1256,7 +1256,32 @@ CGRect lastZoomPicRect;
 #ifdef DO_GALLERY
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
     int max = 30;
+    
+    
+    /*10.18.2012 */
+    max = 17-4;
+    
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+    /* 10.18.2012 */
+    [ arr addObject:@"3panelcomic.jpg"];
+    [ arr addObject:@"30lympians.jpg"];
+    [ arr addObject:@"b&wportrait.jpg"];
+    [ arr addObject:@"b&wportrait2.jpg"];
+    [ arr addObject:@"babysitter.jpg"];
+    [ arr addObject:@"bacardi_comp.jpg"];
+    [ arr addObject:@"bookcover.jpg"];
+    [ arr addObject:@"hairmagazinespread.jpg"];
+    [ arr addObject:@"paperlandscape1.jpg"];
+    [ arr addObject:@"paperlandscape2.jpg"];
+    [ arr addObject:@"psychomother.jpg"];
+    [ arr addObject:@"rain clouds.jpg"];
+    [ arr addObject:@"strollerderby.jpg"];
+    [ arr addObject:@"Suitcase.jpg"];
+    [ arr addObject:@"TullamoreYeats_rev.jpg"];
+    [ arr addObject:@"umbrella.jpg"];
+    [ arr addObject:@"yellowcomic.jpg"];
+    
     
     int prefix[5] = {14,6,4,3,15};
     for (int i=0;i<5;i++)
@@ -1273,7 +1298,22 @@ CGRect lastZoomPicRect;
             [ arr addObject:path ];
         }
     }
-    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Illustration ] ];
+    
+    /* 10.18.2012 */
+    if ( [ arr containsObject:@"illustration11.jpg" ] )
+        [ arr removeObject:@"illustration11.jpg" ];
+    if ( [ arr containsObject:@"illustration14.jpg" ] )
+        [ arr removeObject:@"illustration14.jpg" ];
+    if ( [ arr containsObject:@"illustration16.jpg" ] )
+        [ arr removeObject:@"illustration16.jpg" ];
+    if ( [ arr containsObject:@"illustration22.jpg" ] )
+        [ arr removeObject:@"illustration22.jpg" ];
+    
+    [ self.galleryDCT
+        setObject:arr forKey:[ NSNumber numberWithInt:Section_Illustration ] ];
+    
+    
+    
 #endif
     
 }
@@ -1331,7 +1371,22 @@ CGRect lastZoomPicRect;
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity:0 ];
     
     int max = 18;
+    /* 10.18.2012 adjustments */
+    max = max + 9 - 3;
+    
+    
     if (MAX_GALLERY>0) max = MAX_GALLERY;
+    
+    
+    [ arr addObject:@"100YSS_posters5_1.jpg"];
+    [ arr addObject:@"100YSS_posters7_1.jpg"];
+    [ arr addObject:@"100YSS_posters10_1.jpg"];
+    [ arr addObject:@"100YSS_posters13_1.jpg"];
+    [ arr addObject:@"AICP_poster_sarah2.jpg"];
+    [ arr addObject:@"brainspace_infograph_rev2.jpg"];
+    [ arr addObject:@"coffee_break.jpg" ];
+    [ arr addObject:@"METHDOLODYrev2.jpg" ];
+    [ arr addObject:@"track_Record_infograph.jpg" ];
     
     int prefix[3] = {15,12,6};
     for (int i=0;i<3;i++)
@@ -1352,6 +1407,15 @@ CGRect lastZoomPicRect;
             [ arr addObject:path ];
         }
     }
+    
+    
+    /* adjustments 10.18.2012 */
+    if ( [ arr containsObject:@"design02.jpg" ] )
+        [ arr removeObject:@"design02.jpg" ];
+    if ( [ arr containsObject:@"design03.jpg" ] )
+        [ arr removeObject:@"design03.jpg" ];
+    if ( [ arr containsObject:@"design06.jpg" ] )
+        [ arr removeObject:@"design06.jpg" ];
     
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Design ] ];
 #endif
@@ -1432,6 +1496,7 @@ CGRect lastZoomPicRect;
 }
 
 
+
 //  BOTTOM ROW...
 
 -(void) initCharacterDev
@@ -1464,6 +1529,11 @@ CGRect lastZoomPicRect;
     int max = 22;
     if (MAX_GALLERY>0) max = MAX_GALLERY;
     
+    /* adjustments 10.18.2012 */
+    [ arr addObject:@"Ransom_cast.jpg" ];
+    [ arr addObject:@"tech_girl.jpg" ];
+    
+    
 #ifdef FATBOY
     int prefix[2] = {12,15};
     for (int i=0;i<2;i++)
@@ -1485,6 +1555,14 @@ CGRect lastZoomPicRect;
             [ arr addObject:path ];
         }
     }
+    
+    /* adjustments 10.18.2012 */
+    if ( [ arr containsObject:@"charDev04.jpg" ] )
+        [ arr removeObject:@"charDev04.jpg" ];
+    if ( [ arr containsObject:@"charDev09.jpg" ] )
+            [ arr removeObject:@"charDev09.jpg" ];
+    
+    
     [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_CharacterDevelopment ] ];
 #endif
     
@@ -1536,8 +1614,28 @@ CGRect lastZoomPicRect;
 #ifdef DO_GALLERY
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];
     int max = 29;
+    
+    /*10.18.2012*/
+    max = max + 14;
+    
     if (MAX_GALLERY>0) max = MAX_GALLERY;
     
+    
+    /*10.18.2012*/
+    [ arr addObject:@"airplane.jpg"];
+    [ arr addObject:@"comedyclub.jpg"];
+    [ arr addObject:@"director.jpg"];
+    [ arr addObject:@"forest.jpg"];
+    [ arr addObject:@"greenscreen"];
+    [ arr addObject:@"HeyMS15.jpg"];
+    [ arr addObject:@"holiday05_rev.jpg"];
+    [ arr addObject:@"ifweleavenow04.jpg"];
+    [ arr addObject:@"ifweleavenow09.jpg"];
+    [ arr addObject:@"OverdraftFees05.jpg"];
+    [ arr addObject:@"ring_family_rev2.jpg"];
+    [ arr addObject:@"tank_woman.jpg"];
+    [ arr addObject:@"ted.jpg"];
+    [ arr addObject:@"womanbeach.jpg"];
     
     int prefix[4] = {4,8,21,29};
     for (int i=0;i<4;i++)
@@ -1554,7 +1652,9 @@ CGRect lastZoomPicRect;
             [ arr addObject:path ];
         }
     }
-    [ self.galleryDCT setObject:arr forKey:[ NSNumber numberWithInt:Section_Storyboarding ] ];
+    [ self.galleryDCT
+        setObject:arr forKey:[ NSNumber numberWithInt:Section_Storyboarding ] ];
+    
 #endif
 }
 

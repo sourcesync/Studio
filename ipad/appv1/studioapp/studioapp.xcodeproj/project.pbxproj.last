@@ -2393,6 +2393,8 @@
 				GCC_PREFIX_HEADER = "studioapp/studioapp-Prefix.pch";
 				INFOPLIST_FILE = "studioapp/studioapp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E822F06C-F503-4FFA-B895-41F76DC58EB1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E822F06C-F503-4FFA-B895-41F76DC58EB1";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2407,6 +2409,8 @@
 				GCC_PREFIX_HEADER = "studioapp/studioapp-Prefix.pch";
 				INFOPLIST_FILE = "studioapp/studioapp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "E822F06C-F503-4FFA-B895-41F76DC58EB1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "E822F06C-F503-4FFA-B895-41F76DC58EB1";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
