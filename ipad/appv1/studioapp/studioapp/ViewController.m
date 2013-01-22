@@ -1237,15 +1237,26 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile2Illustration.png" ];
     [ iv setImage:img ];
     
-    [ self singlePic:0 :1 :0 :4 :@"Tile2Dudecropped.png":@"illustration14.jpg":
-        CGAffineTransformMakeTranslation(0.01,0.01): 
-        YES :0:0:EXTEND:0 :1];
+    /*1.21.2012*/
+    //[ self singlePic:0 :1 :0 :4 :@"Tile2Dudecropped.png":@"illustration14.jpg":
+    //    CGAffineTransformMakeTranslation(0.01,0.01):
+    //    YES :0:0:EXTEND:0 :1];
+    [ self singlePic:0 :1 :0 :4 :@"PersonOfInterest1.png":@"bookcover.jpg":
+        CGAffineTransformMakeTranslation(0.01,0.01):
+                YES :0:0:EXTEND:0 :1];
+    
     [ self singlePic:0 :1 :1 :2 :@"Tile2Boatcropped.png":@"illustration06.jpg": 
         CGAffineTransformMakeTranslation(0.01,0.01):
                  YES:0:0:0:0  :1];
-    [ self singlePic:0 :1 :1 :3 :@"Tile2Clockcropped.png":@"illustration04.jpg": 
+    
+    /*1.21.2012*/
+    //[ self singlePic:0 :1 :1 :3 :@"Tile2Clockcropped.png":@"illustration04.jpg":
+    //    CGAffineTransformMakeTranslation(0.01,0.01):
+    //             YES:0:0:0:0 :1];
+    [ self singlePic:0 :1 :1 :3 :@"Bacardi1.png":@"bacardi_comp.jpg":
         CGAffineTransformMakeTranslation(0.01,0.01):
                  YES:0:0:0:0 :1];
+    
     [ self singlePic:0 :1 :2 :4 :@"Tile2Classroomcropped.png":@"illustration03.jpg":
         CGAffineTransformMakeTranslation(0.01,0.01):
                 YES :0:0:0:0 :1];
@@ -1349,12 +1360,18 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile4Design.png" ];
     [ iv setImage:img ];
     
-    [ self twoByOnePic:1 :0 :2 :0 :@"Tile4Bryancropped.png":@"design12.jpg": 
-        CGAffineTransformMakeTranslation(0.01, 0.01):
-            YES :0:0:0:0 :3];
-    [ self twoByOnePic:1 :0 :3 :0 :@"Tile4Wonderthrillscropped.jpg":@"design06.jpg": 
+    /*1.21.2013*/
+    //[ self twoByOnePic:1 :0 :2 :0 :@"Tile4Bryancropped.png":@"design12.jpg":
+    //    CGAffineTransformMakeTranslation(0.01, 0.01):
+    //        YES :0:0:0:0 :3];
+    [ self twoByOnePic:1 :0 :2 :0 :@"AICP1.png":@"AICP_poster_sarah2.jpg":
+     CGAffineTransformMakeTranslation(0.01, 0.01):
+                  YES :0:0:0:0 :3];
+    
+    [ self twoByOnePic:1 :0 :3 :0 :@"Tile4Wonderthrillscropped.jpg":@"design06.jpg":
         CGAffineTransformMakeTranslation(0.01, 0.01):
                    YES:0:0:0:EXTEND :3];
+    
     
     [ self fourByTwoPic:1:0:0:2:NO:@"design15.jpg":@"design15.jpg":CGAffineTransformMakeTranslation(0.01, 0.01) :YES  :0:EXTEND:EXTEND:0 :3];
     
@@ -1521,7 +1538,10 @@ CGRect lastZoomPicRect;
 #ifdef FATBOY
     self.fatboy =  
 #else
-    [ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformMakeTranslation(0.01, 0.01):YES  :0:0:0:0 :6];
+    /*1.21.2013*/
+    //[ self fourByTwoPic:2:0:1:0:NO:@"charDev01.jpg":@"charDev01.jpg":CGAffineTransformMakeTranslation(0.01, 0.01):YES  :0:0:0:0 :6];
+    [ self fourByTwoPic:2:0:1:0:NO:@"Ransom_cast1.png":@"Ransom_cast.jpg":CGAffineTransformMakeTranslation(0.01, 0.01):YES  :0:0:0:0 :6];
+    
 #endif
     
 #ifdef DO_GALLERY
@@ -1598,18 +1618,33 @@ CGRect lastZoomPicRect;
     UIImage *img = [ UIImage imageNamed:@"Tile9Storyboards.png" ];
     [ iv setImage:img ];
     
-    [ self twoByOnePic:2:2:0:3  :@"Tile9Redcropped.png":@"SB_Concepts04.jpg": 
-        CGAffineTransformMakeTranslation(0.01,0.01): 
-        YES :0:EXTEND:0:0 :8];
+    /*1.21.2013*/
+    //[ self twoByOnePic:2:2:0:3  :@"Tile9Redcropped.png":@"SB_Concepts04.jpg":
+    //    CGAffineTransformMakeTranslation(0.01,0.01):
+    //    YES :0:EXTEND:0:0 :8];
+    [ self twoByOnePic:2:2:0:3  :@"Chase1.png":@"OverdraftFees05.jpg":
+     CGAffineTransformMakeTranslation(0.01,0.01):
+                  YES :0:EXTEND:0:0 :8];
+    
     [ self twoByOnePic:2:2:1:3  :@"Tile9Bikescropped.png":@"SB_Concepts08.jpg": 
      CGAffineTransformMakeTranslation(0.01,0.01): 
         YES :0:0:0:0 :8];
-    [ self twoByOnePic:2:2:2:1  :@"Tile9Drapercropped.png":@"SB_Concepts21.jpg":
-        CGAffineTransformMakeTranslation(0.01,0.01): 
-        YES :0:0:0:0 :8];
-    [ self twoByOnePic:2:2:3:1  :@"Tile9Sariscropped.png":@"SB_Concepts29.jpg":
-        CGAffineTransformMakeTranslation(0.01,0.01): 
-        YES :0:0:0:0 :8];
+    
+    /*1.21.2013*/
+    //[ self twoByOnePic:2:2:2:1  :@"Tile9Drapercropped.png":@"SB_Concepts21.jpg":
+    //    CGAffineTransformMakeTranslation(0.01,0.01):
+    //    YES :0:0:0:0 :8];
+    [ self twoByOnePic:2:2:2:1  :@"Ted1.png":@"ted.jpg":
+     CGAffineTransformMakeTranslation(0.01,0.01):
+                  YES :0:0:0:0 :8];
+    
+    /*1.21.2013*/
+    //[ self twoByOnePic:2:2:3:1  :@"Tile9Sariscropped.png":@"SB_Concepts29.jpg":
+    //    CGAffineTransformMakeTranslation(0.01,0.01):
+    //    YES :0:0:0:0 :8];
+    [ self twoByOnePic:2:2:3:1  :@"Verizon1.png":@"ring_family_rev2.jpg":
+     CGAffineTransformMakeTranslation(0.01,0.01):
+                  YES :0:0:0:0 :8];
     
 #ifdef DO_GALLERY
     NSMutableArray *arr = [ [ NSMutableArray alloc ] initWithCapacity: 0 ];

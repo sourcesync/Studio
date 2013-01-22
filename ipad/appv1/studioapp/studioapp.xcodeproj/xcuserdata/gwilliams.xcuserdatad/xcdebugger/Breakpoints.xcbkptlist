@@ -65,11 +65,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1642"
-         endingLineNumber = "1642"
+         startingLineNumber = "1677"
+         endingLineNumber = "1677"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -93,11 +93,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1569"
-         endingLineNumber = "1569"
+         startingLineNumber = "1589"
+         endingLineNumber = "1589"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -177,11 +177,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "2023"
-         endingLineNumber = "2023"
+         startingLineNumber = "2058"
+         endingLineNumber = "2058"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -275,11 +275,11 @@
          continueAfterRunningActions = "No"
          isPathRelative = "1"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1538"
-         endingLineNumber = "1538"
+         startingLineNumber = "1558"
+         endingLineNumber = "1558"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -301,11 +301,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1560"
-         endingLineNumber = "1560"
+         startingLineNumber = "1580"
+         endingLineNumber = "1580"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -314,11 +314,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1561"
-         endingLineNumber = "1561"
+         startingLineNumber = "1581"
+         endingLineNumber = "1581"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>
@@ -327,11 +327,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "studioapp/ViewController.m"
-         timestampString = "372378613.189815"
+         timestampString = "380530981.952009"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "1533"
-         endingLineNumber = "1533"
+         startingLineNumber = "1553"
+         endingLineNumber = "1553"
          landmarkName = "-initCharacterDev"
          landmarkType = "5">
       </FileBreakpoint>

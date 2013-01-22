@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		B314157714FB4D9E00A8FC3A /* Tile1Text5.png in Resources */ = {isa = PBXBuildFile; fileRef = B314157614FB4D9E00A8FC3A /* Tile1Text5.png */; };
 		B314157A14FB687700A8FC3A /* Cinematic.AnimaticReel.mov in Resources */ = {isa = PBXBuildFile; fileRef = B314157914FB687700A8FC3A /* Cinematic.AnimaticReel.mov */; };
+		B31E3BD216AE6A7E00F2A991 /* PersonOfInterest1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BD116AE6A7E00F2A991 /* PersonOfInterest1.png */; };
+		B31E3BD616AE6BB500F2A991 /* Bacardi1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BD516AE6BB500F2A991 /* Bacardi1.png */; };
+		B31E3BD916AE6CBA00F2A991 /* AICP1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BD816AE6CBA00F2A991 /* AICP1.png */; };
+		B31E3BDE16AE6EED00F2A991 /* Chase1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BDB16AE6EED00F2A991 /* Chase1.png */; };
+		B31E3BDF16AE6EED00F2A991 /* Ted1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BDC16AE6EED00F2A991 /* Ted1.png */; };
+		B31E3BE016AE6EED00F2A991 /* Verizon1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BDD16AE6EED00F2A991 /* Verizon1.png */; };
+		B31E3BE316AE70D600F2A991 /* Ransom_cast1.png in Resources */ = {isa = PBXBuildFile; fileRef = B31E3BE216AE70D600F2A991 /* Ransom_cast1.png */; };
 		B3346F7914BC17FD007C5A59 /* Tile1Text.png in Resources */ = {isa = PBXBuildFile; fileRef = B3346F7814BC17FD007C5A59 /* Tile1Text.png */; };
 		B3346F7F14BC1873007C5A59 /* Box.png in Resources */ = {isa = PBXBuildFile; fileRef = B3346F7B14BC1872007C5A59 /* Box.png */; };
 		B3346F8014BC1873007C5A59 /* Box2.png in Resources */ = {isa = PBXBuildFile; fileRef = B3346F7C14BC1872007C5A59 /* Box2.png */; };
@@ -495,6 +502,13 @@
 /* Begin PBXFileReference section */
 		B314157614FB4D9E00A8FC3A /* Tile1Text5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile1Text5.png; sourceTree = "<group>"; };
 		B314157914FB687700A8FC3A /* Cinematic.AnimaticReel.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Cinematic.AnimaticReel.mov; sourceTree = "<group>"; };
+		B31E3BD116AE6A7E00F2A991 /* PersonOfInterest1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PersonOfInterest1.png; sourceTree = "<group>"; };
+		B31E3BD516AE6BB500F2A991 /* Bacardi1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bacardi1.png; sourceTree = "<group>"; };
+		B31E3BD816AE6CBA00F2A991 /* AICP1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AICP1.png; sourceTree = "<group>"; };
+		B31E3BDB16AE6EED00F2A991 /* Chase1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chase1.png; sourceTree = "<group>"; };
+		B31E3BDC16AE6EED00F2A991 /* Ted1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ted1.png; sourceTree = "<group>"; };
+		B31E3BDD16AE6EED00F2A991 /* Verizon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Verizon1.png; sourceTree = "<group>"; };
+		B31E3BE216AE70D600F2A991 /* Ransom_cast1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ransom_cast1.png; sourceTree = "<group>"; };
 		B3346F7814BC17FD007C5A59 /* Tile1Text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tile1Text.png; sourceTree = "<group>"; };
 		B3346F7B14BC1872007C5A59 /* Box.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box.png; sourceTree = "<group>"; };
 		B3346F7C14BC1872007C5A59 /* Box2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Box2.png; sourceTree = "<group>"; };
@@ -1009,6 +1023,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B31E3BD416AE6AA300F2A991 /* thumbs */ = {
+			isa = PBXGroup;
+			children = (
+				B31E3BD516AE6BB500F2A991 /* Bacardi1.png */,
+				B31E3BD116AE6A7E00F2A991 /* PersonOfInterest1.png */,
+			);
+			name = thumbs;
+			sourceTree = "<group>";
+		};
+		B31E3BD716AE6CB100F2A991 /* thumbs */ = {
+			isa = PBXGroup;
+			children = (
+				B31E3BD816AE6CBA00F2A991 /* AICP1.png */,
+			);
+			name = thumbs;
+			sourceTree = "<group>";
+		};
+		B31E3BDA16AE6EDF00F2A991 /* thumbs */ = {
+			isa = PBXGroup;
+			children = (
+				B31E3BDB16AE6EED00F2A991 /* Chase1.png */,
+				B31E3BDC16AE6EED00F2A991 /* Ted1.png */,
+				B31E3BDD16AE6EED00F2A991 /* Verizon1.png */,
+			);
+			name = thumbs;
+			sourceTree = "<group>";
+		};
+		B31E3BE116AE70CD00F2A991 /* thumbs */ = {
+			isa = PBXGroup;
+			children = (
+				B31E3BE216AE70D600F2A991 /* Ransom_cast1.png */,
+			);
+			name = thumbs;
+			sourceTree = "<group>";
+		};
 		B3346F8314BC1878007C5A59 /* Elements */ = {
 			isa = PBXGroup;
 			children = (
@@ -1363,6 +1412,7 @@
 		B3C3F5CC163203D000E0C0D4 /* new.10.19.2012 */ = {
 			isa = PBXGroup;
 			children = (
+				B31E3BE116AE70CD00F2A991 /* thumbs */,
 				B3C3F5CE163203E900E0C0D4 /* Ransom_cast.jpg */,
 				B3C3F5CF163203E900E0C0D4 /* tech_girl.jpg */,
 			);
@@ -1372,6 +1422,7 @@
 		B3C3F5D21632084600E0C0D4 /* new.10.18.2012 */ = {
 			isa = PBXGroup;
 			children = (
+				B31E3BD716AE6CB100F2A991 /* thumbs */,
 				B3C3F5D31632087D00E0C0D4 /* 100YSS_posters5_1.jpg */,
 				B3C3F5D41632087D00E0C0D4 /* 100YSS_posters7_1.jpg */,
 				B3C3F5D51632087D00E0C0D4 /* 100YSS_posters10_1.jpg */,
@@ -1388,6 +1439,7 @@
 		B3C3F5E516320A5000E0C0D4 /* new.10.18.2012 */ = {
 			isa = PBXGroup;
 			children = (
+				B31E3BD416AE6AA300F2A991 /* thumbs */,
 				B3C3F5E616320A8100E0C0D4 /* 3panelcomic.jpg */,
 				B3C3F5E716320A8100E0C0D4 /* 30lympians.jpg */,
 				B3C3F5E816320A8100E0C0D4 /* b&wportrait.jpg */,
@@ -1412,6 +1464,7 @@
 		B3C3F60816320D0000E0C0D4 /* new.10.18.2012 */ = {
 			isa = PBXGroup;
 			children = (
+				B31E3BDA16AE6EDF00F2A991 /* thumbs */,
 				B3C3F60916320D1600E0C0D4 /* airplane.jpg */,
 				B3C3F60A16320D1600E0C0D4 /* comedyclub.jpg */,
 				B3C3F60B16320D1600E0C0D4 /* director.jpg */,
@@ -2284,6 +2337,13 @@
 				B3C3F62216320D1600E0C0D4 /* tank_woman.jpg in Resources */,
 				B3C3F62316320D1600E0C0D4 /* ted.jpg in Resources */,
 				B3C3F62416320D1600E0C0D4 /* womanbeach.jpg in Resources */,
+				B31E3BD216AE6A7E00F2A991 /* PersonOfInterest1.png in Resources */,
+				B31E3BD616AE6BB500F2A991 /* Bacardi1.png in Resources */,
+				B31E3BD916AE6CBA00F2A991 /* AICP1.png in Resources */,
+				B31E3BDE16AE6EED00F2A991 /* Chase1.png in Resources */,
+				B31E3BDF16AE6EED00F2A991 /* Ted1.png in Resources */,
+				B31E3BE016AE6EED00F2A991 /* Verizon1.png in Resources */,
+				B31E3BE316AE70D600F2A991 /* Ransom_cast1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
