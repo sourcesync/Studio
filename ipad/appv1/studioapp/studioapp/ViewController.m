@@ -1412,7 +1412,7 @@ CGRect lastZoomPicRect;
         [ arr addObject:path ];
     }
     
-    for (int i=1;i<=max;i++) //18
+    for (int i=1;i<=18;i++) //18
     {
         NSString *path = nil;
         if (i==7)
@@ -1661,9 +1661,9 @@ CGRect lastZoomPicRect;
     [ arr addObject:@"comedyclub.jpg"];
     [ arr addObject:@"director.jpg"];
     [ arr addObject:@"forest.jpg"];
-    [ arr addObject:@"greenscreen"];
+    [ arr addObject:@"greenscreen.jpg"];
     [ arr addObject:@"HeyMS15.jpg"];
-    [ arr addObject:@"holiday05_rev.jpg"];
+    [ arr addObject:@"holidays05_rev.jpg"];
     [ arr addObject:@"ifweleavenow04.jpg"];
     [ arr addObject:@"ifweleavenow09.jpg"];
     [ arr addObject:@"OverdraftFees05.jpg"];
@@ -1679,7 +1679,7 @@ CGRect lastZoomPicRect;
         [ arr addObject:path ];
     }
     
-    for (int i=1;i<=max;i++) //29
+    for (int i=1;i<=45;i++) //29
     {
         NSString *path = [ NSString stringWithFormat:@"SB_Concepts%02d.jpg", i ];
         if (!([arr containsObject:path]))
