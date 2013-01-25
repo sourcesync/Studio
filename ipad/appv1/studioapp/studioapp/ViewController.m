@@ -1401,7 +1401,7 @@ CGRect lastZoomPicRect;
     [ arr addObject:@"100YSS_posters13_1.jpg"];
     [ arr addObject:@"AICP_poster_sarah2.jpg"];
     [ arr addObject:@"brainspace_infograph_rev2.jpg"];
-    [ arr addObject:@"coffee_break.jpg" ];
+    [ arr addObject:@"coffee_break_resize.jpg" ];
     [ arr addObject:@"METHDOLODYrev2.jpg" ];
     [ arr addObject:@"track_Record_infograph.jpg" ];
     

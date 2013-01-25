@@ -189,7 +189,6 @@
 		B3C3F5DF1632087D00E0C0D4 /* 100YSS_posters13_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5D61632087D00E0C0D4 /* 100YSS_posters13_1.jpg */; };
 		B3C3F5E01632087D00E0C0D4 /* AICP_poster_sarah2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5D71632087D00E0C0D4 /* AICP_poster_sarah2.jpg */; };
 		B3C3F5E11632087D00E0C0D4 /* brainspace_infograph_rev2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5D81632087D00E0C0D4 /* brainspace_infograph_rev2.jpg */; };
-		B3C3F5E21632087D00E0C0D4 /* coffee_break.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5D91632087D00E0C0D4 /* coffee_break.jpg */; };
 		B3C3F5E31632087D00E0C0D4 /* METHDOLODYrev2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5DA1632087D00E0C0D4 /* METHDOLODYrev2.jpg */; };
 		B3C3F5E41632087D00E0C0D4 /* track_Record_infograph.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5DB1632087D00E0C0D4 /* track_Record_infograph.jpg */; };
 		B3C3F5F716320A8100E0C0D4 /* 3panelcomic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F5E616320A8100E0C0D4 /* 3panelcomic.jpg */; };
@@ -224,6 +223,7 @@
 		B3C3F62316320D1600E0C0D4 /* ted.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F61516320D1600E0C0D4 /* ted.jpg */; };
 		B3C3F62416320D1600E0C0D4 /* womanbeach.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3C3F61616320D1600E0C0D4 /* womanbeach.jpg */; };
 		B3C5651F14FB6D020064D6BF /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C5651E14FB6D020064D6BF /* PlayerView.m */; };
+		B3CBC4CB16B251100050DD4A /* coffee_break_resize.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B3CBC4CA16B251100050DD4A /* coffee_break_resize.jpg */; };
 		B3EAB78E14EDA7E80055428D /* 1new.mov in Resources */ = {isa = PBXBuildFile; fileRef = B3EAB78D14EDA7E80055428D /* 1new.mov */; };
 		B3F1E5AA14BDA73500CDACE1 /* Boxdottedbig.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5A814BDA73500CDACE1 /* Boxdottedbig.png */; };
 		B3F1E5AB14BDA73500CDACE1 /* Boxdottedbig2.png in Resources */ = {isa = PBXBuildFile; fileRef = B3F1E5A914BDA73500CDACE1 /* Boxdottedbig2.png */; };
@@ -689,7 +689,6 @@
 		B3C3F5D61632087D00E0C0D4 /* 100YSS_posters13_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 100YSS_posters13_1.jpg; sourceTree = "<group>"; };
 		B3C3F5D71632087D00E0C0D4 /* AICP_poster_sarah2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = AICP_poster_sarah2.jpg; sourceTree = "<group>"; };
 		B3C3F5D81632087D00E0C0D4 /* brainspace_infograph_rev2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = brainspace_infograph_rev2.jpg; sourceTree = "<group>"; };
-		B3C3F5D91632087D00E0C0D4 /* coffee_break.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = coffee_break.jpg; sourceTree = "<group>"; };
 		B3C3F5DA1632087D00E0C0D4 /* METHDOLODYrev2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = METHDOLODYrev2.jpg; sourceTree = "<group>"; };
 		B3C3F5DB1632087D00E0C0D4 /* track_Record_infograph.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = track_Record_infograph.jpg; sourceTree = "<group>"; };
 		B3C3F5E616320A8100E0C0D4 /* 3panelcomic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3panelcomic.jpg; sourceTree = "<group>"; };
@@ -725,6 +724,7 @@
 		B3C3F61616320D1600E0C0D4 /* womanbeach.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = womanbeach.jpg; sourceTree = "<group>"; };
 		B3C5651D14FB6D020064D6BF /* PlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
 		B3C5651E14FB6D020064D6BF /* PlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
+		B3CBC4CA16B251100050DD4A /* coffee_break_resize.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = coffee_break_resize.jpg; sourceTree = "<group>"; };
 		B3EAB78D14EDA7E80055428D /* 1new.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = 1new.mov; sourceTree = "<group>"; };
 		B3F1E5A814BDA73500CDACE1 /* Boxdottedbig.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boxdottedbig.png; sourceTree = "<group>"; };
 		B3F1E5A914BDA73500CDACE1 /* Boxdottedbig2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Boxdottedbig2.png; sourceTree = "<group>"; };
@@ -1422,6 +1422,7 @@
 		B3C3F5D21632084600E0C0D4 /* new.10.18.2012 */ = {
 			isa = PBXGroup;
 			children = (
+				B3CBC4CA16B251100050DD4A /* coffee_break_resize.jpg */,
 				B31E3BD716AE6CB100F2A991 /* thumbs */,
 				B3C3F5D31632087D00E0C0D4 /* 100YSS_posters5_1.jpg */,
 				B3C3F5D41632087D00E0C0D4 /* 100YSS_posters7_1.jpg */,
@@ -1429,7 +1430,6 @@
 				B3C3F5D61632087D00E0C0D4 /* 100YSS_posters13_1.jpg */,
 				B3C3F5D71632087D00E0C0D4 /* AICP_poster_sarah2.jpg */,
 				B3C3F5D81632087D00E0C0D4 /* brainspace_infograph_rev2.jpg */,
-				B3C3F5D91632087D00E0C0D4 /* coffee_break.jpg */,
 				B3C3F5DA1632087D00E0C0D4 /* METHDOLODYrev2.jpg */,
 				B3C3F5DB1632087D00E0C0D4 /* track_Record_infograph.jpg */,
 			);
@@ -2303,7 +2303,6 @@
 				B3C3F5DF1632087D00E0C0D4 /* 100YSS_posters13_1.jpg in Resources */,
 				B3C3F5E01632087D00E0C0D4 /* AICP_poster_sarah2.jpg in Resources */,
 				B3C3F5E11632087D00E0C0D4 /* brainspace_infograph_rev2.jpg in Resources */,
-				B3C3F5E21632087D00E0C0D4 /* coffee_break.jpg in Resources */,
 				B3C3F5E31632087D00E0C0D4 /* METHDOLODYrev2.jpg in Resources */,
 				B3C3F5E41632087D00E0C0D4 /* track_Record_infograph.jpg in Resources */,
 				B3C3F5F716320A8100E0C0D4 /* 3panelcomic.jpg in Resources */,
@@ -2344,6 +2343,7 @@
 				B31E3BDF16AE6EED00F2A991 /* Ted1.png in Resources */,
 				B31E3BE016AE6EED00F2A991 /* Verizon1.png in Resources */,
 				B31E3BE316AE70D600F2A991 /* Ransom_cast1.png in Resources */,
+				B3CBC4CB16B251100050DD4A /* coffee_break_resize.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
